@@ -14,13 +14,90 @@
         <header id="banner" class="body">
                 <h1><a href="/">The Living Deadline </a></h1>
                 <nav><ul>
+                    <li><a href="/category/git-https.html">Git, HTTPS</a></li>
                     <li><a href="/category/python.html">Python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/Test Post.html">Test post</a></h1>
+                    <h1 class="entry-title"><a href="/Accept a self-signed certificate with git..html">Accept a self-signed certificate with git.</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-02-11T20:54:00-03:00">
+                Published: dom 11 febrero 2018
+        </abbr>
+		<br />
+        <abbr class="modified" title="2018-02-27T00:00:00-03:00">
+                Updated: mar 27 febrero 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/alex-hans.html">Alex Hans</a>
+        </address>
+<p>In <a href="/category/git-https.html">Git, HTTPS</a>.</p>
+<p>tags: <a href="/tag/https.html">https</a> <a href="/tag/git.html">git</a> <a href="/tag/networking.html">networking</a> <a href="/tag/sysadmin.html">sysadmin</a> <a href="/tag/svn.html">svn</a> <a href="/tag/devops.html">devops</a> </p>
+</footer><!-- /.post-info --><h2>Intro</h2>
+<p>Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.</p>
+<p>Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?</p>
+<h2>The Problem</h2>
+<p>It turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn't pester them again but git was another story.  Git tried to verify that the cert was signed by a proper authority and couldn't.</p>
+<div class="highlight"><pre><span></span>user@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git 
+Cloning into &#39;repo_name&#39;...
+fatal: unable to access &#39;https://user@dev-server-01/git/repo_name.git/&#39;: server certificate verification failed. 
+CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+</pre></div>
+
+
+<h2>The Solution</h2>
+<p>After some googling I came across suggestions to disable SSL verification with <code>git config http.sslVerify "false"</code> but that looked like it could induce some bad habits and it actually wouldn't prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.</p>
+<p>That's when <a href="https://stackoverflow.com/questions/11621768/how-can-i-make-git-accept-a-self-signed-certificate/26785963#26785963">Stack</a> <a href="https://stackoverflow.com/questions/23807313/adding-self-signed-ssl-certificate-without-disabling-authority-signed-ones">Overflow</a> came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally. </p>
+<p>Steps: </p>
+<p>1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs </p>
+<div class="highlight"><pre><span></span>/etc/ssl/certs/ssl-cert-dev-01.pem
+/etc/ssl/certs/ssl-cert-dev-02.pem
+</pre></div>
+
+
+<p>2- Modify your git config (globally or per-repository) to associate hosts with certs:</p>
+<div class="highlight"><pre><span></span>(From git config --help)
+
+http.sslCAInfo
+    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. 
+    Can be overridden by the GIT_SSL_CAINFO environment variable.
+</pre></div>
+
+
+<p>In this case we're going to do it globally by modifying ~/.gitconfig</p>
+<div class="highlight"><pre><span></span><span class="k">[http &quot;https://dev-server-01:/&quot;]</span>
+    <span class="na">sslCAInfo</span> <span class="o">=</span> <span class="s">/etc/ssl/certs/ssl-cert-dev-01.pem</span>
+
+<span class="k">[http &quot;https://dev-server-02&quot;]</span>
+    <span class="na">sslCAInfo</span> <span class="o">=</span> <span class="s">/etc/ssl/certs/ssl-cert-dev-02.pem</span>
+</pre></div>
+
+
+<p>Or you can do it with the command line:</p>
+<div class="highlight"><pre><span></span>$ git config --global http.<span class="s2">&quot;https://dev-server-01/&quot;</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem
+$ git config --global http.<span class="s2">&quot;https://dev-server-02/&quot;</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem
+</pre></div>
+
+
+<p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a></p>
+<p>The one con I can think of is that you need to clone the repo with the precise name.  If your users where not in the habit of doing so you'll better start getting them used to it.</p>
+<p>Cheers.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/Test Post.html" rel="bookmark"
+                           title="Permalink to Test post">Test post</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-05-21T23:16:00-03:00">
                 Published: dom 21 mayo 2017
@@ -37,8 +114,12 @@
 <p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/publishing.html">publishing</a> </p>Translations:
         <a href="/es/Test Post.html">es</a>
 
-</footer><!-- /.post-info --><p>There's really not much to say about this.</p>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>Testing pelican tutorial</p>
+                <a class="readmore" href="/Test Post.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
@@ -46,15 +127,13 @@
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>
                             <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
                         <h2>social</h2>
                         <ul>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
+                            <li><a href="https://twitter.com/Living_Deadline">twitter</a></li>
                         </ul>
                 </div><!-- /.social -->
         </section><!-- /#extras -->

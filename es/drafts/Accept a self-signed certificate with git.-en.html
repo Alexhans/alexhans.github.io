@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
         <meta charset="utf-8" />
-        <title>The Living Deadline</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+        <title>Accept a self-signed certificate with git.</title>
+        <link rel="stylesheet" href="/es/../theme/css/main.css" />
 
         <!--[if IE]>
             <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -12,16 +12,21 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">The Living Deadline </a></h1>
+                <h1><a href="/es/">La Fecha Límite Nunca Muere </a></h1>
                 <nav><ul>
-                    <li><a href="/category/git-https.html">Git, HTTPS</a></li>
-                    <li><a href="/category/python.html">Python</a></li>
+                    <li><a href="/es/category/python.html">Python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/es/drafts/Accept a self-signed certificate with git.-en.html" rel="bookmark"
+           title="Permalink to Accept a self-signed certificate with git.">Accept a self-signed certificate with git.</a></h1>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="Living_Deadline">Tweet</a><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/Accept a self-signed certificate with git..html">Accept a self-signed certificate with git.</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-02-11T20:54:00-03:00">
                 Published: dom 11 febrero 2018
@@ -32,11 +37,11 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/alex-hans.html">Alex Hans</a>
+                By                         <a class="url fn" href="/es/author/alex-hans.html">Alex Hans</a>
         </address>
-<p>In <a href="/category/git-https.html">Git, HTTPS</a>.</p>
-<p>tags: <a href="/tag/https.html">https</a> <a href="/tag/git.html">git</a> <a href="/tag/networking.html">networking</a> <a href="/tag/sysadmin.html">sysadmin</a> <a href="/tag/svn.html">svn</a> <a href="/tag/devops.html">devops</a> </p>
-</footer><!-- /.post-info --><h2>Intro</h2>
+<p>In <a href="/es/category/git-https.html">Git, HTTPS</a>.</p>
+<p>tags: <a href="/es/tag/https.html">https</a> <a href="/es/tag/git.html">git</a> <a href="/es/tag/networking.html">networking</a> <a href="/es/tag/sysadmin.html">sysadmin</a> <a href="/es/tag/svn.html">svn</a> <a href="/es/tag/devops.html">devops</a> </p>
+</footer><!-- /.post-info -->      <h2>Intro</h2>
 <p>Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.</p>
 <p>Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?</p>
 <h2>The Problem</h2>
@@ -84,42 +89,11 @@ $ git config --global http.<span class="s2">&quot;https://dev-server-02/&quot;</
 
 <p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a></p>
 <p>The one con I can think of is that you need to clone the repo with the precise name.  If your users where not in the habit of doing so you'll better start getting them used to it.</p>
-<p>Cheers.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>Cheers.</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/Test Post.html" rel="bookmark"
-                           title="Permalink to Test post">Test post</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-21T23:16:00-03:00">
-                Published: dom 21 mayo 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-05-21T23:16:00-03:00">
-                Updated: dom 21 mayo 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/alex-hans.html">Alex Hans</a>
-        </address>
-<p>In <a href="/category/python.html">Python</a>.</p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/publishing.html">publishing</a> </p>Translations:
-        <a href="/es/Test Post.html">es</a>
-
-</footer><!-- /.post-info -->                <p>Testing pelican tutorial</p>
-                <a class="readmore" href="/Test Post.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

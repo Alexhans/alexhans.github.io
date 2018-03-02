@@ -14,14 +14,14 @@
         <header id="banner" class="body">
                 <h1><a href="/">The Living Deadline </a></h1>
                 <nav><ul>
-                    <li><a href="/category/git-https.html">Git, HTTPS</a></li>
-                    <li><a href="/category/python.html">Python</a></li>
+                    <li><a href="/category/devops.html">Devops</a></li>
+                    <li><a href="/category/tools.html">Tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/Accept a self-signed certificate with git..html">Accept a self-signed certificate with git.</a></h1>
+                    <h1 class="entry-title"><a href="/accept_self_signed_cert_git.html">Accept a self-signed certificate with git.</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2018-02-11T20:54:00-03:00">
                 Published: dom 11 febrero 2018
@@ -34,7 +34,7 @@
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/alex-hans.html">Alex Hans</a>
         </address>
-<p>In <a href="/category/git-https.html">Git, HTTPS</a>.</p>
+<p>In <a href="/category/devops.html">Devops</a>.</p>
 <p>tags: <a href="/tag/https.html">https</a> <a href="/tag/git.html">git</a> <a href="/tag/networking.html">networking</a> <a href="/tag/sysadmin.html">sysadmin</a> <a href="/tag/svn.html">svn</a> <a href="/tag/devops.html">devops</a> </p>
 </footer><!-- /.post-info --><h2>Intro</h2>
 <p>Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.</p>
@@ -82,9 +82,10 @@ $ git config --global http.<span class="s2">&quot;https://dev-server-02/&quot;</
 </pre></div>
 
 
-<p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a></p>
-<p>The one con I can think of is that you need to clone the repo with the precise name.  If your users where not in the habit of doing so you'll better start getting them used to it.</p>
-<p>Cheers.</p>                </article>
+<p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a>.  That's the one con I can think of and, if your users where not in the habit of doing so, you'll better start getting them used to it.</p>
+<p>Cheers</p>
+<hr>
+<p><strong>Was this helpful? Do you do it another way?  All comments are welcome!</strong></p>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">

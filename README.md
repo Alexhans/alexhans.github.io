@@ -1,2 +1,0 @@
-# alexhans.github.io
-Blog

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
         <meta charset="utf-8" />
-        <title>The Living Deadline - svn</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+        <title>Accept a self-signed certificate with git.</title>
+        <link rel="stylesheet" href="/es/../theme/css/main.css" />
 
         <!--[if IE]>
             <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -12,16 +12,21 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">The Living Deadline </a></h1>
+                <h1><a href="/es/">La Fecha Límite Nunca Muere </a></h1>
                 <nav><ul>
-                    <li><a href="/category/devops.html">Devops</a></li>
-                    <li><a href="/category/tools.html">Tools</a></li>
+                    <li><a href="/es/category/herramientas.html">Herramientas</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/es/drafts/accept_self_signed_cert_git-en.html" rel="bookmark"
+           title="Permalink to Accept a self-signed certificate with git.">Accept a self-signed certificate with git.</a></h1>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="Living_Deadline">Tweet</a><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/accept_self_signed_cert_git.html">Accept a self-signed certificate with git.</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-02-11T20:54:00-03:00">
                 Published: dom 11 febrero 2018
@@ -32,11 +37,11 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/alex-hans.html">Alex Hans</a>
+                By                         <a class="url fn" href="/es/author/alex-hans.html">Alex Hans</a>
         </address>
-<p>In <a href="/category/devops.html">Devops</a>.</p>
-<p>tags: <a href="/tag/https.html">https</a> <a href="/tag/git.html">git</a> <a href="/tag/networking.html">networking</a> <a href="/tag/sysadmin.html">sysadmin</a> <a href="/tag/svn.html">svn</a> <a href="/tag/devops.html">devops</a> </p>
-</footer><!-- /.post-info --><h2>Intro</h2>
+<p>In <a href="/es/category/devops.html">Devops</a>.</p>
+<p>tags: <a href="/es/tag/https.html">https</a> <a href="/es/tag/git.html">git</a> <a href="/es/tag/networking.html">networking</a> <a href="/es/tag/sysadmin.html">sysadmin</a> <a href="/es/tag/svn.html">svn</a> <a href="/es/tag/devops.html">devops</a> </p>
+</footer><!-- /.post-info -->      <h2>Intro</h2>
 <p>Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.</p>
 <p>Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?</p>
 <h2>The Problem</h2>
@@ -85,8 +90,11 @@ $ git config --global http.<span class="s2">&quot;https://dev-server-02/&quot;</
 <p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a>.  That's the one con I can think of and, if your users where not in the habit of doing so, you'll better start getting them used to it.</p>
 <p>Cheers</p>
 <hr>
-<p><strong>Was this helpful? Do you do it another way?  All comments are welcome!</strong></p>                </article>
-            </aside><!-- /#featured -->
+<p><strong>Was this helpful? Do you do it another way?  All comments are welcome!</strong></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

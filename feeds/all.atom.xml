@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Living Deadline</title><link href="https://alexhans.github.io/" rel="alternate"></link><link href="https://alexhans.github.io/feeds/all.atom.xml" rel="self"></link><id>https://alexhans.github.io/</id><updated>2018-03-01T22:00:00-03:00</updated><entry><title>Finding the Right Locale for Google Spreadsheets: Currency and Date</title><link href="https://alexhans.github.io/locale_google_spreadsheets_currency_date.html" rel="alternate"></link><published>2018-03-01T22:00:00-03:00</published><updated>2018-03-01T22:00:00-03:00</updated><author><name>Alex Hans</name></author><id>tag:alexhans.github.io,2018-03-01:/locale_google_spreadsheets_currency_date.html</id><summary type="html">&lt;p&gt;Finding a locale with day/month/year that uses the dot operator for decimals&lt;/p&gt;</summary><content type="html">&lt;p&gt;I was collaborating with Google Spreadsheets when I encountered a particular annoyance regarding currency and date formats.&lt;/p&gt;
+&lt;p&gt;If you go to &lt;code&gt;File &amp;gt; Spreadsheet Settings&lt;/code&gt; you will find, in the General tab, the possibility of choosing what locale you want to choose.  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Google Spreadsheets Locale Menu - Argentina is Selected" src="https://alexhans.github.io/images/google_spreadsheets_locale_argentina.png"&gt;&lt;/p&gt;
+&lt;p&gt;The problem was that we wanted the little endian (day, month, year) or big endian (year, month, day) date format instead of the awkward &lt;a href="https://calendars.wikia.com/wiki/Date_format_by_country"&gt;middle endian (month, day, year) format&lt;/a&gt; (Common in places like USA or Canada).&lt;/p&gt;
+&lt;p&gt;We also wanted the dot operator as currency since the default layout for most keypads involves a dot instead of a comma, even in &lt;a href="https://en.wikipedia.org/wiki/Decimal_separator"&gt;countries that use the comma operator for decimals&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Image of Typical Keypad - Done with https://www.keyboard-layout-editor.com/" src="https://alexhans.github.io/images/keypad.png"&gt;&lt;/p&gt;
+&lt;p&gt;After searching for a bit we came to a nice compromise in the lovely country of &lt;strong&gt;Australia which allows us to use the best of both worlds&lt;/strong&gt; and where the currency still shows a generic &lt;code&gt;$&lt;/code&gt; money sign.&lt;/p&gt;
+&lt;p&gt;Thanks Australia! &lt;/p&gt;</content><category term="locale"></category><category term="google spreadsheets"></category><category term="google docs"></category><category term="currency"></category><category term="date"></category></entry><entry><title>Formatos de Fechas y Moneda en Google Spreadsheet. La Configuración Regional Correcta.</title><link href="https://alexhans.github.io/es/locale_google_spreadsheets_currency_date.html" rel="alternate"></link><published>2018-03-01T22:00:00-03:00</published><updated>2018-03-01T22:00:00-03:00</updated><author><name>Alex Hans</name></author><id>tag:alexhans.github.io,2018-03-01:/es/locale_google_spreadsheets_currency_date.html</id><summary type="html">&lt;p&gt;Como encontrar una configuración regional que use dia/mes/año y el punto para los decimales.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Estaba colaborando en una hója de cálculo de Google Spreadsheets cuando encontré una molestia particular en relación con los formatos de moneda y fecha.&lt;/p&gt;
+&lt;p&gt;Si vas a &lt;code&gt;Archivo &amp;gt; Configuración de la hoja de cálculo&lt;/code&gt; encontrarás, en la solapa &lt;code&gt;General&lt;/code&gt;, la posibilidad de optar por la configuración regional que desees.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Menu de configuración regional de Google Spreadsheets - Argentina está seleccionada" src="https://alexhans.github.io/images/google_spreadsheets_locale_argentina-es.png"&gt;&lt;/p&gt;
+&lt;p&gt;El problema residía en que queríamos usar el formato de fechas &lt;em&gt;little endian&lt;/em&gt; (día, mes, año) o el &lt;em&gt;big endian&lt;/em&gt; (año, mes, día) en vez del &lt;a href="https://calendars.wikia.com/wiki/Date_format_by_country"&gt;incómodo &lt;em&gt;middle endian&lt;/em&gt; (mes, día, año)&lt;/a&gt; (común en lugar como EEUU o Canadá). &lt;/p&gt;
+&lt;p&gt;Además queríamos usar el punto para la moneda por un tema de conveniencia considerando que la mayoría de los teclados numéricos o &lt;em&gt;keypads&lt;/em&gt; tienen un punto en vez de una coma, aún en &lt;a href="https://en.wikipedia.org/wiki/Decimal_separator"&gt;países donde el operador de decimales es la coma&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Imagen de un típico keypad - Hecha con https://www.keyboard-layout-editor.com/" src="https://alexhans.github.io/images/keypad.png"&gt;&lt;/p&gt;
+&lt;p&gt;Luego de buscar un rato encontramos una buena solución de compromiso usando al encantador país de &lt;strong&gt;Australia que permite combinar lo mejor de los dos mundos&lt;/strong&gt; y donde el símbolo de moneda usado &lt;code&gt;$&lt;/code&gt; es lo suficientemente genérico.&lt;/p&gt;
+&lt;p&gt;Gracias Australia! &lt;/p&gt;</content><category term="regional"></category><category term="google spreadsheets"></category><category term="google docs"></category><category term="moneda"></category><category term="fecha"></category></entry><entry><title>Accept a self-signed certificate with git.</title><link href="https://alexhans.github.io/accept_self_signed_cert_git.html" rel="alternate"></link><published>2018-02-11T20:54:00-03:00</published><updated>2018-02-27T00:00:00-03:00</updated><author><name>Alex Hans</name></author><id>tag:alexhans.github.io,2018-02-11:/accept_self_signed_cert_git.html</id><summary type="html">&lt;p&gt;How To accept a self-signed cert in git over HTTPS&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Intro&lt;/h2&gt;
+&lt;p&gt;Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.&lt;/p&gt;
+&lt;p&gt;Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?&lt;/p&gt;
+&lt;h2&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;It turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn't pester them again but git was another story.  Git tried to verify that the cert was signed by a proper authority and couldn't.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;user@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git 
+Cloning into &amp;#39;repo_name&amp;#39;...
+fatal: unable to access &amp;#39;https://user@dev-server-01/git/repo_name.git/&amp;#39;: server certificate verification failed. 
+CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;The Solution&lt;/h2&gt;
+&lt;p&gt;After some googling I came across suggestions to disable SSL verification with &lt;code&gt;git config http.sslVerify "false"&lt;/code&gt; but that looked like it could induce some bad habits and it actually wouldn't prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.&lt;/p&gt;
+&lt;p&gt;That's when &lt;a href="https://stackoverflow.com/questions/11621768/how-can-i-make-git-accept-a-self-signed-certificate/26785963#26785963"&gt;Stack&lt;/a&gt; &lt;a href="https://stackoverflow.com/questions/23807313/adding-self-signed-ssl-certificate-without-disabling-authority-signed-ones"&gt;Overflow&lt;/a&gt; came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally. &lt;/p&gt;
+&lt;p&gt;Steps: &lt;/p&gt;
+&lt;p&gt;1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/etc/ssl/certs/ssl-cert-dev-01.pem
+/etc/ssl/certs/ssl-cert-dev-02.pem
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;2- Modify your git config (globally or per-repository) to associate hosts with certs:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(From git config --help)
+
+http.sslCAInfo
+    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. 
+    Can be overridden by the GIT_SSL_CAINFO environment variable.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this case we're going to do it globally by modifying ~/.gitconfig&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[http &amp;quot;https://dev-server-01:/&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;sslCAInfo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/etc/ssl/certs/ssl-cert-dev-01.pem&lt;/span&gt;
+
+&lt;span class="k"&gt;[http &amp;quot;https://dev-server-02&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;sslCAInfo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/etc/ssl/certs/ssl-cert-dev-02.pem&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Or you can do it with the command line:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git config --global http.&lt;span class="s2"&gt;&amp;quot;https://dev-server-01/&amp;quot;&lt;/span&gt;.sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem
+$ git config --global http.&lt;span class="s2"&gt;&amp;quot;https://dev-server-02/&amp;quot;&lt;/span&gt;.sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Of course, this breaks the flow of those who were using HTTP and the IP address directly since &lt;a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho"&gt;you need the same name that appears in the certificate&lt;/a&gt;.  That's the one con I can think of and, if your users where not in the habit of doing so, you'll better start getting them used to it.&lt;/p&gt;
+&lt;p&gt;Cheers&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Was this helpful? Do you do it another way?  All comments are welcome!&lt;/strong&gt;&lt;/p&gt;</content><category term="https"></category><category term="git"></category><category term="networking"></category><category term="sysadmin"></category><category term="svn"></category><category term="devops"></category></entry></feed>

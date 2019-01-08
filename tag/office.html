@@ -29,8 +29,8 @@
                 Published: jue 17 mayo 2018
         </abbr>
 		<br />
-        <abbr class="modified" title="2018-05-17T23:00:00-03:00">
-                Updated: jue 17 mayo 2018
+        <abbr class="modified" title="2019-01-08T02:07:00-03:00">
+                Updated: mar 08 enero 2019
         </abbr>
 
         <address class="vcard author">
@@ -38,8 +38,7 @@
         </address>
 <p>In <a href="/category/tools.html">Tools</a>.</p>
 <p>tags: <a href="/tag/excel.html">excel</a> <a href="/tag/calc.html">calc</a> <a href="/tag/office.html">office</a> </p>
-</footer><!-- /.post-info --><p>ARTICLE IN CONSTRUCTION</p>
-<h2>Intro</h2>
+</footer><!-- /.post-info --><h2>Intro</h2>
 <p>I love football (or Soccer if that's how you roll).  Each World Cup and Euro is a cause for intense joy, not just during the actual competition but before, trying to guess the corret outcomes with friends and coworkers.</p>
 <p>That's why in 2010, since I knew a bit of Excel, I hacked this spreadsheet together that I and many other people have been using for quite some time now.</p>
 <p>I've now updated the Excel for the FIFA World Cup 2018.</p>
@@ -64,20 +63,32 @@
 </ul>
 <h2>The Solution</h2>
 <h3>Group Tab</h3>
+<p>Relevant functions: </p>
+<p>The logic for the group tables is simple although verbose and mainly rests in the shoulders of two functions: </p>
 <p><a href="https://support.office.com/en-us/article/vlookup-function-0bbc8083-26fe-4963-8ab8-93a18ad188a1">VLOOKUP</a></p>
 <p><a href="https://support.office.com/en-us/article/rank-function-6a2fc49d-1831-4a03-9d8c-c279cf99f723">RANK</a></p>
-<ul>
-<li>
-<p>Calculate pts Use a positional coefficient system to be able to assign higher values to the first ranked teams.</p>
-</li>
-<li>
-<p>Use a two tables with translations so you can switch between different languages that you can translate to.</p>
-</li>
-</ul>
+<p>There's a group table to input values as they happen on the utmost left, then to the right of it, there's a "standings" table that will
+take advantage of <code>VLOOKUP</code> by looking for a specific position from 1 to 4 to fill all its values.</p>
+<p>Where does it look the data from?  Yet another table in the right of it which has fixed positions for each team and computes values like points, 
+goals in favour and goals against.  It also ranks each of those columns to see which team leads for each respective category and finally, the magic
+happens in the coefficient column.  It just multiplies each column by powers of ten creating a sorting hierarchy that can be used by the previously 
+mentioned <code>VLOOKUP</code>.</p>
+<blockquote>
+<p>Give people the possibility to localize the spreadsheet if they're so inclined.</p>
+</blockquote>
+<p>To achieve this there's two columns in <code>AA</code> and <code>AB</code> where you can find translations for two languages.
+All the texts you'll see in the "menus" will compare to the <code>B1</code> cell to see which column/language to use.</p>
+<p>Localizing this to a different language than English/Spanish is easy.  Just replace the appropriate column and the <code>B1</code> cell. </p>
 <h3>Stage Tab</h3>
 <p>This one is pretty simple and just consists of a judicious use of IF commands that takes into accounts ties and the light blue cells for PKs.</p>
 <h3>Rankings Tab</h3>
 <p>This is just a nice view for the real logic that is performed in the database tab.</p>
+<!-- > Have the rankings and standings be updated automatically and correctly. -->
+
+<!-- > Be able to enter the predictions of many participants. -->
+
+<!-- > Be able to specify how many points a participant wins for guessing the outcome and how many for guessing the exact score. -->
+
 <h3>Database Tab</h3>
 <p>Here be dragons.</p>
 <h3>Stadiums Tab</h3>

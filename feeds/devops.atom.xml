@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Living Deadline - Devops</title><link href="https://alexhans.github.io/" rel="alternate"></link><link href="https://alexhans.github.io/feeds/devops.atom.xml" rel="self"></link><id>https://alexhans.github.io/</id><updated>2019-04-16T00:00:00-03:00</updated><entry><title>Get notifications in ubuntu when command line tasks end</title><link href="https://alexhans.github.io/notifications_in_ubuntu_linux.html" rel="alternate"></link><published>2019-04-16T00:00:00-03:00</published><updated>2019-04-16T00:00:00-03:00</updated><author><name>Alex Hans</name></author><id>tag:alexhans.github.io,2019-04-16:/notifications_in_ubuntu_linux.html</id><summary type="html">&lt;p&gt;Notifications in Ubuntu Linux for command line tasks&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Intro&lt;/h2&gt;
+&lt;p&gt;Often, when working in the terminal, you'll find yourself running a command that takes a non-trivial amount of time and you don't want to just stare at the screen until it finishes.  &lt;/p&gt;
+&lt;p&gt;So you switch tabs/windows and do something else in the meantime.  Problem is, when is the other task finished?  You don't want to waste time checking too often nor too late...&lt;/p&gt;
+&lt;p&gt;So what you want is a notification.  One that lets you carry on merrily until the original command is actually finished.&lt;/p&gt;
+&lt;p&gt;It turns out that many &lt;a href="https://askubuntu.com/questions/17536/how-do-i-create-a-permanent-bash-alias"&gt;.bashrc&lt;/a&gt; files come with an alias called &lt;code&gt;alert&lt;/code&gt; and, some SO answers even improve upon it.&lt;/p&gt;
+&lt;h2&gt;Desktop notifications with notify-send&lt;/h2&gt;
+&lt;p&gt;Here's the one I'm using lately and has served me well:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Add an &amp;quot;alert&amp;quot; alias for long running commands.  Use like so:&lt;/span&gt;
+&lt;span class="c1"&gt;#   sleep 10; alert&lt;/span&gt;
+&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;alert&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;notify-send --urgency=low -i &amp;quot;$([ $? = 0 ] &amp;amp;&amp;amp; echo terminal || echo error)&amp;quot;  &lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;$(history|tail -n1|sed -e &amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\&amp;#39;&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;s/^\s*[0-9]\+\s*//;s/[;&amp;amp;|]\s*alert$//&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\&amp;#39;&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;)&amp;quot;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias &lt;code&gt;alert&lt;/code&gt; (Remember that semi-colon &lt;code&gt;;&lt;/code&gt; means execute after the previous command is finished, no matter the return code, unlike &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; which only executes the next command if return code is 0 (success).&lt;/p&gt;
+&lt;p&gt;So if you're compiling and running tests in a project you could just do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make test; alert
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and you'll get notified whenever &lt;code&gt;make test&lt;/code&gt; ends.&lt;/p&gt;
+&lt;p&gt;But what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker?  How will you know when it's done if you're not in front of the computer to see the desktop notification?&lt;/p&gt;
+&lt;h2&gt;Email notifications&lt;/h2&gt;
+&lt;p&gt;That's when email comes in handy.  You just gotta take your phone with you and have access to an SMTP server.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt install mailutils
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The logic is the same as before, once the command is done, execute the "alert". &lt;/p&gt;
+&lt;p&gt;If you want to do it in python, here's a &lt;a href="https://unix.stackexchange.com/a/55437/7937"&gt;simple way&lt;/a&gt; to go about it.&lt;/p&gt;
+&lt;p&gt;Just make sure it doesn't go to SPAM.&lt;/p&gt;
+&lt;p&gt;Cheers&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Was this helpful? Do you do it another way?  All comments are welcome!&lt;/strong&gt;&lt;/p&gt;</content><category term="notification"></category><category term="producitivity"></category><category term="alert"></category><category term="ubuntu"></category><category term="linux"></category><category term="desktop"></category><category term="mail"></category></entry><entry><title>Accept a self-signed certificate with git.</title><link href="https://alexhans.github.io/accept_self_signed_cert_git.html" rel="alternate"></link><published>2018-02-11T20:54:00-03:00</published><updated>2018-02-27T00:00:00-03:00</updated><author><name>Alex Hans</name></author><id>tag:alexhans.github.io,2018-02-11:/accept_self_signed_cert_git.html</id><summary type="html">&lt;p&gt;How To accept a self-signed cert in git over HTTPS&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Intro&lt;/h2&gt;
+&lt;p&gt;Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.&lt;/p&gt;
+&lt;p&gt;Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?&lt;/p&gt;
+&lt;h2&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;It turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn't pester them again but git was another story.  Git tried to verify that the cert was signed by a proper authority and couldn't.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;user@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git 
+Cloning into &amp;#39;repo_name&amp;#39;...
+fatal: unable to access &amp;#39;https://user@dev-server-01/git/repo_name.git/&amp;#39;: server certificate verification failed. 
+CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;The Solution&lt;/h2&gt;
+&lt;p&gt;After some googling I came across suggestions to disable SSL verification with &lt;code&gt;git config http.sslVerify "false"&lt;/code&gt; but that looked like it could induce some bad habits and it actually wouldn't prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.&lt;/p&gt;
+&lt;p&gt;That's when &lt;a href="https://stackoverflow.com/questions/11621768/how-can-i-make-git-accept-a-self-signed-certificate/26785963#26785963"&gt;Stack&lt;/a&gt; &lt;a href="https://stackoverflow.com/questions/23807313/adding-self-signed-ssl-certificate-without-disabling-authority-signed-ones"&gt;Overflow&lt;/a&gt; came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally. &lt;/p&gt;
+&lt;p&gt;Steps: &lt;/p&gt;
+&lt;p&gt;1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/etc/ssl/certs/ssl-cert-dev-01.pem
+/etc/ssl/certs/ssl-cert-dev-02.pem
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;2- Modify your git config (globally or per-repository) to associate hosts with certs:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(From git config --help)
+
+http.sslCAInfo
+    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. 
+    Can be overridden by the GIT_SSL_CAINFO environment variable.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this case we're going to do it globally by modifying ~/.gitconfig&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[http &amp;quot;https://dev-server-01:/&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;sslCAInfo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/etc/ssl/certs/ssl-cert-dev-01.pem&lt;/span&gt;
+
+&lt;span class="k"&gt;[http &amp;quot;https://dev-server-02&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;sslCAInfo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/etc/ssl/certs/ssl-cert-dev-02.pem&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Or you can do it with the command line:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git config --global http.&lt;span class="s2"&gt;&amp;quot;https://dev-server-01/&amp;quot;&lt;/span&gt;.sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem
+$ git config --global http.&lt;span class="s2"&gt;&amp;quot;https://dev-server-02/&amp;quot;&lt;/span&gt;.sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Of course, this breaks the flow of those who were using HTTP and the IP address directly since &lt;a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho"&gt;you need the same name that appears in the certificate&lt;/a&gt;.  That's the one con I can think of and, if your users where not in the habit of doing so, you'll better start getting them used to it.&lt;/p&gt;
+&lt;p&gt;Cheers&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Was this helpful? Do you do it another way?  All comments are welcome!&lt;/strong&gt;&lt;/p&gt;</content><category term="https"></category><category term="git"></category><category term="networking"></category><category term="sysadmin"></category><category term="svn"></category><category term="devops"></category></entry></feed>

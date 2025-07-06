@@ -4,239 +4,288 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>https://alexhans.github.io/</loc>
-<lastmod>2019-04-18T00:51:51-00:00</lastmod>
+<loc>/</loc>
+<lastmod>2025-07-06T23:37:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/archives.html</loc>
-<lastmod>2019-04-18T00:51:51-00:00</lastmod>
+<loc>/tags.html</loc>
+<lastmod>2025-07-06T23:37:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tags.html</loc>
-<lastmod>2019-04-18T00:51:51-00:00</lastmod>
+<loc>/categories.html</loc>
+<lastmod>2025-07-06T23:37:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/categories.html</loc>
-<lastmod>2019-04-18T00:51:51-00:00</lastmod>
+<loc>/authors.html</loc>
+<lastmod>2025-07-06T23:37:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/pages/about.html</loc>
-<lastmod>2019-04-18T00:51:51-00:00</lastmod>
+<loc>/archives.html</loc>
+<lastmod>2025-07-06T23:37:48-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/pages/about.html</loc>
+<lastmod>2025-07-06T23:37:48-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/pages/contact.html</loc>
-<lastmod>2019-04-18T00:51:51-00:00</lastmod>
+<loc>/pages/contact.html</loc>
+<lastmod>2025-07-06T23:37:48-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/notifications_in_ubuntu_linux.html</loc>
+<loc>/use_aider_for_free_with_local_llms.html</loc>
+<lastmod>2025-07-06T00:00:00-03:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/notifications_in_ubuntu_linux.html</loc>
 <lastmod>2019-04-16T00:00:00-03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/using_excel_to_make_russia_fifa_world_cup_2018_prediction_maker.html</loc>
+<loc>/using_excel_to_make_russia_fifa_world_cup_2018_prediction_maker.html</loc>
 <lastmod>2019-01-08T02:07:00-03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/locale_google_spreadsheets_currency_date.html</loc>
+<loc>/locale_google_spreadsheets_currency_date.html</loc>
 <lastmod>2018-03-01T22:00:00-03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/accept_self_signed_cert_git.html</loc>
+<loc>/accept_self_signed_cert_git.html</loc>
 <lastmod>2018-02-27T00:00:00-03:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/category/devops.html</loc>
+<loc>/category/devops.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/category/tools.html</loc>
+<loc>/category/genai.html</loc>
+<lastmod>2025-07-06T00:00:00-03:54</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/category/tools.html</loc>
 <lastmod>2019-01-08T02:07:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/notification.html</loc>
+<loc>/tag/aider.html</loc>
+<lastmod>2025-07-06T00:00:00-03:54</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/tag/llm.html</loc>
+<lastmod>2025-07-06T00:00:00-03:54</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/tag/local_llm.html</loc>
+<lastmod>2025-07-06T00:00:00-03:54</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/tag/open_router.html</loc>
+<lastmod>2025-07-06T00:00:00-03:54</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/tag/notification.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/producitivity.html</loc>
+<loc>/tag/producitivity.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/alert.html</loc>
+<loc>/tag/alert.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/ubuntu.html</loc>
+<loc>/tag/ubuntu.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/linux.html</loc>
+<loc>/tag/linux.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/desktop.html</loc>
+<loc>/tag/desktop.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/mail.html</loc>
+<loc>/tag/mail.html</loc>
 <lastmod>2019-04-16T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/excel.html</loc>
+<loc>/tag/excel.html</loc>
 <lastmod>2019-01-08T02:07:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/calc.html</loc>
+<loc>/tag/calc.html</loc>
 <lastmod>2019-01-08T02:07:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/office.html</loc>
+<loc>/tag/office.html</loc>
 <lastmod>2019-01-08T02:07:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/locale.html</loc>
+<loc>/tag/locale.html</loc>
 <lastmod>2018-03-01T22:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/google-spreadsheets.html</loc>
+<loc>/tag/google-spreadsheets.html</loc>
 <lastmod>2018-03-01T22:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/google-docs.html</loc>
+<loc>/tag/google-docs.html</loc>
 <lastmod>2018-03-01T22:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/currency.html</loc>
+<loc>/tag/currency.html</loc>
 <lastmod>2018-03-01T22:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/date.html</loc>
+<loc>/tag/date.html</loc>
 <lastmod>2018-03-01T22:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/https.html</loc>
+<loc>/tag/https.html</loc>
 <lastmod>2018-02-27T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/git.html</loc>
+<loc>/tag/git.html</loc>
 <lastmod>2018-02-27T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/networking.html</loc>
+<loc>/tag/networking.html</loc>
 <lastmod>2018-02-27T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/sysadmin.html</loc>
+<loc>/tag/sysadmin.html</loc>
 <lastmod>2018-02-27T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/svn.html</loc>
+<loc>/tag/svn.html</loc>
 <lastmod>2018-02-27T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/tag/devops.html</loc>
+<loc>/tag/devops.html</loc>
 <lastmod>2018-02-27T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://alexhans.github.io/author/alex-hans.html</loc>
-<lastmod>2019-04-16T00:00:00-03:54</lastmod>
+<loc>/author/alex-hans.html</loc>
+<lastmod>2025-07-06T00:00:00-03:54</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

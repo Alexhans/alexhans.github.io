@@ -1,135 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>The Living Deadline - git</title>
-        <link rel="stylesheet" href="https://alexhans.github.io/theme/css/main.css" />
-        <link href="https://alexhans.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="The Living Deadline Atom Feed" />
-</head>
+        <head>
+                        <meta charset="utf-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <meta name="generator" content="Pelican" />
+                        <title>The Living Deadline - git</title>
+                        <link rel="stylesheet" href="/theme/css/main.css" />
+        </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://alexhans.github.io/">The Living Deadline </a></h1>
-                <nav><ul>
-                    <li><a href="https://alexhans.github.io/pages/about.html">About</a></li>
-                    <li><a href="https://alexhans.github.io/pages/contact.html">Contact</a></li>
-                    <li><a href="https://alexhans.github.io/category/devops.html">Devops</a></li>
-                    <li><a href="https://alexhans.github.io/category/tools.html">Tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+        <body id="index" class="home">
+                <header id="banner" class="body">
+                        <h1><a href="/">The Living Deadline</a></h1>
+                        <nav><ul>
+                                                <li><a href="/pages/about.html">About</a></li>
+                                                <li><a href="/pages/contact.html">Contact</a></li>
+                                                <li><a href="/category/devops.html">Devops</a></li>
+                                                <li><a href="/category/genai.html">GenAI</a></li>
+                                                <li><a href="/category/tools.html">Tools</a></li>
+                        </ul></nav>
+                </header><!-- /#banner -->
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://alexhans.github.io/accept_self_signed_cert_git.html">Accept a self-signed certificate with git.</a></h1>
+                <aside id="featured" class="body">
+                    <article>
+                        <h1 class="entry-title"><a href="/accept_self_signed_cert_git.html">Accept a self-signed certificate with git.</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2018-02-11T20:54:00-03:00">
-                Published: dom 11 febrero 2018
+                Published: Sun 11 February 2018
         </abbr>
-		<br />
-        <abbr class="modified" title="2018-02-27T00:00:00-03:00">
-                Updated: mar 27 febrero 2018
-        </abbr>
+                <br />
+                <abbr class="modified" title="2018-02-27T00:00:00-03:00">
+                        Updated: Tue 27 February 2018
+                </abbr>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://alexhans.github.io/author/alex-hans.html">Alex Hans</a>
-        </address>
-<p>In <a href="https://alexhans.github.io/category/devops.html">Devops</a>.</p>
-<p>tags: <a href="https://alexhans.github.io/tag/https.html">https</a> <a href="https://alexhans.github.io/tag/git.html">git</a> <a href="https://alexhans.github.io/tag/networking.html">networking</a> <a href="https://alexhans.github.io/tag/sysadmin.html">sysadmin</a> <a href="https://alexhans.github.io/tag/svn.html">svn</a> <a href="https://alexhans.github.io/tag/devops.html">devops</a> </p>
+                <address class="vcard author">
+                        By                                 <a class="url fn" href="/author/alex-hans.html">Alex Hans</a>
+                </address>
+        <p>In <a href="/category/devops.html">Devops</a>.</p>
+<p>tags: <a href="/tag/https.html">https</a> <a href="/tag/git.html">git</a> <a href="/tag/networking.html">networking</a> <a href="/tag/sysadmin.html">sysadmin</a> <a href="/tag/svn.html">svn</a> <a href="/tag/devops.html">devops</a> </p>        
 </footer><!-- /.post-info --><h2>Intro</h2>
 <p>Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.</p>
 <p>Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?</p>
 <h2>The Problem</h2>
 <p>It turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn't pester them again but git was another story.  Git tried to verify that the cert was signed by a proper authority and couldn't.</p>
-<div class="highlight"><pre><span></span>user@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git 
-Cloning into &#39;repo_name&#39;...
-fatal: unable to access &#39;https://user@dev-server-01/git/repo_name.git/&#39;: server certificate verification failed. 
-CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="k">user</span><span class="nv">@user</span><span class="o">-</span><span class="nl">linux</span><span class="p">:</span><span class="n">git</span><span class="err">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">clone</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="k">user</span><span class="nv">@dev</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mi">01</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">repo_name</span><span class="p">.</span><span class="n">git</span><span class="w"> </span>
+<span class="n">Cloning</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="s1">&#39;repo_name&#39;</span><span class="p">...</span>
+<span class="nl">fatal</span><span class="p">:</span><span class="w"> </span><span class="n">unable</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="s1">&#39;https://user@dev-server-01/git/repo_name.git/&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">certificate</span><span class="w"> </span><span class="n">verification</span><span class="w"> </span><span class="n">failed</span><span class="p">.</span><span class="w"> </span>
+<span class="nl">CAfile</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">ca</span><span class="o">-</span><span class="n">certificates</span><span class="p">.</span><span class="n">crt</span><span class="w"> </span><span class="nl">CRLfile</span><span class="p">:</span><span class="w"> </span><span class="k">none</span>
+</code></pre></div>
 
 <h2>The Solution</h2>
 <p>After some googling I came across suggestions to disable SSL verification with <code>git config http.sslVerify "false"</code> but that looked like it could induce some bad habits and it actually wouldn't prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.</p>
 <p>That's when <a href="https://stackoverflow.com/questions/11621768/how-can-i-make-git-accept-a-self-signed-certificate/26785963#26785963">Stack</a> <a href="https://stackoverflow.com/questions/23807313/adding-self-signed-ssl-certificate-without-disabling-authority-signed-ones">Overflow</a> came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally. </p>
 <p>Steps: </p>
 <p>1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs </p>
-<div class="highlight"><pre><span></span>/etc/ssl/certs/ssl-cert-dev-01.pem
+<div class="highlight"><pre><span></span><code>/etc/ssl/certs/ssl-cert-dev-01.pem
 /etc/ssl/certs/ssl-cert-dev-02.pem
-</pre></div>
-
+</code></pre></div>
 
 <p>2- Modify your git config (globally or per-repository) to associate hosts with certs:</p>
-<div class="highlight"><pre><span></span>(From git config --help)
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">From</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">--</span><span class="n">help</span><span class="p">)</span>
 
-http.sslCAInfo
-    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. 
-    Can be overridden by the GIT_SSL_CAINFO environment variable.
-</pre></div>
-
+<span class="n">http</span><span class="o">.</span><span class="n">sslCAInfo</span>
+<span class="w">    </span><span class="n">File</span><span class="w"> </span><span class="n">containing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">certificates</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">verify</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">peer</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">fetching</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">pushing</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="n">HTTPS</span><span class="o">.</span><span class="w"> </span>
+<span class="w">    </span><span class="n">Can</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">overridden</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">GIT_SSL_CAINFO</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="n">variable</span><span class="o">.</span>
+</code></pre></div>
 
 <p>In this case we're going to do it globally by modifying ~/.gitconfig</p>
-<div class="highlight"><pre><span></span><span class="k">[http &quot;https://dev-server-01:/&quot;]</span>
-    <span class="na">sslCAInfo</span> <span class="o">=</span> <span class="s">/etc/ssl/certs/ssl-cert-dev-01.pem</span>
+<div class="highlight"><pre><span></span><code><span class="k">[http &quot;https://dev-server-01:/&quot;]</span>
+<span class="w">    </span><span class="na">sslCAInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/ssl/certs/ssl-cert-dev-01.pem</span>
 
 <span class="k">[http &quot;https://dev-server-02&quot;]</span>
-    <span class="na">sslCAInfo</span> <span class="o">=</span> <span class="s">/etc/ssl/certs/ssl-cert-dev-02.pem</span>
-</pre></div>
-
+<span class="w">    </span><span class="na">sslCAInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/ssl/certs/ssl-cert-dev-02.pem</span>
+</code></pre></div>
 
 <p>Or you can do it with the command line:</p>
-<div class="highlight"><pre><span></span>$ git config --global http.<span class="s2">&quot;https://dev-server-01/&quot;</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem
-$ git config --global http.<span class="s2">&quot;https://dev-server-02/&quot;</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.<span class="s2">&quot;https://dev-server-01/&quot;</span>.sslCAInfo<span class="w"> </span>/etc/ssl/certs/ssl-cert-dev-01.pem
+$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.<span class="s2">&quot;https://dev-server-02/&quot;</span>.sslCAInfo<span class="w"> </span>/etc/ssl/certs/ssl-cert-dev-02.pem
+</code></pre></div>
 
 <p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a>.  That's the one con I can think of and, if your users where not in the habit of doing so, you'll better start getting them used to it.</p>
 <p>Cheers</p>
 <hr>
-<p><strong>Was this helpful? Do you do it another way?  All comments are welcome!</strong></p><p>There are <a href="https://alexhans.github.io/accept_self_signed_cert_git.html#disqus_thread">comments</a>.</p>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="https://getpelican.com/">Pelican</a></li>
-                            <li><a href="https://python.org/">Python.org</a></li>
-                            <li><a href="https://jinja.pocoo.org/">Jinja2</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://alexhans.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+<p><strong>Was this helpful? Do you do it another way?  All comments are welcome!</strong></p>                    </article>
+                </aside><!-- /#featured -->
+                <section id="extras" class="body">
+                                <div class="blogroll">
+                                        <h2>links</h2>
+                                        <ul>
+                                                        <li><a href="https://getpelican.com/">Pelican</a></li>
+                                                        <li><a href="https://python.org/">Python.org</a></li>
+                                                        <li><a href="https://jinja.pocoo.org/">Jinja2</a></li>
+                                        </ul>
+                                </div><!-- /.blogroll -->
+                                <div class="social">
+                                        <h2>social</h2>
+                                        <ul>
 
-                            <li><a href="https://twitter.com/Living_Deadline">twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+                                                        <li><a href="https://twitter.com/Living_Deadline">twitter</a></li>
+                                        </ul>
+                                </div><!-- /.social -->
+                </section><!-- /#extras -->
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+                <footer id="contentinfo" class="body">
+                        <address id="about" class="vcard body">
+                                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                        </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+                        <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                </footer><!-- /#contentinfo -->
 
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-115006052-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-<script type="text/javascript">
-    var disqus_shortname = 'alexhans-github-io';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = 'https://' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-</body>
+        </body>
 </html>

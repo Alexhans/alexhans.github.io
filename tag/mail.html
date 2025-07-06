@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>The Living Deadline - mail</title>
-        <link rel="stylesheet" href="https://alexhans.github.io/theme/css/main.css" />
-        <link href="https://alexhans.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="The Living Deadline Atom Feed" />
-</head>
+        <head>
+                        <meta charset="utf-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <meta name="generator" content="Pelican" />
+                        <title>The Living Deadline - mail</title>
+                        <link rel="stylesheet" href="/theme/css/main.css" />
+        </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://alexhans.github.io/">The Living Deadline </a></h1>
-                <nav><ul>
-                    <li><a href="https://alexhans.github.io/pages/about.html">About</a></li>
-                    <li><a href="https://alexhans.github.io/pages/contact.html">Contact</a></li>
-                    <li><a href="https://alexhans.github.io/category/devops.html">Devops</a></li>
-                    <li><a href="https://alexhans.github.io/category/tools.html">Tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+        <body id="index" class="home">
+                <header id="banner" class="body">
+                        <h1><a href="/">The Living Deadline</a></h1>
+                        <nav><ul>
+                                                <li><a href="/pages/about.html">About</a></li>
+                                                <li><a href="/pages/contact.html">Contact</a></li>
+                                                <li><a href="/category/devops.html">Devops</a></li>
+                                                <li><a href="/category/genai.html">GenAI</a></li>
+                                                <li><a href="/category/tools.html">Tools</a></li>
+                        </ul></nav>
+                </header><!-- /#banner -->
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://alexhans.github.io/notifications_in_ubuntu_linux.html">Get notifications in ubuntu when command line tasks end</a></h1>
+                <aside id="featured" class="body">
+                    <article>
+                        <h1 class="entry-title"><a href="/notifications_in_ubuntu_linux.html">Get notifications in ubuntu when command line tasks end</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2019-04-16T00:00:00-03:00">
-                Published: mar 16 abril 2019
+                Published: Tue 16 April 2019
         </abbr>
-		<br />
-        <abbr class="modified" title="2019-04-16T00:00:00-03:00">
-                Updated: mar 16 abril 2019
-        </abbr>
+                <br />
+                <abbr class="modified" title="2019-04-16T00:00:00-03:00">
+                        Updated: Tue 16 April 2019
+                </abbr>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://alexhans.github.io/author/alex-hans.html">Alex Hans</a>
-        </address>
-<p>In <a href="https://alexhans.github.io/category/devops.html">Devops</a>.</p>
-<p>tags: <a href="https://alexhans.github.io/tag/notification.html">notification</a> <a href="https://alexhans.github.io/tag/producitivity.html">producitivity</a> <a href="https://alexhans.github.io/tag/alert.html">alert</a> <a href="https://alexhans.github.io/tag/ubuntu.html">ubuntu</a> <a href="https://alexhans.github.io/tag/linux.html">linux</a> <a href="https://alexhans.github.io/tag/desktop.html">desktop</a> <a href="https://alexhans.github.io/tag/mail.html">mail</a> </p>
+                <address class="vcard author">
+                        By                                 <a class="url fn" href="/author/alex-hans.html">Alex Hans</a>
+                </address>
+        <p>In <a href="/category/devops.html">Devops</a>.</p>
+<p>tags: <a href="/tag/notification.html">notification</a> <a href="/tag/producitivity.html">producitivity</a> <a href="/tag/alert.html">alert</a> <a href="/tag/ubuntu.html">ubuntu</a> <a href="/tag/linux.html">linux</a> <a href="/tag/desktop.html">desktop</a> <a href="/tag/mail.html">mail</a> </p>        
 </footer><!-- /.post-info --><h2>Intro</h2>
 <p>Often, when working in the terminal, you'll find yourself running a command that takes a non-trivial amount of time and you don't want to just stare at the screen until it finishes.  </p>
 <p>So you switch tabs/windows and do something else in the meantime.  Problem is, when is the other task finished?  You don't want to waste time checking too often nor too late...</p>
@@ -42,78 +44,56 @@
 <p>It turns out that many <a href="https://askubuntu.com/questions/17536/how-do-i-create-a-permanent-bash-alias">.bashrc</a> files come with an alias called <code>alert</code> and, some SO answers even improve upon it.</p>
 <h2>Desktop notifications with notify-send</h2>
 <p>Here's the one I'm using lately and has served me well:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Add an &quot;alert&quot; alias for long running commands.  Use like so:</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add an &quot;alert&quot; alias for long running commands.  Use like so:</span>
 <span class="c1">#   sleep 10; alert</span>
-<span class="nb">alias</span> <span class="nv">alert</span><span class="o">=</span><span class="s1">&#39;notify-send --urgency=low -i &quot;$([ $? = 0 ] &amp;&amp; echo terminal || echo error)&quot;  </span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">alert</span><span class="o">=</span><span class="s1">&#39;notify-send --urgency=low -i &quot;$([ $? = 0 ] &amp;&amp; echo terminal || echo error)&quot;  </span>
 <span class="s1">&quot;$(history|tail -n1|sed -e &#39;</span><span class="se">\&#39;</span><span class="s1">&#39;s/^\s*[0-9]\+\s*//;s/[;&amp;|]\s*alert$//&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;)&quot;&#39;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>As the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias <code>alert</code> (Remember that semi-colon <code>;</code> means execute after the previous command is finished, no matter the return code, unlike <code>&amp;&amp;</code> which only executes the next command if return code is 0 (success).</p>
 <p>So if you're compiling and running tests in a project you could just do:</p>
-<div class="highlight"><pre><span></span>make test; alert
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>make test; alert
+</code></pre></div>
 
 <p>and you'll get notified whenever <code>make test</code> ends.</p>
 <p>But what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker?  How will you know when it's done if you're not in front of the computer to see the desktop notification?</p>
 <h2>Email notifications</h2>
 <p>That's when email comes in handy.  You just gotta take your phone with you and have access to an SMTP server.</p>
-<div class="highlight"><pre><span></span>$ sudo apt install mailutils
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>mailutils
+</code></pre></div>
 
 <p>The logic is the same as before, once the command is done, execute the "alert". </p>
 <p>If you want to do it in python, here's a <a href="https://unix.stackexchange.com/a/55437/7937">simple way</a> to go about it.</p>
 <p>Just make sure it doesn't go to SPAM.</p>
 <p>Cheers</p>
 <hr>
-<p><strong>Was this helpful? Do you do it another way?  All comments are welcome!</strong></p><p>There are <a href="https://alexhans.github.io/notifications_in_ubuntu_linux.html#disqus_thread">comments</a>.</p>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="https://getpelican.com/">Pelican</a></li>
-                            <li><a href="https://python.org/">Python.org</a></li>
-                            <li><a href="https://jinja.pocoo.org/">Jinja2</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://alexhans.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+<p><strong>Was this helpful? Do you do it another way?  All comments are welcome!</strong></p>                    </article>
+                </aside><!-- /#featured -->
+                <section id="extras" class="body">
+                                <div class="blogroll">
+                                        <h2>links</h2>
+                                        <ul>
+                                                        <li><a href="https://getpelican.com/">Pelican</a></li>
+                                                        <li><a href="https://python.org/">Python.org</a></li>
+                                                        <li><a href="https://jinja.pocoo.org/">Jinja2</a></li>
+                                        </ul>
+                                </div><!-- /.blogroll -->
+                                <div class="social">
+                                        <h2>social</h2>
+                                        <ul>
 
-                            <li><a href="https://twitter.com/Living_Deadline">twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+                                                        <li><a href="https://twitter.com/Living_Deadline">twitter</a></li>
+                                        </ul>
+                                </div><!-- /.social -->
+                </section><!-- /#extras -->
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+                <footer id="contentinfo" class="body">
+                        <address id="about" class="vcard body">
+                                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                        </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+                        <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                </footer><!-- /#contentinfo -->
 
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-115006052-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-<script type="text/javascript">
-    var disqus_shortname = 'alexhans-github-io';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = 'https://' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-</body>
+        </body>
 </html>

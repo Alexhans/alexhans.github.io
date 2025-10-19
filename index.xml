@@ -13,7 +13,7 @@
 <lastBuildDate>Sat, 05 Jul 2025 23:00:00 GMT</lastBuildDate>
 <item>
   <title>Use aider for free with your local LLMs or cheaply with OpenRouter</title>
-  <dc:creator>Alex Hans</dc:creator>
+  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
   <link>https://alexhans.github.io/posts/aider_with_open_router.html</link>
   <description><![CDATA[ 
 
@@ -21,7 +21,6 @@
 
 
 
-<!-- tags: aider, llm, local_llm, open_router -->
 <p>Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.</p>
 <p>Here are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter.</p>
 <section id="local-llms" class="level2">
@@ -30,11 +29,19 @@
 <li>Make sure you have <a href="https://github.com/ollama/ollama">ollama</a> installed and running.</li>
 <li>Note down a wich model(s) you have installed and plan to use. We’ll use <a href="https://ollama.com/library/deepseek-r1">deepseek-r1</a> and <a href="https://ollama.com/library/qwen2.5-coder">qwen2.5-coder</a> as example models. <code>Deepseek</code> is general purpose and a good candidate for reasoning while <code>qwen2.5-coder</code> is specialized for coding tasks.</li>
 </ol>
-<pre><code>$ ollama list
-
-NAME                                        ID              SIZE      MODIFIED
-deepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago
-qwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">$</span> ollama list</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">NAME</span>                                        ID              SIZE      MODIFIED</span>
+<span id="cb1-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">deepseek-r1:14b</span>                             ea35dfe18182    9.0 GB    2 hours ago</span>
+<span id="cb1-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">qwen2.5-coder:14b</span>                           9ec8897f747e    9.0 GB    2 hours ago</span></code></pre></div></div>
 <p>I’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The <a href="https://ollama.com/search">Ollama models site</a> is very handy to get information about models and their distilled versions.</p>
 <ol start="3" type="1">
 <li><a href="https://aider.chat/docs/llms/ollama.html">follow the guide</a> which tells you to run:</li>
@@ -49,7 +56,17 @@ font-style: inherit;">&lt;</span>model<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span></span></code></pre></div></div>
 <p>So in our case, that becomes:</p>
-<pre><code>aider --model "ollama_chat/deepseek-r1:14b" --editor-model "ollama_chat/qwen2.5-coder:14b"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">aider</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ollama_chat/deepseek-r1:14b"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--editor-model</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ollama_chat/qwen2.5-coder:14b"</span></span></code></pre></div></div>
 <p>We could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.</p>
 <p>Use <code>aider --help</code> or visit <a href="https://aider.chat/docs/config/options.html">the options page on aider’s site</a> to understand the differences between <code>--model</code> (main model), <code>--editor-model</code> (editor tasks), and <code>--weak-model</code> (commit messages and history summarization).</p>
 </section>
@@ -93,8 +110,55 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
   <pubDate>Sat, 05 Jul 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Have a Time Budget</title>
+  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
+  <link>https://alexhans.github.io/posts/time_budget.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="pain-point" class="level1">
+<h1>Pain Point</h1>
+<!-- A huge productivity damager is having an excessive amount of meetings disrupting your week -->
+<p>Too many recurring meetings drain your week’s productivity.</p>
+</section>
+<section id="the-rule" class="level1">
+<h1>The Rule</h1>
+<ul>
+<li>Set a <strong>hard budget</strong> for fixed meetings.</li>
+<li>Example: 40 h week, 6 h meeting budget.</li>
+</ul>
+<pre><code>Total - Budget = Free -&gt; 40 - 6 = 34</code></pre>
+<ul>
+<li>If you go over budget, <strong>cut or shrink</strong> the least important meetings.</li>
+<li>You <em>can</em> adjust the budget, but do so rarely, otherwise it loses meaning.</li>
+<li>Ad-hoc syncs are fine. It’s the <strong>recurring</strong> ones that eat up your time.
+<ul>
+<li>Consider doing a similar thing for ad-hoc meetings, if they become a problem.</li>
+</ul></li>
+<li>Like code, less is better. Always look for ways to reduce, even if you’re under budget.</li>
+</ul>
+</section>
+<section id="analogy" class="level1">
+<h1>Analogy</h1>
+<p>This is similar to the U.S. Senate’s <a href="https://www.congress.gov/crs-product/RL31943">PAYGO</a> rule:</p>
+<blockquote class="blockquote">
+<p>if Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it.</p>
+</blockquote>
+
+
+</section>
+
+ ]]></description>
+  <category>productivity</category>
+  <guid>https://alexhans.github.io/posts/time_budget.html</guid>
+  <pubDate>Wed, 01 Mar 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Get notifications in ubuntu when command line tasks end</title>
-  <dc:creator>Alex Hans</dc:creator>
+  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
   <link>https://alexhans.github.io/posts/notifications_for_command_line_tasks.html</link>
   <description><![CDATA[ 
 
@@ -179,7 +243,7 @@ font-style: inherit;">$</span> sudo apt install mailutils</span></code></pre></d
 </item>
 <item>
   <title>Accept a self-signed certificate with git</title>
-  <dc:creator>Alex Hans</dc:creator>
+  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
   <link>https://alexhans.github.io/posts/accept_self_signed_cert_git_https.html</link>
   <description><![CDATA[ 
 

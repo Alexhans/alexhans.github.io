@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Guglielmone Nemi (alexhans.dev)">
-<meta name="dcterms.date" content="2025-07-06">
+<meta name="dcterms.date" content="2023-03-01">
 
-<title>Use aider for free with your local LLMs or cheaply with OpenRouter – The Living Deadline</title>
+<title>Have a Time Budget – The Living Deadline</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,41 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -149,10 +114,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Use aider for free with your local LLMs or cheaply with OpenRouter</h1>
+      <h1 class="title">Have a Time Budget</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">genai</div>
-                <div class="quarto-category">code</div>
+                <div class="quarto-category">productivity</div>
               </div>
                   </div>
   </div>
@@ -170,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 6, 2025</p>
+        <p class="date">March 1, 2023</p>
       </div>
     </div>
     
@@ -189,42 +153,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.</p>
-<p>Here are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter.</p>
-<section id="local-llms" class="level2">
-<h2 class="anchored" data-anchor-id="local-llms">Local LLMs</h2>
-<ol type="1">
-<li>Make sure you have <a href="https://github.com/ollama/ollama">ollama</a> installed and running.</li>
-<li>Note down a wich model(s) you have installed and plan to use. We’ll use <a href="https://ollama.com/library/deepseek-r1">deepseek-r1</a> and <a href="https://ollama.com/library/qwen2.5-coder">qwen2.5-coder</a> as example models. <code>Deepseek</code> is general purpose and a good candidate for reasoning while <code>qwen2.5-coder</code> is specialized for coding tasks.</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ollama list</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                                        ID              SIZE      MODIFIED</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">deepseek-r1:14b</span>                             ea35dfe18182    9.0 GB    2 hours ago</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">qwen2.5-coder:14b</span>                           9ec8897f747e    9.0 GB    2 hours ago</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>I’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The <a href="https://ollama.com/search">Ollama models site</a> is very handy to get information about models and their distilled versions.</p>
-<ol start="3" type="1">
-<li><a href="https://aider.chat/docs/llms/ollama.html">follow the guide</a> which tells you to run:</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aider</span> <span class="at">--model</span> ollama_chat/<span class="op">&lt;</span>model<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>So in our case, that becomes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aider</span> <span class="at">--model</span> <span class="st">"ollama_chat/deepseek-r1:14b"</span> <span class="at">--editor-model</span> <span class="st">"ollama_chat/qwen2.5-coder:14b"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.</p>
-<p>Use <code>aider --help</code> or visit <a href="https://aider.chat/docs/config/options.html">the options page on aider’s site</a> to understand the differences between <code>--model</code> (main model), <code>--editor-model</code> (editor tasks), and <code>--weak-model</code> (commit messages and history summarization).</p>
+<section id="pain-point" class="level1">
+<h1>Pain Point</h1>
+<!-- A huge productivity damager is having an excessive amount of meetings disrupting your week -->
+<p>Too many recurring meetings drain your week’s productivity.</p>
 </section>
-<section id="cheaply-with-openrouter" class="level2">
-<h2 class="anchored" data-anchor-id="cheaply-with-openrouter">Cheaply with OpenRouter</h2>
-<p>If you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.</p>
-<p>The advantage of using OpenRouter over a specific LLM service like <a href="https://www.anthropic.com/api">Claude</a>, <a href="https://openai.com/index/openai-api/">ChatGPT API</a> or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.</p>
-<p><a href="https://www.reddit.com/r/LocalLLaMA/comments/1jhjbgj/best_llm_for_code_through_api_with_aider/">user u/Baldur-Norddahl Reddit LocalLLama</a> shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENROUTER_API_KEY</span><span class="op">=</span>sk-or-v1-xxxx</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">aider</span> <span class="at">--architect</span> <span class="at">--model</span> openrouter/deepseek/deepseek-r1 <span class="at">--editor-model</span> openrouter/anthropic/claude-3.7-sonnet <span class="at">--watch-files</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You can easily monitor your <a href="https://openrouter.ai/activity">activity</a> an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs.</p>
+<section id="the-rule" class="level1">
+<h1>The Rule</h1>
+<ul>
+<li>Set a <strong>hard budget</strong> for fixed meetings.</li>
+<li>Example: 40 h week, 6 h meeting budget.</li>
+</ul>
+<pre><code>Total - Budget = Free -&gt; 40 - 6 = 34</code></pre>
+<ul>
+<li>If you go over budget, <strong>cut or shrink</strong> the least important meetings.</li>
+<li>You <em>can</em> adjust the budget, but do so rarely, otherwise it loses meaning.</li>
+<li>Ad-hoc syncs are fine. It’s the <strong>recurring</strong> ones that eat up your time.
+<ul>
+<li>Consider doing a similar thing for ad-hoc meetings, if they become a problem.</li>
+</ul></li>
+<li>Like code, less is better. Always look for ways to reduce, even if you’re under budget.</li>
+</ul>
 </section>
-<section id="in-closing" class="level2">
-<h2 class="anchored" data-anchor-id="in-closing">In Closing</h2>
-<p>Both patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.</p>
-<p>Shoutout to Georgi Gerganov’s <a href="https://picovoice.ai/blog/local-llms-llamacpp-ollama/">llama.cpp</a> which is the core that allows ollama to work.</p>
+<section id="analogy" class="level1">
+<h1>Analogy</h1>
+<p>This is similar to the U.S. Senate’s <a href="https://www.congress.gov/crs-product/RL31943">PAYGO</a> rule:</p>
+<blockquote class="blockquote">
+<p>if Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it.</p>
+</blockquote>
 
 
 </section>

@@ -13,7 +13,7 @@
 <lastBuildDate>Sat, 05 Jul 2025 23:00:00 GMT</lastBuildDate>
 <item>
   <title>Use aider for free with your local LLMs or cheaply with OpenRouter</title>
-  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/aider_with_open_router.html</link>
   <description><![CDATA[ 
 
@@ -111,7 +111,7 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
 </item>
 <item>
   <title>Have a Time Budget</title>
-  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/time_budget.html</link>
   <description><![CDATA[ 
 
@@ -158,7 +158,7 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
 </item>
 <item>
   <title>Get notifications in ubuntu when command line tasks end</title>
-  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/notifications_for_command_line_tasks.html</link>
   <description><![CDATA[ 
 
@@ -243,7 +243,7 @@ font-style: inherit;">$</span> sudo apt install mailutils</span></code></pre></d
 </item>
 <item>
   <title>Accept a self-signed certificate with git</title>
-  <dc:creator>Alex Guglielmone Nemi (alexhans.dev)</dc:creator>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/accept_self_signed_cert_git_https.html</link>
   <description><![CDATA[ 
 

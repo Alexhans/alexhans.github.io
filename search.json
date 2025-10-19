@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "The Living Deadline",
     "section": "",
-    "text": "Use aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nHave a Time Budget\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "text": "Use aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/notifications_for_command_line_tasks.html",
@@ -35,9 +35,9 @@
     "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
   },
   {
-    "objectID": "posts/time_budget.html",
-    "href": "posts/time_budget.html",
-    "title": "Have a Time Budget",
+    "objectID": "posts/meeting_budget.html",
+    "href": "posts/meeting_budget.html",
+    "title": "Set a Meeting Budget",
     "section": "",
     "text": "Pain Point\n\nToo many recurring meetings drain your week’s productivity.\n\n\nThe Rule\n\nSet a hard budget for fixed meetings.\nExample: 40 h week, 6 h meeting budget.\n\nTotal - Budget = Free -&gt; 40 - 6 = 34\n\nIf you go over budget, cut or shrink the least important meetings.\nYou can adjust the budget, but do so rarely, otherwise it loses meaning.\nAd-hoc syncs are fine. It’s the recurring ones that eat up your time.\n\nConsider doing a similar thing for ad-hoc meetings, if they become a problem.\n\nLike code, less is better. Always look for ways to reduce, even if you’re under budget.\n\n\n\nAnalogy\nThis is similar to the U.S. Senate’s PAYGO rule:\n\nif Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it."
   },

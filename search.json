@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Living Deadline",
+    "section": "",
+    "text": "Use aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Hans\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Hans\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Hans\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/notifications_for_command_line_tasks.html",
+    "href": "posts/notifications_for_command_line_tasks.html",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "",
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications_for_command_line_tasks.html#intro",
+    "href": "posts/notifications_for_command_line_tasks.html#intro",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "",
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications_for_command_line_tasks.html#desktop-notifications-with-notify-send",
+    "href": "posts/notifications_for_command_line_tasks.html#desktop-notifications-with-notify-send",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Desktop notifications with notify-send",
+    "text": "Desktop notifications with notify-send\nHere’s the one I’m using lately and has served me well:\n# Add an \"alert\" alias for long running commands.  Use like so:\n#   sleep 10; alert\nalias alert='notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\"  \n\"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"'\nAs the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias alert (Remember that semi-colon ; means execute after the previous command is finished, no matter the return code, unlike && which only executes the next command if return code is 0 (success).\nSo if you’re compiling and running tests in a project you could just do:\nmake test; alert\nand you’ll get notified whenever make test ends.\nBut what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?"
+  },
+  {
+    "objectID": "posts/notifications_for_command_line_tasks.html#email-notifications",
+    "href": "posts/notifications_for_command_line_tasks.html#email-notifications",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Email notifications",
+    "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
+    "objectID": "posts/accept_self_signed_cert_git_https.html",
+    "href": "posts/accept_self_signed_cert_git_https.html",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept_self_signed_cert_git_https.html#intro",
+    "href": "posts/accept_self_signed_cert_git_https.html#intro",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept_self_signed_cert_git_https.html#the-problem",
+    "href": "posts/accept_self_signed_cert_git_https.html#the-problem",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Problem",
+    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
+  },
+  {
+    "objectID": "posts/accept_self_signed_cert_git_https.html#the-solution",
+    "href": "posts/accept_self_signed_cert_git_https.html#the-solution",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Solution",
+    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html",
+    "href": "posts/aider_with_open_router.html",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "",
+    "text": "Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.\nHere are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter."
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html#local-llms",
+    "href": "posts/aider_with_open_router.html#local-llms",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Local LLMs",
+    "text": "Local LLMs\n\nMake sure you have ollama installed and running.\nNote down a wich model(s) you have installed and plan to use. We’ll use deepseek-r1 and qwen2.5-coder as example models. Deepseek is general purpose and a good candidate for reasoning while qwen2.5-coder is specialized for coding tasks.\n\n$ ollama list\n\nNAME                                        ID              SIZE      MODIFIED\ndeepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago\nqwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago\nI’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The Ollama models site is very handy to get information about models and their distilled versions.\n\nfollow the guide which tells you to run:\n\naider --model ollama_chat/&lt;model&gt;\nSo in our case, that becomes:\naider --model \"ollama_chat/deepseek-r1:14b\" --editor-model \"ollama_chat/qwen2.5-coder:14b\"\nWe could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.\nUse aider --help or visit the options page on aider’s site to understand the differences between --model (main model), --editor-model (editor tasks), and --weak-model (commit messages and history summarization)."
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html#cheaply-with-openrouter",
+    "href": "posts/aider_with_open_router.html#cheaply-with-openrouter",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Cheaply with OpenRouter",
+    "text": "Cheaply with OpenRouter\nIf you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.\nThe advantage of using OpenRouter over a specific LLM service like Claude, ChatGPT API or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.\nuser u/Baldur-Norddahl Reddit LocalLLama shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:\nexport OPENROUTER_API_KEY=sk-or-v1-xxxx\naider --architect --model openrouter/deepseek/deepseek-r1 --editor-model openrouter/anthropic/claude-3.7-sonnet --watch-files\nYou can easily monitor your activity an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs."
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html#in-closing",
+    "href": "posts/aider_with_open_router.html#in-closing",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "In Closing",
+    "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I’ve been developing software professionally from 2008 so I’ve seen a thing or two, writing roguelikes with GCC 4.2, dealing with Visual C++ 6.0’s non standard quirks, writing triangles in OpenGL’s “Red Book”, to writing fiscal printer firmware, creating multi country products, working in truly big data in Big Company (TM) and realizing that more often than not, the problem is not technical in nature.\nI’ve always found myself repeating insights, whether learned from others or my own experiences and realized I don’t always put them into text in the companies I work for and definitely not expose them in written form to the outside world.\nI should do that more. This is me getting into the habit of doing that more."
+  }
+]

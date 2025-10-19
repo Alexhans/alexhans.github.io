@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>The Living Deadline</title>
+<link>https://alexhans.github.io/</link>
+<atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
+<description>Alex Hans&#39;s blog</description>
+<generator>quarto-1.8.25</generator>
+<lastBuildDate>Sat, 05 Jul 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Use aider for free with your local LLMs or cheaply with OpenRouter</title>
+  <dc:creator>Alex Hans</dc:creator>
+  <link>https://alexhans.github.io/posts/aider_with_open_router.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<!-- tags: aider, llm, local_llm, open_router -->
+<p>Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.</p>
+<p>Here are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter.</p>
+<section id="local-llms" class="level2">
+<h2 class="anchored" data-anchor-id="local-llms">Local LLMs</h2>
+<ol type="1">
+<li>Make sure you have <a href="https://github.com/ollama/ollama">ollama</a> installed and running.</li>
+<li>Note down a wich model(s) you have installed and plan to use. We’ll use <a href="https://ollama.com/library/deepseek-r1">deepseek-r1</a> and <a href="https://ollama.com/library/qwen2.5-coder">qwen2.5-coder</a> as example models. <code>Deepseek</code> is general purpose and a good candidate for reasoning while <code>qwen2.5-coder</code> is specialized for coding tasks.</li>
+</ol>
+<pre><code>$ ollama list
+
+NAME                                        ID              SIZE      MODIFIED
+deepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago
+qwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago</code></pre>
+<p>I’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The <a href="https://ollama.com/search">Ollama models site</a> is very handy to get information about models and their distilled versions.</p>
+<ol start="3" type="1">
+<li><a href="https://aider.chat/docs/llms/ollama.html">follow the guide</a> which tells you to run:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">aider</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> ollama_chat/<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>model<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div></div>
+<p>So in our case, that becomes:</p>
+<pre><code>aider --model "ollama_chat/deepseek-r1:14b" --editor-model "ollama_chat/qwen2.5-coder:14b"</code></pre>
+<p>We could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.</p>
+<p>Use <code>aider --help</code> or visit <a href="https://aider.chat/docs/config/options.html">the options page on aider’s site</a> to understand the differences between <code>--model</code> (main model), <code>--editor-model</code> (editor tasks), and <code>--weak-model</code> (commit messages and history summarization).</p>
+</section>
+<section id="cheaply-with-openrouter" class="level2">
+<h2 class="anchored" data-anchor-id="cheaply-with-openrouter">Cheaply with OpenRouter</h2>
+<p>If you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.</p>
+<p>The advantage of using OpenRouter over a specific LLM service like <a href="https://www.anthropic.com/api">Claude</a>, <a href="https://openai.com/index/openai-api/">ChatGPT API</a> or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.</p>
+<p><a href="https://www.reddit.com/r/LocalLLaMA/comments/1jhjbgj/best_llm_for_code_through_api_with_aider/">user u/Baldur-Norddahl Reddit LocalLLama</a> shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">export</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OPENROUTER_API_KEY</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>sk-or-v1-xxxx</span>
+<span id="cb4-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">aider</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--architect</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> openrouter/deepseek/deepseek-r1 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--editor-model</span> openrouter/anthropic/claude-3.7-sonnet <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--watch-files</span></span></code></pre></div></div>
+<p>You can easily monitor your <a href="https://openrouter.ai/activity">activity</a> an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs.</p>
+</section>
+<section id="in-closing" class="level2">
+<h2 class="anchored" data-anchor-id="in-closing">In Closing</h2>
+<p>Both patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.</p>
+<p>Shoutout to Georgi Gerganov’s <a href="https://picovoice.ai/blog/local-llms-llamacpp-ollama/">llama.cpp</a> which is the core that allows ollama to work.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>genai</category>
+  <category>code</category>
+  <guid>https://alexhans.github.io/posts/aider_with_open_router.html</guid>
+  <pubDate>Sat, 05 Jul 2025 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Get notifications in ubuntu when command line tasks end</title>
+  <dc:creator>Alex Hans</dc:creator>
+  <link>https://alexhans.github.io/posts/notifications_for_command_line_tasks.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<!-- Title: Get notifications in ubuntu when command line tasks end
+Date: 2019-04-16 00:00
+Modified: 2019-04-16 00:00
+Category: Devops
+Tags: notification, producitivity, alert, ubuntu, linux, desktop, mail
+slug: notifications_in_ubuntu_linux
+Authors: Alex Hans
+Summary: Notifications in Ubuntu Linux for command line tasks
+Lang: en -->
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<p>Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.</p>
+<p>So you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…</p>
+<p>So what you want is a notification. One that lets you carry on merrily until the original command is actually finished.</p>
+<p>It turns out that many <a href="https://askubuntu.com/questions/17536/how-do-i-create-a-permanent-bash-alias">.bashrc</a> files come with an alias called <code>alert</code> and, some SO answers even improve upon it.</p>
+</section>
+<section id="desktop-notifications-with-notify-send" class="level2">
+<h2 class="anchored" data-anchor-id="desktop-notifications-with-notify-send">Desktop notifications with notify-send</h2>
+<p>Here’s the one I’m using lately and has served me well:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Add an "alert" alias for long running commands.  Use like so:</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   sleep 10; alert</span></span>
+<span id="cb1-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">alias</span> alert=<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'notify-send --urgency=low -i "$([ $? = 0 ] &amp;&amp; echo terminal || echo error)"  </span></span>
+<span id="cb1-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"$(history|tail -n1|sed -e '</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\'</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'s/^\s*[0-9]\+\s*//;s/[;&amp;|]\s*alert$//'</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\'</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">')"'</span></span></code></pre></div></div>
+<p>As the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias <code>alert</code> (Remember that semi-colon <code>;</code> means execute after the previous command is finished, no matter the return code, unlike <code>&amp;&amp;</code> which only executes the next command if return code is 0 (success).</p>
+<p>So if you’re compiling and running tests in a project you could just do:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">make</span> test<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">alert</span></span></code></pre></div></div>
+<p>and you’ll get notified whenever <code>make test</code> ends.</p>
+<p>But what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?</p>
+</section>
+<section id="email-notifications" class="level2">
+<h2 class="anchored" data-anchor-id="email-notifications">Email notifications</h2>
+<p>That’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">$</span> sudo apt install mailutils</span></code></pre></div></div>
+<p>The logic is the same as before, once the command is done, execute the “alert”.</p>
+<p>If you want to do it in python, here’s a <a href="https://unix.stackexchange.com/a/55437/7937">simple way</a> to go about it.</p>
+<p>Just make sure it doesn’t go to SPAM.</p>
+<p>Cheers</p>
+<hr>
+<p><strong>Was this helpful? Do you do it another way? All comments are welcome!</strong></p>
+
+
+</section>
+
+ ]]></description>
+  <category>devops</category>
+  <guid>https://alexhans.github.io/posts/notifications_for_command_line_tasks.html</guid>
+  <pubDate>Mon, 15 Apr 2019 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Accept a self-signed certificate with git</title>
+  <dc:creator>Alex Hans</dc:creator>
+  <link>https://alexhans.github.io/posts/accept_self_signed_cert_git_https.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<!-- Title: 
+Date: 2018-02-11 20:54
+Modified: 2018-02-27 00:00
+Category: Devops
+Tags: https, git, networking, sysadmin, svn, devops
+slug: accept_self_signed_cert_git
+Authors: Alex Hans
+Summary: How To accept a self-signed cert in git over HTTPS
+Lang: en -->
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<p>Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.</p>
+<p>Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?</p>
+</section>
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The Problem</h2>
+<p>It turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">user@user-linux:git$</span> git clone https://user@dev-server-01/git/repo_name.git </span>
+<span id="cb1-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Cloning</span> into <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'repo_name'</span>...</span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">fatal:</span> unable to access <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'https://user@dev-server-01/git/repo_name.git/'</span>: server certificate verification failed. </span>
+<span id="cb1-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">CAfile:</span> /etc/ssl/certs/ca-certificates.crt CRLfile: none</span></code></pre></div></div>
+</section>
+<section id="the-solution" class="level2">
+<h2 class="anchored" data-anchor-id="the-solution">The Solution</h2>
+<p>After some googling I came across suggestions to disable SSL verification with <code>git config http.sslVerify "false"</code> but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.</p>
+<p>That’s when <a href="https://stackoverflow.com/questions/11621768/how-can-i-make-git-accept-a-self-signed-certificate/26785963#26785963">Stack</a> <a href="https://stackoverflow.com/questions/23807313/adding-self-signed-ssl-certificate-without-disabling-authority-signed-ones">Overflow</a> came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.</p>
+<p>Steps:</p>
+<p>1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/etc/ssl/certs/ssl-cert-dev-01.pem</span></span>
+<span id="cb2-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/etc/ssl/certs/ssl-cert-dev-02.pem</span></span></code></pre></div></div>
+<p>2- Modify your git config (globally or per-repository) to associate hosts with certs:</p>
+<pre><code>(From git config --help)
+
+http.sslCAInfo
+    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. 
+    Can be overridden by the GIT_SSL_CAINFO environment variable.</code></pre>
+<p>In this case we’re going to do it globally by modifying <code>~/.gitconfig</code></p>
+<pre><code>[http "https://dev-server-01:/"]
+    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem
+
+[http "https://dev-server-02"]
+    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem</code></pre>
+<p>Or you can do it with the command line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">$</span> git config <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--global</span> http.<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://dev-server-01/"</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem</span>
+<span id="cb5-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">$</span> git config <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--global</span> http.<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://dev-server-02/"</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem</span></code></pre></div></div>
+<p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a>. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.</p>
+<p>Cheers</p>
+<hr>
+<p><strong>Was this helpful? Do you do it another way? All comments are welcome!</strong></p>
+
+
+</section>
+
+ ]]></description>
+  <category>devops</category>
+  <guid>https://alexhans.github.io/posts/accept_self_signed_cert_git_https.html</guid>
+  <pubDate>Sun, 11 Feb 2018 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

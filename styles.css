@@ -1,0 +1,5 @@
+/* css styles */
+pre code {
+  white-space: pre-wrap !important;  /* enable wrapping */
+  word-break: break-word;            /* break long tokens */
+}

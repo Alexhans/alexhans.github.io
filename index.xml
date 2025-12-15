@@ -10,7 +10,59 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Sat, 05 Jul 2025 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 31 Aug 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Using Data Build Tool (dbt) to Accelerate &amp; Scale Science</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/using.dbt.to.accelerate.science.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>This post is part of a series: “Factory of Domain Experts”:</p>
+<section id="what-problem-are-we-solving" class="level2">
+<h2 class="anchored" data-anchor-id="what-problem-are-we-solving">What problem are we solving?</h2>
+<p>“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?</p>
+<p>I challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.</p>
+<section id="what-we-wanted-to-achieve" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-wanted-to-achieve">What we wanted to achieve:</h3>
+<ol type="1">
+<li><strong>Scale our team</strong>: Grow scientific output independent of engineering capacity.</li>
+<li><strong>Iterate in parallel, not sequentially</strong>: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.</li>
+<li><strong>Share easily reproducible code</strong>: Produce reproducible code and data that makes cross-team collaboration easy and transparent.</li>
+</ol>
+<p>Instead of building custom solutions, we used a small set of industry-standard tools, <a href="https://github.com/dbt-labs/dbt-core?tab=readme-ov-file#understanding-dbt">dbt (Data Build Tool)</a> with SQL, <a href="https://airflow.apache.org/">Apache Airflow</a> (using <a href="https://github.com/astronomer/astronomer-cosmos">astronomer-cosmos</a>), and <a href="https://git-scm.com/">Git</a>, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic.</p>
+</section>
+</section>
+<section id="how-dbt-solves-these-problems" class="level2">
+<h2 class="anchored" data-anchor-id="how-dbt-solves-these-problems">How dbt solves these problems</h2>
+<p>Data Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. <strong>Crucially, there are no tradeoffs between scrappy exploration and production-ready code</strong>, the same code serves both purposes:</p>
+<ul>
+<li><strong>Production-ready from day one</strong>: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.</li>
+<li><strong>Collaboration and early integration</strong>: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.</li>
+<li><strong>Simple workflows that scale</strong>: A simple <code>dbt run -s "model_name+"</code> runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.</li>
+<li><strong>Modularity without orchestration headaches</strong>: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.</li>
+<li><strong>Automatic lineage and documentation</strong>: dbt generates interactive dependency graphs showing how your models connect. <a href="https://docs.getdbt.com/reference/commands/cmd-docs">Schema documentation</a> automatically appears in the warehouse tables.</li>
+<li><strong>Built-in quality controls</strong>: Define data tests that run automatically.</li>
+<li><strong>Built for integration and extensibility</strong>: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.</li>
+<li><strong>Compliance and governance</strong>: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling.</li>
+</ul>
+</section>
+<section id="impact" class="level2">
+<h2 class="anchored" data-anchor-id="impact">Impact</h2>
+<p>Our approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>data-science</category>
+  <category>engineering</category>
+  <guid>https://alexhans.github.io/posts/using.dbt.to.accelerate.science.html</guid>
+  <pubDate>Sun, 31 Aug 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Use aider for free with your local LLMs or cheaply with OpenRouter</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

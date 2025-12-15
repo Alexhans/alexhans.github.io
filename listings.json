@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/using.dbt.to.accelerate.science.html",
       "/posts/aider_with_open_router.html",
       "/posts/meeting_budget.html",
       "/posts/notifications_for_command_line_tasks.html",

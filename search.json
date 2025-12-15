@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "The Living Deadline",
     "section": "",
-    "text": "Use aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "text": "Using Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/notifications_for_command_line_tasks.html",
@@ -42,32 +42,32 @@
     "text": "Pain Point\n\nToo many recurring meetings drain your week’s productivity.\n\n\nThe Rule\n\nSet a hard budget for fixed meetings.\nExample: 40 h week, 6 h meeting budget.\n\nTotal - Budget = Free -&gt; 40 - 6 = 34\n\nIf you go over budget, cut or shrink the least important meetings.\nYou can adjust the budget, but do so rarely, otherwise it loses meaning.\nAd-hoc syncs are fine. It’s the recurring ones that eat up your time.\n\nConsider doing a similar thing for ad-hoc meetings, if they become a problem.\n\nLike code, less is better. Always look for ways to reduce, even if you’re under budget.\n\n\n\nAnalogy\nThis is similar to the U.S. Senate’s PAYGO rule:\n\nif Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it."
   },
   {
-    "objectID": "posts/aider_with_open_router.html",
-    "href": "posts/aider_with_open_router.html",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "objectID": "posts/using.dbt.to.accelerate.science.html",
+    "href": "posts/using.dbt.to.accelerate.science.html",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
     "section": "",
-    "text": "Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.\nHere are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter."
+    "text": "This post is part of a series: “Factory of Domain Experts”:"
   },
   {
-    "objectID": "posts/aider_with_open_router.html#local-llms",
-    "href": "posts/aider_with_open_router.html#local-llms",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "Local LLMs",
-    "text": "Local LLMs\n\nMake sure you have ollama installed and running.\nNote down a wich model(s) you have installed and plan to use. We’ll use deepseek-r1 and qwen2.5-coder as example models. Deepseek is general purpose and a good candidate for reasoning while qwen2.5-coder is specialized for coding tasks.\n\n$ ollama list\n\nNAME                                        ID              SIZE      MODIFIED\ndeepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago\nqwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago\nI’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The Ollama models site is very handy to get information about models and their distilled versions.\n\nfollow the guide which tells you to run:\n\naider --model ollama_chat/&lt;model&gt;\nSo in our case, that becomes:\naider --model \"ollama_chat/deepseek-r1:14b\" --editor-model \"ollama_chat/qwen2.5-coder:14b\"\nWe could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.\nUse aider --help or visit the options page on aider’s site to understand the differences between --model (main model), --editor-model (editor tasks), and --weak-model (commit messages and history summarization)."
+    "objectID": "posts/using.dbt.to.accelerate.science.html#what-problem-are-we-solving",
+    "href": "posts/using.dbt.to.accelerate.science.html#what-problem-are-we-solving",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "What problem are we solving?",
+    "text": "What problem are we solving?\n“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?\nI challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.\n\nWhat we wanted to achieve:\n\nScale our team: Grow scientific output independent of engineering capacity.\nIterate in parallel, not sequentially: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.\nShare easily reproducible code: Produce reproducible code and data that makes cross-team collaboration easy and transparent.\n\nInstead of building custom solutions, we used a small set of industry-standard tools, dbt (Data Build Tool) with SQL, Apache Airflow (using astronomer-cosmos), and Git, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic."
   },
   {
-    "objectID": "posts/aider_with_open_router.html#cheaply-with-openrouter",
-    "href": "posts/aider_with_open_router.html#cheaply-with-openrouter",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "Cheaply with OpenRouter",
-    "text": "Cheaply with OpenRouter\nIf you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.\nThe advantage of using OpenRouter over a specific LLM service like Claude, ChatGPT API or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.\nuser u/Baldur-Norddahl Reddit LocalLLama shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:\nexport OPENROUTER_API_KEY=sk-or-v1-xxxx\naider --architect --model openrouter/deepseek/deepseek-r1 --editor-model openrouter/anthropic/claude-3.7-sonnet --watch-files\nYou can easily monitor your activity an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs."
+    "objectID": "posts/using.dbt.to.accelerate.science.html#how-dbt-solves-these-problems",
+    "href": "posts/using.dbt.to.accelerate.science.html#how-dbt-solves-these-problems",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "How dbt solves these problems",
+    "text": "How dbt solves these problems\nData Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. Crucially, there are no tradeoffs between scrappy exploration and production-ready code, the same code serves both purposes:\n\nProduction-ready from day one: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.\nCollaboration and early integration: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.\nSimple workflows that scale: A simple dbt run -s \"model_name+\" runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.\nModularity without orchestration headaches: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.\nAutomatic lineage and documentation: dbt generates interactive dependency graphs showing how your models connect. Schema documentation automatically appears in the warehouse tables.\nBuilt-in quality controls: Define data tests that run automatically.\nBuilt for integration and extensibility: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.\nCompliance and governance: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling."
   },
   {
-    "objectID": "posts/aider_with_open_router.html#in-closing",
-    "href": "posts/aider_with_open_router.html#in-closing",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "In Closing",
-    "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
+    "objectID": "posts/using.dbt.to.accelerate.science.html#impact",
+    "href": "posts/using.dbt.to.accelerate.science.html#impact",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "Impact",
+    "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
   },
   {
     "objectID": "posts/accept_self_signed_cert_git_https.html",
@@ -96,6 +96,34 @@
     "title": "Accept a self-signed certificate with git",
     "section": "The Solution",
     "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html",
+    "href": "posts/aider_with_open_router.html",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "",
+    "text": "Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.\nHere are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter."
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html#local-llms",
+    "href": "posts/aider_with_open_router.html#local-llms",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Local LLMs",
+    "text": "Local LLMs\n\nMake sure you have ollama installed and running.\nNote down a wich model(s) you have installed and plan to use. We’ll use deepseek-r1 and qwen2.5-coder as example models. Deepseek is general purpose and a good candidate for reasoning while qwen2.5-coder is specialized for coding tasks.\n\n$ ollama list\n\nNAME                                        ID              SIZE      MODIFIED\ndeepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago\nqwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago\nI’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The Ollama models site is very handy to get information about models and their distilled versions.\n\nfollow the guide which tells you to run:\n\naider --model ollama_chat/&lt;model&gt;\nSo in our case, that becomes:\naider --model \"ollama_chat/deepseek-r1:14b\" --editor-model \"ollama_chat/qwen2.5-coder:14b\"\nWe could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.\nUse aider --help or visit the options page on aider’s site to understand the differences between --model (main model), --editor-model (editor tasks), and --weak-model (commit messages and history summarization)."
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html#cheaply-with-openrouter",
+    "href": "posts/aider_with_open_router.html#cheaply-with-openrouter",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Cheaply with OpenRouter",
+    "text": "Cheaply with OpenRouter\nIf you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.\nThe advantage of using OpenRouter over a specific LLM service like Claude, ChatGPT API or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.\nuser u/Baldur-Norddahl Reddit LocalLLama shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:\nexport OPENROUTER_API_KEY=sk-or-v1-xxxx\naider --architect --model openrouter/deepseek/deepseek-r1 --editor-model openrouter/anthropic/claude-3.7-sonnet --watch-files\nYou can easily monitor your activity an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs."
+  },
+  {
+    "objectID": "posts/aider_with_open_router.html#in-closing",
+    "href": "posts/aider_with_open_router.html#in-closing",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "In Closing",
+    "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
   },
   {
     "objectID": "about.html",

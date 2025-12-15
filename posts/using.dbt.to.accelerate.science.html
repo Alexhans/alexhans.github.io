@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Alex Guglielmone Nemi">
+<meta name="dcterms.date" content="2025-09-01">
 
-<title>The Living Deadline</title>
+<title>Using Data Build Tool (dbt) to Accelerate &amp; Scale Science – The Living Deadline</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +25,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,79 +70,21 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
+<link rel="stylesheet" href="../styles.css">
+</head>
 
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="The Living Deadline" href="index.xml" data-external="1"></head>
-
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">The Living Deadline</span>
     </a>
   </div>
@@ -153,7 +95,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -171,196 +113,84 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">The Living Deadline</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Using Data Build Tool (dbt) to Accelerate &amp; Scale Science</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">data-science</div>
+                <div class="quarto-category">engineering</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Guglielmone Nemi </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 1, 2025</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YS1zY2llbmNl">data-science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGV2b3Bz">devops <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZW5naW5lZXJpbmc=">engineering <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2VuYWk=">genai <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvZHVjdGl2aXR5">productivity <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>This post is part of a series: “Factory of Domain Experts”:</p>
+<section id="what-problem-are-we-solving" class="level2">
+<h2 class="anchored" data-anchor-id="what-problem-are-we-solving">What problem are we solving?</h2>
+<p>“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?</p>
+<p>I challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.</p>
+<section id="what-we-wanted-to-achieve" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-wanted-to-achieve">What we wanted to achieve:</h3>
+<ol type="1">
+<li><strong>Scale our team</strong>: Grow scientific output independent of engineering capacity.</li>
+<li><strong>Iterate in parallel, not sequentially</strong>: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.</li>
+<li><strong>Share easily reproducible code</strong>: Produce reproducible code and data that makes cross-team collaboration easy and transparent.</li>
+</ol>
+<p>Instead of building custom solutions, we used a small set of industry-standard tools, <a href="https://github.com/dbt-labs/dbt-core?tab=readme-ov-file#understanding-dbt">dbt (Data Build Tool)</a> with SQL, <a href="https://airflow.apache.org/">Apache Airflow</a> (using <a href="https://github.com/astronomer/astronomer-cosmos">astronomer-cosmos</a>), and <a href="https://git-scm.com/">Git</a>, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic.</p>
+</section>
+</section>
+<section id="how-dbt-solves-these-problems" class="level2">
+<h2 class="anchored" data-anchor-id="how-dbt-solves-these-problems">How dbt solves these problems</h2>
+<p>Data Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. <strong>Crucially, there are no tradeoffs between scrappy exploration and production-ready code</strong>, the same code serves both purposes:</p>
+<ul>
+<li><strong>Production-ready from day one</strong>: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.</li>
+<li><strong>Collaboration and early integration</strong>: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.</li>
+<li><strong>Simple workflows that scale</strong>: A simple <code>dbt run -s "model_name+"</code> runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.</li>
+<li><strong>Modularity without orchestration headaches</strong>: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.</li>
+<li><strong>Automatic lineage and documentation</strong>: dbt generates interactive dependency graphs showing how your models connect. <a href="https://docs.getdbt.com/reference/commands/cmd-docs">Schema documentation</a> automatically appears in the warehouse tables.</li>
+<li><strong>Built-in quality controls</strong>: Define data tests that run automatically.</li>
+<li><strong>Built for integration and extensibility</strong>: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.</li>
+<li><strong>Compliance and governance</strong>: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling.</li>
+</ul>
+</section>
+<section id="impact" class="level2">
+<h2 class="anchored" data-anchor-id="impact">Impact</h2>
+<p>Our approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions.</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="ZGF0YS1zY2llbmNlJTJDZW5naW5lZXJpbmc=" data-listing-date-sort="1756681200000" data-listing-file-modified-sort="1765764531690" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="519">
-<div class="thumbnail"><a href="./posts/using.dbt.to.accelerate.science.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/using.dbt.to.accelerate.science.html" class="no-external">Using Data Build Tool (dbt) to Accelerate &amp; Scale Science</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZW5naW5lZXJpbmc='); return false;">engineering</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/using.dbt.to.accelerate.science.html" class="no-external">
-This post is part of a series: “Factory of Domain Experts”:
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/using.dbt.to.accelerate.science.html" class="no-external">
-<div class="listing-date">
-Sep 1, 2025
-</div>
-<div class="listing-author">
-Alex Guglielmone Nemi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Z2VuYWklMkNjb2Rl" data-listing-date-sort="1751756400000" data-listing-file-modified-sort="1760907474550" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="571">
-<div class="thumbnail"><a href="./posts/aider_with_open_router.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/aider_with_open_router.html" class="no-external">Use aider for free with your local LLMs or cheaply with OpenRouter</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Z2VuYWk='); return false;">genai</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">code</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/aider_with_open_router.html" class="no-external">
-Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/aider_with_open_router.html" class="no-external">
-<div class="listing-date">
-Jul 6, 2025
-</div>
-<div class="listing-author">
-Alex Guglielmone Nemi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="cHJvZHVjdGl2aXR5" data-listing-date-sort="1677628800000" data-listing-file-modified-sort="1760908014913" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="156">
-<div class="thumbnail"><a href="./posts/meeting_budget.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/meeting_budget.html" class="no-external">Set a Meeting Budget</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvZHVjdGl2aXR5'); return false;">productivity</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/meeting_budget.html" class="no-external">
-Too many recurring meetings drain your week’s productivity.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/meeting_budget.html" class="no-external">
-<div class="listing-date">
-Mar 1, 2023
-</div>
-<div class="listing-author">
-Alex Guglielmone Nemi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="ZGV2b3Bz" data-listing-date-sort="1555369200000" data-listing-file-modified-sort="1760907475036" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="400">
-<div class="thumbnail"><a href="./posts/notifications_for_command_line_tasks.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/notifications_for_command_line_tasks.html" class="no-external">Get notifications in ubuntu when command line tasks end</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2b3Bz'); return false;">devops</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/notifications_for_command_line_tasks.html" class="no-external">
-Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/notifications_for_command_line_tasks.html" class="no-external">
-<div class="listing-date">
-Apr 16, 2019
-</div>
-<div class="listing-author">
-Alex Guglielmone Nemi
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="ZGV2b3Bz" data-listing-date-sort="1518307200000" data-listing-file-modified-sort="1760907474032" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="401">
-<div class="thumbnail"><a href="./posts/accept_self_signed_cert_git_https.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/accept_self_signed_cert_git_https.html" class="no-external">Accept a self-signed certificate with git</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2b3Bz'); return false;">devops</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/accept_self_signed_cert_git_https.html" class="no-external">
-Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/accept_self_signed_cert_git_https.html" class="no-external">
-<div class="listing-date">
-Feb 11, 2018
-</div>
-<div class="listing-author">
-Alex Guglielmone Nemi
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

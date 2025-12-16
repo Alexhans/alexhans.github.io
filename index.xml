@@ -14,7 +14,7 @@
 <item>
   <title>Using Data Build Tool (dbt) to Accelerate &amp; Scale Science</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/using.dbt.to.accelerate.science.html</link>
+  <link>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</link>
   <description><![CDATA[ 
 
 
@@ -60,13 +60,13 @@
  ]]></description>
   <category>data-science</category>
   <category>engineering</category>
-  <guid>https://alexhans.github.io/posts/using.dbt.to.accelerate.science.html</guid>
+  <guid>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</guid>
   <pubDate>Sun, 31 Aug 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Use aider for free with your local LLMs or cheaply with OpenRouter</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/aider_with_open_router.html</link>
+  <link>https://alexhans.github.io/posts/aider-with-open-router.html</link>
   <description><![CDATA[ 
 
 
@@ -158,13 +158,13 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
  ]]></description>
   <category>genai</category>
   <category>code</category>
-  <guid>https://alexhans.github.io/posts/aider_with_open_router.html</guid>
+  <guid>https://alexhans.github.io/posts/aider-with-open-router.html</guid>
   <pubDate>Sat, 05 Jul 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Set a Meeting Budget</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/meeting_budget.html</link>
+  <link>https://alexhans.github.io/posts/meeting-budget.html</link>
   <description><![CDATA[ 
 
 
@@ -205,13 +205,13 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
 
  ]]></description>
   <category>productivity</category>
-  <guid>https://alexhans.github.io/posts/meeting_budget.html</guid>
+  <guid>https://alexhans.github.io/posts/meeting-budget.html</guid>
   <pubDate>Wed, 01 Mar 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Get notifications in ubuntu when command line tasks end</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/notifications_for_command_line_tasks.html</link>
+  <link>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</link>
   <description><![CDATA[ 
 
 
@@ -290,13 +290,13 @@ font-style: inherit;">$</span> sudo apt install mailutils</span></code></pre></d
 
  ]]></description>
   <category>devops</category>
-  <guid>https://alexhans.github.io/posts/notifications_for_command_line_tasks.html</guid>
+  <guid>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</guid>
   <pubDate>Mon, 15 Apr 2019 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Accept a self-signed certificate with git</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/accept_self_signed_cert_git_https.html</link>
+  <link>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</link>
   <description><![CDATA[ 
 
 
@@ -386,7 +386,7 @@ font-style: inherit;">"https://dev-server-02/"</span>.sslCAInfo /etc/ssl/certs/s
 
  ]]></description>
   <category>devops</category>
-  <guid>https://alexhans.github.io/posts/accept_self_signed_cert_git_https.html</guid>
+  <guid>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</guid>
   <pubDate>Sun, 11 Feb 2018 00:00:00 GMT</pubDate>
 </item>
 </channel>

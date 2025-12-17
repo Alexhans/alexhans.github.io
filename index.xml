@@ -162,6 +162,126 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
   <pubDate>Sat, 05 Jul 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Merge and Forget</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/series/zeroops/merge-and-forget.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<!-- Merge and forget: Engineers don't have to follow deployments through to feel assured and can simply expect things to work, and context switch right after code merges happen. -->
+<section id="the-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
+<p>After your change is approved and enters the delivery pipeline, you should be able to <strong>forget it</strong>.</p>
+<p>No following it through pipelines. No watching for when it lands. No manual checking for failure states.</p>
+</section>
+<section id="pain-point" class="level2">
+<h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
+<p>Tracking deployments “just in case” creates unnecessary <strong>cognitive load</strong>.</p>
+<p>It turns delivery into a background worry: tabs left open, dashboards checked, attention fragmented.</p>
+<p>If something requires attention, you should be told.</p>
+</section>
+<section id="do" class="level2">
+<h2 class="anchored" data-anchor-id="do">Do</h2>
+<p>Treat delivery as a <strong>system property</strong>:</p>
+<ul>
+<li>Push “surprises” left: run fast, automated cross-system checks (e.g.&nbsp;integration tests) <strong>before</strong> merge, at code-review time, to minimise post-merge failures.</li>
+<li>You should get a signal if something is blocked or broken.</li>
+<li>You should not need manual reassurance.</li>
+<li>When the system is healthy, silence is expected.</li>
+</ul>
+<p>(see <a href="../../../posts/series/zeroops/no-news-is-good-news">No News Is Good News</a>).</p>
+</section>
+<section id="do-not" class="level2">
+<h2 class="anchored" data-anchor-id="do-not">Do Not</h2>
+<ul>
+<li>Follow a deploy through the pipeline to feel safe.</li>
+<li>Keep checking “did it land yet?”</li>
+<li>Watch logs/dashboards after merge for reassurance.</li>
+</ul>
+</section>
+<section id="scope" class="level2">
+<h2 class="anchored" data-anchor-id="scope">Scope</h2>
+<p>This is for routine, continuous delivery of typical changes.</p>
+<p>This does <strong>not</strong> cover:</p>
+<ul>
+<li>major migrations</li>
+<li>one-way / high-blast-radius changes</li>
+<li>communicating expected delivery times (ETAs)</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>engineering</category>
+  <guid>https://alexhans.github.io/posts/series/zeroops/merge-and-forget.html</guid>
+  <pubDate>Fri, 17 May 2024 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>No News Is Good News</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
+<p>Do <strong>not</strong> check whether things are fine.</p>
+</section>
+<section id="pain-point" class="level2">
+<h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
+<p>Manually checking systems to confirm they are “okay” creates unnecessary <strong>cognitive load</strong>.</p>
+<p>Dashboards and queues become reassurance rituals: they consume time and attention without changing outcomes.</p>
+<p>If something is broken, you should be told.</p>
+</section>
+<section id="do" class="level2">
+<h2 class="anchored" data-anchor-id="do">Do</h2>
+<p>For anything that might require action, ensure there is an automated <strong>signal</strong>.</p>
+<ul>
+<li>The signal should reach the people who can meaningfully act on it.</li>
+<li>It does not need to prescribe the action.</li>
+<li>Over time, actions may be formalised (runbooks, automation), but that is secondary.</li>
+</ul>
+<p>If something requires attention, it should create noise. If it does not, it should remain silent.</p>
+</section>
+<section id="do-not" class="level2">
+<h2 class="anchored" data-anchor-id="do-not">Do Not</h2>
+<ul>
+<li>Create mechanisms to confirm system health.</li>
+<li>Regularly inspect dashboards “just to be sure”.</li>
+<li>Rely on manual checks for reassurance.</li>
+</ul>
+<p>Silence is expected when coverage is adequate.</p>
+</section>
+<section id="scope" class="level2">
+<h2 class="anchored" data-anchor-id="scope">Scope</h2>
+<p>This applies to <strong>operational, actionable failures</strong>: things that are broken <em>now</em> and require attention.</p>
+<p>This does <strong>not</strong> cover:</p>
+<ul>
+<li>slow degradation</li>
+<li>trend monitoring</li>
+<li>preemptive or exploratory analysis</li>
+</ul>
+</section>
+<section id="analogy" class="level2">
+<h2 class="anchored" data-anchor-id="analogy">Analogy</h2>
+<p>Think of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>engineering</category>
+  <guid>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</guid>
+  <pubDate>Thu, 16 May 2024 23:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Set a Meeting Budget</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/meeting-budget.html</link>

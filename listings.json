@@ -4,6 +4,8 @@
     "items": [
       "/posts/using-dbt-to-accelerate-science.html",
       "/posts/aider-with-open-router.html",
+      "/posts/series/zeroops/merge-and-forget.html",
+      "/posts/series/zeroops/no-news-is-good-news.html",
       "/posts/meeting-budget.html",
       "/posts/notifications-for-command-line-tasks.html",
       "/posts/accept-self-signed-cert-git-https.html"

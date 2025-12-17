@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "The Living Deadline",
     "section": "",
-    "text": "Using Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "text": "Using Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/meeting-budget.html",
@@ -70,6 +70,48 @@
     "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
   },
   {
+    "objectID": "posts/series/zeroops/merge-and-forget.html",
+    "href": "posts/series/zeroops/merge-and-forget.html",
+    "title": "Merge and Forget",
+    "section": "",
+    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#the-rule",
+    "href": "posts/series/zeroops/merge-and-forget.html#the-rule",
+    "title": "Merge and Forget",
+    "section": "",
+    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#pain-point",
+    "href": "posts/series/zeroops/merge-and-forget.html#pain-point",
+    "title": "Merge and Forget",
+    "section": "Pain Point",
+    "text": "Pain Point\nTracking deployments “just in case” creates unnecessary cognitive load.\nIt turns delivery into a background worry: tabs left open, dashboards checked, attention fragmented.\nIf something requires attention, you should be told."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#do",
+    "href": "posts/series/zeroops/merge-and-forget.html#do",
+    "title": "Merge and Forget",
+    "section": "Do",
+    "text": "Do\nTreat delivery as a system property:\n\nPush “surprises” left: run fast, automated cross-system checks (e.g. integration tests) before merge, at code-review time, to minimise post-merge failures.\nYou should get a signal if something is blocked or broken.\nYou should not need manual reassurance.\nWhen the system is healthy, silence is expected.\n\n(see No News Is Good News)."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#do-not",
+    "href": "posts/series/zeroops/merge-and-forget.html#do-not",
+    "title": "Merge and Forget",
+    "section": "Do Not",
+    "text": "Do Not\n\nFollow a deploy through the pipeline to feel safe.\nKeep checking “did it land yet?”\nWatch logs/dashboards after merge for reassurance."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#scope",
+    "href": "posts/series/zeroops/merge-and-forget.html#scope",
+    "title": "Merge and Forget",
+    "section": "Scope",
+    "text": "Scope\nThis is for routine, continuous delivery of typical changes.\nThis does not cover:\n\nmajor migrations\none-way / high-blast-radius changes\ncommunicating expected delivery times (ETAs)"
+  },
+  {
     "objectID": "posts/notifications-for-command-line-tasks.html",
     "href": "posts/notifications-for-command-line-tasks.html",
     "title": "Get notifications in ubuntu when command line tasks end",
@@ -124,6 +166,55 @@
     "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
     "section": "Impact",
     "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html",
+    "href": "posts/series/zeroops/no-news-is-good-news.html",
+    "title": "No News Is Good News",
+    "section": "",
+    "text": "Do not check whether things are fine."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
+    "title": "No News Is Good News",
+    "section": "",
+    "text": "Do not check whether things are fine."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
+    "title": "No News Is Good News",
+    "section": "Pain Point",
+    "text": "Pain Point\nManually checking systems to confirm they are “okay” creates unnecessary cognitive load.\nDashboards and queues become reassurance rituals: they consume time and attention without changing outcomes.\nIf something is broken, you should be told."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#do",
+    "title": "No News Is Good News",
+    "section": "Do",
+    "text": "Do\nFor anything that might require action, ensure there is an automated signal.\n\nThe signal should reach the people who can meaningfully act on it.\nIt does not need to prescribe the action.\nOver time, actions may be formalised (runbooks, automation), but that is secondary.\n\nIf something requires attention, it should create noise. If it does not, it should remain silent."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do-not",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#do-not",
+    "title": "No News Is Good News",
+    "section": "Do Not",
+    "text": "Do Not\n\nCreate mechanisms to confirm system health.\nRegularly inspect dashboards “just to be sure”.\nRely on manual checks for reassurance.\n\nSilence is expected when coverage is adequate."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#scope",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#scope",
+    "title": "No News Is Good News",
+    "section": "Scope",
+    "text": "Scope\nThis applies to operational, actionable failures: things that are broken now and require attention.\nThis does not cover:\n\nslow degradation\ntrend monitoring\npreemptive or exploratory analysis"
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#analogy",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#analogy",
+    "title": "No News Is Good News",
+    "section": "Analogy",
+    "text": "Analogy\nThink of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine."
   },
   {
     "objectID": "about.html",

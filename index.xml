@@ -10,7 +10,155 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Sun, 31 Aug 2025 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 13 Jan 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Fix: pip hangs in WSL (IPv6 / gai.conf)</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="pain-point" class="level2">
+<h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
+<p><code>pip install</code> hangs in WSL with no useful error, often after it starts fetching from <code>files.pythonhosted.org</code>.</p>
+</section>
+<section id="the-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
+<p>If DNS/connection to <code>files.pythonhosted.org</code> hangs but <code>pypi.org</code> works, suspect IPv6 preference + broken IPv6 routing.</p>
+</section>
+<section id="minimal-diagnosis" class="level2">
+<h2 class="anchored" data-anchor-id="minimal-diagnosis">Minimal Diagnosis</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"import urllib.request; print(urllib.request.urlopen('https://pypi.org/simple/').status)"</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># expected: 200</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getent</span> hosts pypi.org</span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># returns quickly</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getent</span> hosts files.pythonhosted.org</span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># may hang</span></span></code></pre></div></div>
+<p>If <code>files.pythonhosted.org</code> hangs, <code>pip</code> will hang. That host is where wheels and sdists are served from.</p>
+</section>
+<section id="fix" class="level2">
+<h2 class="anchored" data-anchor-id="fix">Fix</h2>
+<p>Prefer IPv4 for address selection using <code>gai.conf</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> tee /etc/gai.conf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>/dev/null <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt;'EOF'</span></span>
+<span id="cb4-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">precedence ::ffff:0:0/96  100</span></span>
+<span id="cb4-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">EOF</span></span></code></pre></div></div>
+<p>This does not disable IPv6. It changes the precedence so IPv4 is tried first.</p>
+</section>
+<section id="verify" class="level2">
+<h2 class="anchored" data-anchor-id="verify">Verify</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getent</span> hosts files.pythonhosted.org</span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># should return immediately</span></span></code></pre></div></div>
+<p>Then retry:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install ipython</span></code></pre></div></div>
+</section>
+<section id="revert" class="level2">
+<h2 class="anchored" data-anchor-id="revert">Revert</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> tee /etc/gai.conf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>/dev/null <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt;'EOF'</span></span>
+<span id="cb7-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"># empty override: use glibc defaults</span></span>
+<span id="cb7-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">EOF</span></span></code></pre></div></div>
+</section>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p>If you see multiple stuck installs, clear them before retrying:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pkill</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"python -u -m pip install"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">||</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">true</span></span></code></pre></div></div>
+</section>
+<section id="other-sources" class="level1">
+<h1>Other sources</h1>
+<ul>
+<li><a href="https://askubuntu.com/questions/958876/how-to-disable-ipv6-on-windows-subsystem-for-linux">https://askubuntu.com/questions/958876/how-to-disable-ipv6-on-windows-subsystem-for-linux</a></li>
+<li><a href="https://man7.org/linux/man-pages/man5/gai.conf.5.html">gai.conf(5) — Linux manual page</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>troubleshooting</category>
+  <guid>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</guid>
+  <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="slides-and-transcript" class="level1">
+
+<ul>
+<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html">Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</a></li>
+<li>Transcript in VTT coming soon</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>airflow</category>
+  <category>talks</category>
+  <guid>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</guid>
+  <pubDate>Mon, 08 Sep 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Using Data Build Tool (dbt) to Accelerate &amp; Scale Science</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

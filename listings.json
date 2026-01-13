@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/wsl-pip-hangs-ipv6.html",
+      "/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
       "/posts/using-dbt-to-accelerate-science.html",
       "/posts/aider-with-open-router.html",
       "/posts/series/zeroops/merge-and-forget.html",

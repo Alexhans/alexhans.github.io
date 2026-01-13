@@ -151,7 +151,7 @@
     "href": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
     "title": "Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "",
-    "text": "Slides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript in VTT coming soon"
+    "text": "Abstract\nAs LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.\n\n\nSlides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript in VTT coming before 2026-02-01"
   },
   {
     "objectID": "posts/using-dbt-to-accelerate-science.html",

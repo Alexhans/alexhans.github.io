@@ -314,6 +314,456 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
   <pubDate>Sat, 05 Jul 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Stop Reformatting Markdown When Pasting into Slack</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="pain-point" class="level1">
+<h1>Pain Point</h1>
+<p>Slack only pastes rich formatting when the clipboard advertises <code>text/html</code>, otherwise it treats everything as plain text.</p>
+<p>If my file <code>sample.md</code> looks like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:robot_face:</span> Tech updates <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:robot_face:</span></span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"># Some Title</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>**Project**: Did x in <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">google</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">](https://google.com)</span>.</span>
+<span id="cb1-6"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - </span>aaa</span>
+<span id="cb1-7"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - </span>bbb</span>
+<span id="cb1-8"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      - </span>ccc </span>
+<span id="cb1-9"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - </span>ddd</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"># Another title</span></span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">- </span>Another launch</span>
+<span id="cb1-14"><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - </span>details</span></code></pre></div></div>
+<p>Compare pasting directly on the left and what we want on the right.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/posts/slack/comparison.png" class="img-fluid figure-img"></p>
+<figcaption>Side by Side comparison between markdown in plain text and the slack rich formatted version</figcaption>
+</figure>
+</div>
+</section>
+<section id="solution" class="level1">
+<h1>Solution</h1>
+<p>Put HTML onto the clipboard the same way a browser would, so Slack pastes it as rich content instead of plain text.</p>
+<p>This requires a recent xclip build that supports advertising <code>text/html</code> correctly.</p>
+<ol type="1">
+<li>Built <a href="https://github.com/astrand/xclip">xclip from source</a> to get the latest features around html</li>
+<li><code>pip install beautifulsoup4 lxml</code></li>
+<li>Run <code>pandoc sample.md -t html</code></li>
+<li>Optionally modify the HTML to fix things like lists.</li>
+<li>and pipe it to <code>xclip -selection clipboard -t text/html</code></li>
+</ol>
+<p>What it looks like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">pandoc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>f gfm <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>t html sample.md <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> python <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>c <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span></span>
+<span id="cb2-3"><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">import sys</span></span>
+<span id="cb2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> bs4 <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> BeautifulSoup <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> BS, Tag</span>
+<span id="cb2-5"></span>
+<span id="cb2-6">s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> BS(sys.stdin.read(), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lxml"</span>)</span>
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> inline_html(tag: Tag) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="cb2-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>.join(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(x) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> tag.contents).strip()</span>
+<span id="cb2-10"></span>
+<span id="cb2-11">out_lines <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb2-12"></span>
+<span id="cb2-13"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> emit_block(tag: Tag):</span>
+<span id="cb2-14">    name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tag.name.lower()</span>
+<span id="cb2-15"></span>
+<span id="cb2-16">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> name <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h1"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h2"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h3"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h4"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h5"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h6"</span>):</span>
+<span id="cb2-17">        txt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tag.get_text(strip<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> txt:</span>
+<span id="cb2-19">            out_lines.append(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"&lt;strong&gt;</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>txt<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">&lt;/strong&gt;"</span>)</span>
+<span id="cb2-20">            out_lines.append(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&lt;br/&gt;"</span>)</span>
+<span id="cb2-21">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span></span>
+<span id="cb2-22"></span>
+<span id="cb2-23">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> name <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"p"</span>,):</span>
+<span id="cb2-24">        txt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> inline_html(tag)</span>
+<span id="cb2-25">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> txt:</span>
+<span id="cb2-26">            out_lines.append(txt)</span>
+<span id="cb2-27">            out_lines.append(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&lt;br/&gt;"</span>)</span>
+<span id="cb2-28">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span></span>
+<span id="cb2-29"></span>
+<span id="cb2-30">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> name <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ul"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ol"</span>):</span>
+<span id="cb2-31">        walk_list(tag, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb2-32">        out_lines.append(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&lt;br/&gt;"</span>)</span>
+<span id="cb2-33">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span></span>
+<span id="cb2-34"></span>
+<span id="cb2-35"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> walk_list(lst: Tag, level: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>):</span>
+<span id="cb2-36">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> li <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> lst.find_all(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"li"</span>, recursive<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>):</span>
+<span id="cb2-37">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># separate nested lists</span></span>
+<span id="cb2-38">        nested <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [c <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> c <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> li.find_all([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ul"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ol"</span>], recursive<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)]</span>
+<span id="cb2-39">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> nested:</span>
+<span id="cb2-40">            n.extract()</span>
+<span id="cb2-41"></span>
+<span id="cb2-42">        text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> inline_html(li)</span>
+<span id="cb2-43">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> text:</span>
+<span id="cb2-44">            indent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&amp;nbsp;"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> level)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 4 = indent width per level</span></span>
+<span id="cb2-45">            bullet <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&amp;#8226;"</span>               <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># •</span></span>
+<span id="cb2-46">            out_lines.append(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>indent<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}{</span>bullet<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>text<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">&lt;br/&gt;"</span>)</span>
+<span id="cb2-47"></span>
+<span id="cb2-48">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> nested:</span>
+<span id="cb2-49">            walk_list(n, level <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-50"></span>
+<span id="cb2-51">body <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> s.body <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> s.body <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> s</span>
+<span id="cb2-52"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> child <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(body.children):</span>
+<span id="cb2-53">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(child, Tag):</span>
+<span id="cb2-54">        emit_block(child)</span>
+<span id="cb2-55"></span>
+<span id="cb2-56"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>.join(out_lines), end<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb2-57"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">' </span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-58"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">| xclip -sel clipboard -t text/html -alt-text "Updates"</span></span></code></pre></div></div>
+<p><strong>Note:</strong> The Python step is only needed if you want to fix Slack’s broken handling of nested lists. For simple formatting (bold, links, headings), Pandoc → xclip alone is enough.</p>
+</section>
+<section id="inspiration" class="level1">
+<h1>Inspiration</h1>
+<p><a href="https://www.jvt.me/posts/2025/04/19/slack-external-markdown/">Authoring Markdown externally and pasting the ‘pretty’ output into Slack (on Linux)</a> does the same thing without the extra formatting to fix the nested lists.</p>
+</section>
+<section id="annex" class="level1">
+<h1>Annex</h1>
+<section id="how-to-build-latest-xclip-from-source-in-ubuntu" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-build-latest-xclip-from-source-in-ubuntu">How to build latest xclip from source in Ubuntu</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt install autoconf automake libtool libxmu-dev</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> clone https://github.com/astrand/xclip</span>
+<span id="cb3-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> xclip</span>
+<span id="cb3-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">autoreconf</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-fi</span></span>
+<span id="cb3-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">./configure</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--prefix</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>/usr/local</span>
+<span id="cb3-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">make</span></span>
+<span id="cb3-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> make install</span></code></pre></div></div>
+</section>
+<section id="wsl-and-powershell-are-different-beasts" class="level2">
+<h2 class="anchored" data-anchor-id="wsl-and-powershell-are-different-beasts">WSL and powershell are different beasts</h2>
+<p>This won’t work on WSL and slack as-is. You likely need to do it from powershell using a third-party program</p>
+<p>WSL cannot directly populate the Windows clipboard with rich HTML in a way Slack accepts; an intermediate Windows application re-copies the content with additional clipboard formats.</p>
+<ol type="1">
+<li>Powershell 5</li>
+</ol>
+<pre><code>Get-Content out.html -Raw | Set-Clipboard -AsHtml</code></pre>
+<ol start="2" type="1">
+<li>Open LibreOffice Writer or any GUI and paste.</li>
+<li>Select that and copy</li>
+<li>Paste into slack</li>
+</ol>
+<ul>
+<li><a href="https://github.com/PowerShell/PowerShell/issues/18196">Format HTML won’t be added to Powershell 7</a></li>
+<li><a href="https://www.reddit.com/r/PowerShell/comments/dq8mr3/setclipboard_for_powershell_7/">People are not happy</a></li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>productivity</category>
+  <guid>https://alexhans.github.io/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html</guid>
+  <pubDate>Thu, 16 Jan 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Merge and Forget</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/series/zeroops/merge-and-forget.html</link>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Guglielmone Nemi">
-<meta name="dcterms.date" content="2025-01-16">
+<meta name="dcterms.date" content="2026-01-16">
 
 <title>Stop Reformatting Markdown When Pasting into Slack – The Living Deadline</title>
 <style>
@@ -169,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 16, 2025</p>
+        <p class="date">January 16, 2026</p>
       </div>
     </div>
     
@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Compare pasting directly on the left and what we want on the right.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="comparison.png" class="img-fluid figure-img"></p>
+<p><img src="markdown-vs-slack-rich-paste.png" class="img-fluid figure-img"></p>
 <figcaption>Side by Side comparison between markdown in plain text and the slack rich formatted version</figcaption>
 </figure>
 </div>
@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Put HTML onto the clipboard the same way a browser would, so Slack pastes it as rich content instead of plain text.</p>
 <p>This requires a recent xclip build that supports advertising <code>text/html</code> correctly.</p>
 <ol type="1">
-<li>Built <a href="https://github.com/astrand/xclip">xclip from source</a> to get the latest features around html</li>
+<li>Build <a href="https://github.com/astrand/xclip">xclip from source</a> to get the latest features around html</li>
 <li><code>pip install beautifulsoup4 lxml</code></li>
 <li>Run <code>pandoc sample.md -t html</code></li>
 <li>Optionally modify the HTML to fix things like lists.</li>
@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">""</span>.join(out_lines), end<span class="op">=</span><span class="st">""</span>)</span>
 <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co">' </span><span class="op">\</span></span>
 <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co">| xclip -sel clipboard -t text/html -alt-text "Updates"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Note:</strong> The Python step is only needed if you want to fix Slack’s broken handling of nested lists. For simple formatting (bold, links, headings), Pandoc → xclip alone is enough.</p>
+<p><strong>Note:</strong> The Python step is only needed if you want to fix Slack’s broken handling of nested lists. For simple formatting (bold, links, headings), Pandoc -&gt; xclip alone is enough.</p>
 </section>
 <section id="inspiration" class="level1">
 <h1>Inspiration</h1>
@@ -309,7 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Powershell 5</li>
 </ol>
-<pre><code>Get-Content out.html -Raw | Set-Clipboard -AsHtml</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Content</span> out<span class="op">.</span><span class="fu">html</span> <span class="op">-</span>Raw <span class="op">|</span> <span class="fu">Set-Clipboard</span> <span class="op">-</span>AsHtml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li>Open LibreOffice Writer or any GUI and paste.</li>
 <li>Select that and copy</li>

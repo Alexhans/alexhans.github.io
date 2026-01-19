@@ -10,309 +10,7 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Tue, 13 Jan 2026 00:00:00 GMT</lastBuildDate>
-<item>
-  <title>Fix: pip hangs in WSL (IPv6 / gai.conf)</title>
-  <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="pain-point" class="level2">
-<h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
-<p><code>pip install</code> hangs in WSL with no useful error, often after it starts fetching from <code>files.pythonhosted.org</code>.</p>
-</section>
-<section id="the-rule" class="level2">
-<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
-<p>If DNS/connection to <code>files.pythonhosted.org</code> hangs but <code>pypi.org</code> works, suspect IPv6 preference + broken IPv6 routing.</p>
-</section>
-<section id="minimal-diagnosis" class="level2">
-<h2 class="anchored" data-anchor-id="minimal-diagnosis">Minimal Diagnosis</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"import urllib.request; print(urllib.request.urlopen('https://pypi.org/simple/').status)"</span></span>
-<span id="cb1-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># expected: 200</span></span></code></pre></div></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">getent</span> hosts pypi.org</span>
-<span id="cb2-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># returns quickly</span></span></code></pre></div></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">getent</span> hosts files.pythonhosted.org</span>
-<span id="cb3-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># may hang</span></span></code></pre></div></div>
-<p>If <code>files.pythonhosted.org</code> hangs, <code>pip</code> will hang. That host is where wheels and sdists are served from.</p>
-</section>
-<section id="fix" class="level2">
-<h2 class="anchored" data-anchor-id="fix">Fix</h2>
-<p>Prefer IPv4 for address selection using <code>gai.conf</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sudo</span> tee /etc/gai.conf <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span>/dev/null <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;&lt;'EOF'</span></span>
-<span id="cb4-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">precedence ::ffff:0:0/96  100</span></span>
-<span id="cb4-3"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">EOF</span></span></code></pre></div></div>
-<p>This does not disable IPv6. It changes the precedence so IPv4 is tried first.</p>
-</section>
-<section id="verify" class="level2">
-<h2 class="anchored" data-anchor-id="verify">Verify</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">getent</span> hosts files.pythonhosted.org</span>
-<span id="cb5-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># should return immediately</span></span></code></pre></div></div>
-<p>Then retry:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">pip</span> install ipython</span></code></pre></div></div>
-</section>
-<section id="revert" class="level2">
-<h2 class="anchored" data-anchor-id="revert">Revert</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sudo</span> tee /etc/gai.conf <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span>/dev/null <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;&lt;'EOF'</span></span>
-<span id="cb7-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"># empty override: use glibc defaults</span></span>
-<span id="cb7-3"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">EOF</span></span></code></pre></div></div>
-</section>
-<section id="notes" class="level2">
-<h2 class="anchored" data-anchor-id="notes">Notes</h2>
-<p>If you see multiple stuck installs, clear them before retrying:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">pkill</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-f</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"python -u -m pip install"</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">||</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">true</span></span></code></pre></div></div>
-</section>
-<section id="other-sources" class="level1">
-<h1>Other sources</h1>
-<ul>
-<li><a href="https://askubuntu.com/questions/958876/how-to-disable-ipv6-on-windows-subsystem-for-linux">https://askubuntu.com/questions/958876/how-to-disable-ipv6-on-windows-subsystem-for-linux</a></li>
-<li><a href="https://man7.org/linux/man-pages/man5/gai.conf.5.html">gai.conf(5) — Linux manual page</a></li>
-</ul>
-
-
-</section>
-
- ]]></description>
-  <category>troubleshooting</category>
-  <guid>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</guid>
-  <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</title>
-  <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="abstract" class="level1">
-<h1>Abstract</h1>
-<p>As LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.</p>
-</section>
-<section id="slides-and-transcript" class="level1">
-<h1>Slides and Transcript</h1>
-<ul>
-<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html">Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</a></li>
-<li>Transcript in VTT coming before 2026-02-01</li>
-</ul>
-
-
-</section>
-
- ]]></description>
-  <category>airflow</category>
-  <category>talks</category>
-  <guid>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</guid>
-  <pubDate>Mon, 08 Sep 2025 23:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Using Data Build Tool (dbt) to Accelerate &amp; Scale Science</title>
-  <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>This post is part of a series: “Factory of Domain Experts”:</p>
-<section id="what-problem-are-we-solving" class="level2">
-<h2 class="anchored" data-anchor-id="what-problem-are-we-solving">What problem are we solving?</h2>
-<p>“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?</p>
-<p>I challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.</p>
-<section id="what-we-wanted-to-achieve" class="level3">
-<h3 class="anchored" data-anchor-id="what-we-wanted-to-achieve">What we wanted to achieve:</h3>
-<ol type="1">
-<li><strong>Scale our team</strong>: Grow scientific output independent of engineering capacity.</li>
-<li><strong>Iterate in parallel, not sequentially</strong>: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.</li>
-<li><strong>Share easily reproducible code</strong>: Produce reproducible code and data that makes cross-team collaboration easy and transparent.</li>
-</ol>
-<p>Instead of building custom solutions, we used a small set of industry-standard tools, <a href="https://github.com/dbt-labs/dbt-core?tab=readme-ov-file#understanding-dbt">dbt (Data Build Tool)</a> with SQL, <a href="https://airflow.apache.org/">Apache Airflow</a> (using <a href="https://github.com/astronomer/astronomer-cosmos">astronomer-cosmos</a>), and <a href="https://git-scm.com/">Git</a>, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic.</p>
-</section>
-</section>
-<section id="how-dbt-solves-these-problems" class="level2">
-<h2 class="anchored" data-anchor-id="how-dbt-solves-these-problems">How dbt solves these problems</h2>
-<p>Data Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. <strong>Crucially, there are no tradeoffs between scrappy exploration and production-ready code</strong>, the same code serves both purposes:</p>
-<ul>
-<li><strong>Production-ready from day one</strong>: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.</li>
-<li><strong>Collaboration and early integration</strong>: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.</li>
-<li><strong>Simple workflows that scale</strong>: A simple <code>dbt run -s "model_name+"</code> runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.</li>
-<li><strong>Modularity without orchestration headaches</strong>: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.</li>
-<li><strong>Automatic lineage and documentation</strong>: dbt generates interactive dependency graphs showing how your models connect. <a href="https://docs.getdbt.com/reference/commands/cmd-docs">Schema documentation</a> automatically appears in the warehouse tables.</li>
-<li><strong>Built-in quality controls</strong>: Define data tests that run automatically.</li>
-<li><strong>Built for integration and extensibility</strong>: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.</li>
-<li><strong>Compliance and governance</strong>: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling.</li>
-</ul>
-</section>
-<section id="impact" class="level2">
-<h2 class="anchored" data-anchor-id="impact">Impact</h2>
-<p>Our approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions.</p>
-
-
-</section>
-
- ]]></description>
-  <category>data-science</category>
-  <category>engineering</category>
-  <guid>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</guid>
-  <pubDate>Sun, 31 Aug 2025 23:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Use aider for free with your local LLMs or cheaply with OpenRouter</title>
-  <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/aider-with-open-router.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.</p>
-<p>Here are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter.</p>
-<section id="local-llms" class="level2">
-<h2 class="anchored" data-anchor-id="local-llms">Local LLMs</h2>
-<ol type="1">
-<li>Make sure you have <a href="https://github.com/ollama/ollama">ollama</a> installed and running.</li>
-<li>Note down a wich model(s) you have installed and plan to use. We’ll use <a href="https://ollama.com/library/deepseek-r1">deepseek-r1</a> and <a href="https://ollama.com/library/qwen2.5-coder">qwen2.5-coder</a> as example models. <code>Deepseek</code> is general purpose and a good candidate for reasoning while <code>qwen2.5-coder</code> is specialized for coding tasks.</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">$</span> ollama list</span>
-<span id="cb1-2"></span>
-<span id="cb1-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">NAME</span>                                        ID              SIZE      MODIFIED</span>
-<span id="cb1-4"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">deepseek-r1:14b</span>                             ea35dfe18182    9.0 GB    2 hours ago</span>
-<span id="cb1-5"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">qwen2.5-coder:14b</span>                           9ec8897f747e    9.0 GB    2 hours ago</span></code></pre></div></div>
-<p>I’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The <a href="https://ollama.com/search">Ollama models site</a> is very handy to get information about models and their distilled versions.</p>
-<ol start="3" type="1">
-<li><a href="https://aider.chat/docs/llms/ollama.html">follow the guide</a> which tells you to run:</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">aider</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--model</span> ollama_chat/<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span>model<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span></span></code></pre></div></div>
-<p>So in our case, that becomes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">aider</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--model</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ollama_chat/deepseek-r1:14b"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--editor-model</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ollama_chat/qwen2.5-coder:14b"</span></span></code></pre></div></div>
-<p>We could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.</p>
-<p>Use <code>aider --help</code> or visit <a href="https://aider.chat/docs/config/options.html">the options page on aider’s site</a> to understand the differences between <code>--model</code> (main model), <code>--editor-model</code> (editor tasks), and <code>--weak-model</code> (commit messages and history summarization).</p>
-</section>
-<section id="cheaply-with-openrouter" class="level2">
-<h2 class="anchored" data-anchor-id="cheaply-with-openrouter">Cheaply with OpenRouter</h2>
-<p>If you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.</p>
-<p>The advantage of using OpenRouter over a specific LLM service like <a href="https://www.anthropic.com/api">Claude</a>, <a href="https://openai.com/index/openai-api/">ChatGPT API</a> or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.</p>
-<p><a href="https://www.reddit.com/r/LocalLLaMA/comments/1jhjbgj/best_llm_for_code_through_api_with_aider/">user u/Baldur-Norddahl Reddit LocalLLama</a> shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">export</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">OPENROUTER_API_KEY</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>sk-or-v1-xxxx</span>
-<span id="cb4-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">aider</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--architect</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--model</span> openrouter/deepseek/deepseek-r1 <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--editor-model</span> openrouter/anthropic/claude-3.7-sonnet <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--watch-files</span></span></code></pre></div></div>
-<p>You can easily monitor your <a href="https://openrouter.ai/activity">activity</a> an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs.</p>
-</section>
-<section id="in-closing" class="level2">
-<h2 class="anchored" data-anchor-id="in-closing">In Closing</h2>
-<p>Both patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.</p>
-<p>Shoutout to Georgi Gerganov’s <a href="https://picovoice.ai/blog/local-llms-llamacpp-ollama/">llama.cpp</a> which is the core that allows ollama to work.</p>
-
-
-</section>
-
- ]]></description>
-  <category>genai</category>
-  <category>code</category>
-  <guid>https://alexhans.github.io/posts/aider-with-open-router.html</guid>
-  <pubDate>Sat, 05 Jul 2025 23:00:00 GMT</pubDate>
-</item>
+<lastBuildDate>Fri, 16 Jan 2026 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Stop Reformatting Markdown When Pasting into Slack</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
@@ -372,7 +70,7 @@ font-style: inherit;">  - </span>details</span></code></pre></div></div>
 <p>Compare pasting directly on the left and what we want on the right.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://alexhans.github.io/posts/slack/comparison.png" class="img-fluid figure-img"></p>
+<p><img src="https://alexhans.github.io/posts/slack/markdown-vs-slack-rich-paste.png" class="img-fluid figure-img"></p>
 <figcaption>Side by Side comparison between markdown in plain text and the slack rich formatted version</figcaption>
 </figure>
 </div>
@@ -382,7 +80,7 @@ font-style: inherit;">  - </span>details</span></code></pre></div></div>
 <p>Put HTML onto the clipboard the same way a browser would, so Slack pastes it as rich content instead of plain text.</p>
 <p>This requires a recent xclip build that supports advertising <code>text/html</code> correctly.</p>
 <ol type="1">
-<li>Built <a href="https://github.com/astrand/xclip">xclip from source</a> to get the latest features around html</li>
+<li>Build <a href="https://github.com/astrand/xclip">xclip from source</a> to get the latest features around html</li>
 <li><code>pip install beautifulsoup4 lxml</code></li>
 <li>Run <code>pandoc sample.md -t html</code></li>
 <li>Optionally modify the HTML to fix things like lists.</li>
@@ -698,7 +396,7 @@ font-style: inherit;">\</span></span>
 <span id="cb2-58"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">| xclip -sel clipboard -t text/html -alt-text "Updates"</span></span></code></pre></div></div>
-<p><strong>Note:</strong> The Python step is only needed if you want to fix Slack’s broken handling of nested lists. For simple formatting (bold, links, headings), Pandoc → xclip alone is enough.</p>
+<p><strong>Note:</strong> The Python step is only needed if you want to fix Slack’s broken handling of nested lists. For simple formatting (bold, links, headings), Pandoc -&gt; xclip alone is enough.</p>
 </section>
 <section id="inspiration" class="level1">
 <h1>Inspiration</h1>
@@ -743,7 +441,21 @@ font-style: inherit;">sudo</span> make install</span></code></pre></div></div>
 <ol type="1">
 <li>Powershell 5</li>
 </ol>
-<pre><code>Get-Content out.html -Raw | Set-Clipboard -AsHtml</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Get-Content</span> out<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">html</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>Raw <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Set-Clipboard</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>AsHtml</span></code></pre></div></div>
 <ol start="2" type="1">
 <li>Open LibreOffice Writer or any GUI and paste.</li>
 <li>Select that and copy</li>
@@ -761,7 +473,309 @@ font-style: inherit;">sudo</span> make install</span></code></pre></div></div>
  ]]></description>
   <category>productivity</category>
   <guid>https://alexhans.github.io/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html</guid>
-  <pubDate>Thu, 16 Jan 2025 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 16 Jan 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Fix: pip hangs in WSL (IPv6 / gai.conf)</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="pain-point" class="level2">
+<h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
+<p><code>pip install</code> hangs in WSL with no useful error, often after it starts fetching from <code>files.pythonhosted.org</code>.</p>
+</section>
+<section id="the-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
+<p>If DNS/connection to <code>files.pythonhosted.org</code> hangs but <code>pypi.org</code> works, suspect IPv6 preference + broken IPv6 routing.</p>
+</section>
+<section id="minimal-diagnosis" class="level2">
+<h2 class="anchored" data-anchor-id="minimal-diagnosis">Minimal Diagnosis</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"import urllib.request; print(urllib.request.urlopen('https://pypi.org/simple/').status)"</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># expected: 200</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getent</span> hosts pypi.org</span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># returns quickly</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getent</span> hosts files.pythonhosted.org</span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># may hang</span></span></code></pre></div></div>
+<p>If <code>files.pythonhosted.org</code> hangs, <code>pip</code> will hang. That host is where wheels and sdists are served from.</p>
+</section>
+<section id="fix" class="level2">
+<h2 class="anchored" data-anchor-id="fix">Fix</h2>
+<p>Prefer IPv4 for address selection using <code>gai.conf</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> tee /etc/gai.conf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>/dev/null <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt;'EOF'</span></span>
+<span id="cb4-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">precedence ::ffff:0:0/96  100</span></span>
+<span id="cb4-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">EOF</span></span></code></pre></div></div>
+<p>This does not disable IPv6. It changes the precedence so IPv4 is tried first.</p>
+</section>
+<section id="verify" class="level2">
+<h2 class="anchored" data-anchor-id="verify">Verify</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getent</span> hosts files.pythonhosted.org</span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># should return immediately</span></span></code></pre></div></div>
+<p>Then retry:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install ipython</span></code></pre></div></div>
+</section>
+<section id="revert" class="level2">
+<h2 class="anchored" data-anchor-id="revert">Revert</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> tee /etc/gai.conf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>/dev/null <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt;'EOF'</span></span>
+<span id="cb7-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"># empty override: use glibc defaults</span></span>
+<span id="cb7-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">EOF</span></span></code></pre></div></div>
+</section>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p>If you see multiple stuck installs, clear them before retrying:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pkill</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"python -u -m pip install"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">||</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">true</span></span></code></pre></div></div>
+</section>
+<section id="other-sources" class="level1">
+<h1>Other sources</h1>
+<ul>
+<li><a href="https://askubuntu.com/questions/958876/how-to-disable-ipv6-on-windows-subsystem-for-linux">https://askubuntu.com/questions/958876/how-to-disable-ipv6-on-windows-subsystem-for-linux</a></li>
+<li><a href="https://man7.org/linux/man-pages/man5/gai.conf.5.html">gai.conf(5) — Linux manual page</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>troubleshooting</category>
+  <guid>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</guid>
+  <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>As LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.</p>
+</section>
+<section id="slides-and-transcript" class="level1">
+<h1>Slides and Transcript</h1>
+<ul>
+<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html">Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</a></li>
+<li>Transcript in VTT coming before 2026-02-01</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>airflow</category>
+  <category>talks</category>
+  <guid>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</guid>
+  <pubDate>Mon, 08 Sep 2025 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Using Data Build Tool (dbt) to Accelerate &amp; Scale Science</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>This post is part of a series: “Factory of Domain Experts”:</p>
+<section id="what-problem-are-we-solving" class="level2">
+<h2 class="anchored" data-anchor-id="what-problem-are-we-solving">What problem are we solving?</h2>
+<p>“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?</p>
+<p>I challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.</p>
+<section id="what-we-wanted-to-achieve" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-wanted-to-achieve">What we wanted to achieve:</h3>
+<ol type="1">
+<li><strong>Scale our team</strong>: Grow scientific output independent of engineering capacity.</li>
+<li><strong>Iterate in parallel, not sequentially</strong>: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.</li>
+<li><strong>Share easily reproducible code</strong>: Produce reproducible code and data that makes cross-team collaboration easy and transparent.</li>
+</ol>
+<p>Instead of building custom solutions, we used a small set of industry-standard tools, <a href="https://github.com/dbt-labs/dbt-core?tab=readme-ov-file#understanding-dbt">dbt (Data Build Tool)</a> with SQL, <a href="https://airflow.apache.org/">Apache Airflow</a> (using <a href="https://github.com/astronomer/astronomer-cosmos">astronomer-cosmos</a>), and <a href="https://git-scm.com/">Git</a>, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic.</p>
+</section>
+</section>
+<section id="how-dbt-solves-these-problems" class="level2">
+<h2 class="anchored" data-anchor-id="how-dbt-solves-these-problems">How dbt solves these problems</h2>
+<p>Data Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. <strong>Crucially, there are no tradeoffs between scrappy exploration and production-ready code</strong>, the same code serves both purposes:</p>
+<ul>
+<li><strong>Production-ready from day one</strong>: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.</li>
+<li><strong>Collaboration and early integration</strong>: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.</li>
+<li><strong>Simple workflows that scale</strong>: A simple <code>dbt run -s "model_name+"</code> runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.</li>
+<li><strong>Modularity without orchestration headaches</strong>: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.</li>
+<li><strong>Automatic lineage and documentation</strong>: dbt generates interactive dependency graphs showing how your models connect. <a href="https://docs.getdbt.com/reference/commands/cmd-docs">Schema documentation</a> automatically appears in the warehouse tables.</li>
+<li><strong>Built-in quality controls</strong>: Define data tests that run automatically.</li>
+<li><strong>Built for integration and extensibility</strong>: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.</li>
+<li><strong>Compliance and governance</strong>: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling.</li>
+</ul>
+</section>
+<section id="impact" class="level2">
+<h2 class="anchored" data-anchor-id="impact">Impact</h2>
+<p>Our approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>data-science</category>
+  <category>engineering</category>
+  <guid>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</guid>
+  <pubDate>Sun, 31 Aug 2025 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Use aider for free with your local LLMs or cheaply with OpenRouter</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/aider-with-open-router.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.</p>
+<p>Here are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter.</p>
+<section id="local-llms" class="level2">
+<h2 class="anchored" data-anchor-id="local-llms">Local LLMs</h2>
+<ol type="1">
+<li>Make sure you have <a href="https://github.com/ollama/ollama">ollama</a> installed and running.</li>
+<li>Note down a wich model(s) you have installed and plan to use. We’ll use <a href="https://ollama.com/library/deepseek-r1">deepseek-r1</a> and <a href="https://ollama.com/library/qwen2.5-coder">qwen2.5-coder</a> as example models. <code>Deepseek</code> is general purpose and a good candidate for reasoning while <code>qwen2.5-coder</code> is specialized for coding tasks.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">$</span> ollama list</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">NAME</span>                                        ID              SIZE      MODIFIED</span>
+<span id="cb1-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">deepseek-r1:14b</span>                             ea35dfe18182    9.0 GB    2 hours ago</span>
+<span id="cb1-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">qwen2.5-coder:14b</span>                           9ec8897f747e    9.0 GB    2 hours ago</span></code></pre></div></div>
+<p>I’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The <a href="https://ollama.com/search">Ollama models site</a> is very handy to get information about models and their distilled versions.</p>
+<ol start="3" type="1">
+<li><a href="https://aider.chat/docs/llms/ollama.html">follow the guide</a> which tells you to run:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">aider</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> ollama_chat/<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>model<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div></div>
+<p>So in our case, that becomes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">aider</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ollama_chat/deepseek-r1:14b"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--editor-model</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ollama_chat/qwen2.5-coder:14b"</span></span></code></pre></div></div>
+<p>We could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.</p>
+<p>Use <code>aider --help</code> or visit <a href="https://aider.chat/docs/config/options.html">the options page on aider’s site</a> to understand the differences between <code>--model</code> (main model), <code>--editor-model</code> (editor tasks), and <code>--weak-model</code> (commit messages and history summarization).</p>
+</section>
+<section id="cheaply-with-openrouter" class="level2">
+<h2 class="anchored" data-anchor-id="cheaply-with-openrouter">Cheaply with OpenRouter</h2>
+<p>If you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.</p>
+<p>The advantage of using OpenRouter over a specific LLM service like <a href="https://www.anthropic.com/api">Claude</a>, <a href="https://openai.com/index/openai-api/">ChatGPT API</a> or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.</p>
+<p><a href="https://www.reddit.com/r/LocalLLaMA/comments/1jhjbgj/best_llm_for_code_through_api_with_aider/">user u/Baldur-Norddahl Reddit LocalLLama</a> shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">export</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OPENROUTER_API_KEY</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>sk-or-v1-xxxx</span>
+<span id="cb4-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">aider</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--architect</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> openrouter/deepseek/deepseek-r1 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--editor-model</span> openrouter/anthropic/claude-3.7-sonnet <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--watch-files</span></span></code></pre></div></div>
+<p>You can easily monitor your <a href="https://openrouter.ai/activity">activity</a> an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs.</p>
+</section>
+<section id="in-closing" class="level2">
+<h2 class="anchored" data-anchor-id="in-closing">In Closing</h2>
+<p>Both patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.</p>
+<p>Shoutout to Georgi Gerganov’s <a href="https://picovoice.ai/blog/local-llms-llamacpp-ollama/">llama.cpp</a> which is the core that allows ollama to work.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>genai</category>
+  <category>code</category>
+  <guid>https://alexhans.github.io/posts/aider-with-open-router.html</guid>
+  <pubDate>Sat, 05 Jul 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Merge and Forget</title>

@@ -2,11 +2,11 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
       "/posts/wsl-pip-hangs-ipv6.html",
       "/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
       "/posts/using-dbt-to-accelerate-science.html",
       "/posts/aider-with-open-router.html",
-      "/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
       "/posts/series/zeroops/merge-and-forget.html",
       "/posts/series/zeroops/no-news-is-good-news.html",
       "/posts/meeting-budget.html",

@@ -133,32 +133,53 @@
     "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html",
-    "href": "posts/accept-self-signed-cert-git-https.html",
-    "title": "Accept a self-signed certificate with git",
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html",
+    "title": "Reducing Error Compounding in GenAI Systems",
     "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+    "text": "GenAI is non-deterministic and can fail or produce different results for the same input.\nA typical prompt-to-action flow involves many LLM calls. Each call is a chance for the model to misinterpret, hallucinate, or produce an unusable output.\nThe question isn’t if errors happen. It’s what happens when they do, and how many opportunities you give them to cascade."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
-    "href": "posts/accept-self-signed-cert-git-https.html#intro",
-    "title": "Accept a self-signed certificate with git",
-    "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "How bad does it get?",
+    "text": "How bad does it get?\nConsider a simple case with just 4 steps (note: this is illustrative, consider how your system might have 10, 20, or more LLM calls):\n\nStep 1: 95% chance of correct\nStep 2: 95% chance of correct\n\nStep 3: 95% chance of correct\nStep 4: 95% chance of correct\n\nEnd-to-end: ~81% chance everything is correct.\nNow compare:\n\nStep 1 (LLM): user intent → structured call (95%)\nStep 2 (deterministic tool): execute (98%)\nStep 3 (deterministic validation): parse + check (97%)\nStep 4 (LLM): result → response (96%)\n\nEnd-to-end: ~87%\n\nSame model. Different architecture. 6+ point improvement."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Problem",
-    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Two high-leverage approaches",
+    "text": "Two high-leverage approaches\n\nRemove 1 or many GenAI steps entirely, fewer chances to fail\nReplace GenAI steps with deterministic ones, lower error rate per step\n\n\n\n\n\n\n\nNote\n\n\n\nThese aren’t the only ways to reduce error (e.g. consensus systems, retries, etc) but the fundamentals expressed would apply everywhere, no matter whether it’s one agent or a swarm."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Solution",
-    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "What makes deterministic steps different",
+    "text": "What makes deterministic steps different\nDeterministic steps still fail, but the failure characteristics differ from LLM failures:\n\nBounded: failures come from a finite set of causes (parse error, timeout, missing field), not open-ended misinterpretation\nRepeatable: same input, same failure: you can reproduce and fix it\nNon-semantic: a crashed process doesn’t convince the next step that “actually the user meant X”\n\n\n\n\n\n\n\nNote\n\n\n\nThis doesn’t mean deterministic = reliable. It means when things break, they break in less subtle ways and there’s a lot of software engineering history behind their robustness."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "The design pattern",
+    "text": "The design pattern\nLLMs do many hard parts (interpreting intent, choosing tools, dealing with syntax, reasoning through results, deciding what comes next).\nIn a simplified flow, the model might:\n\nReceive user intent (natural language)\nDecide which tool to call and with what parameters\nReceive structured output from the tool\nDecide: done, or call another tool?\nRepeat until ready to respond\nTranslate the final result back to the user\n\nA lot of reasoning and orchestration happens there and the point isn’t to limit that but to give it good building blocks.\nA human user is more effective with better building blocks (e.g. well designed libraries or cli tools) and so is an LLM.\nWhat you want are building blocks that are:\n\nreusable\ncomposable\nwell tested\neasy to change and maintain\ncost effective\n\nAnd a model that acts as a translation layer, not the tool running all the logic."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Practical recommendations",
+    "text": "Practical recommendations\n\nIdentify the deterministic core\nIf you are writing a Claude skill and a step can be expressed as code, ask yourself why you’re not expressing it as code.\nThe tradeoff is real:\nLeaving logic in prose means:\n\nHigher error rate at runtime\nRelying on evals instead of unit tests (if you don’t know what one or either of these are, then you’re definitely safer in the frozen code world)\nPaying the cost and error on every execution\nYes, it might improve as models improve, but you’re paying for that uncertainty every time\n\nMoving logic to code means:\n\nLower error rate (deterministic execution)\nUnit testable\nCheaper to run\nStill easy to write with LLMs, have the model generate the code once instead of regenerating the logic from prose every time\nYou can still ask LLMs to review or improve the code later if you want\n\nThe second option gives you confidence that things actually work. The first option defers that confidence in exchange for alleged convenience.\nIf the LLM can write code for you, why have it translate markdown to logic on every run? Make the translation once, freeze it as code, and test it properly.\n\n\nForce structure at boundaries\nDon’t pass prose between steps. Use formats that are easy to serialize and deserialize, like JSON/YAML with schemas you can validate against.\nStructure lets you validate, detect errors and attempt course correction or fail fast, diff, log, and evaluate deterministically.\n\n\n\n\n\n\nNote\n\n\n\nThis will even save you money, time and compute resources by not having to use LLM as a Judge for assertion in your evals.\n\n\n\n\nTest the building blocks\nWrite unit tests and integration tests for the core building blocks — same as you would’ve done before LLMs."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Closing",
+    "text": "Closing\nThis isn’t about distrusting models, it’s about giving them good building blocks to use.\nUse GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.\nThat is how automation becomes something you can trust instead of manually testing once and being hopeful."
   },
   {
     "objectID": "posts/series/zeroops/merge-and-forget.html",
@@ -392,10 +413,38 @@
     "text": "Analogy\nThink of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine."
   },
   {
+    "objectID": "posts/accept-self-signed-cert-git-https.html",
+    "href": "posts/accept-self-signed-cert-git-https.html",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
+    "href": "posts/accept-self-signed-cert-git-https.html#intro",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Problem",
+    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Solution",
+    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "The Living Deadline",
     "section": "",
-    "text": "Stop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "text": "Reducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   }
 ]

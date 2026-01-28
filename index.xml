@@ -10,12 +10,211 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Fri, 16 Jan 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 28 Jan 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Reducing Error Compounding in GenAI Systems</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/series/evals/error-compounding-genai-systems-approach.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>GenAI is non-deterministic and can fail or produce different results for the same input.</p>
+<p>A typical prompt-to-action flow involves many LLM calls. Each call is a chance for the model to misinterpret, hallucinate, or produce an unusable output.</p>
+<p>The question isn’t if errors happen. It’s what happens when they do, and how many opportunities you give them to cascade.</p>
+<hr>
+<section id="how-bad-does-it-get" class="level2">
+<h2 class="anchored" data-anchor-id="how-bad-does-it-get">How bad does it get?</h2>
+<p>Consider a simple case with just 4 steps (note: this is illustrative, consider how your system might have 10, 20, or more LLM calls):</p>
+<ul>
+<li>Step 1: 95% chance of correct</li>
+<li>Step 2: 95% chance of correct<br>
+</li>
+<li>Step 3: 95% chance of correct</li>
+<li>Step 4: 95% chance of correct</li>
+</ul>
+<p>End-to-end: ~81% chance everything is correct.</p>
+<p>Now compare:</p>
+<ul>
+<li>Step 1 (LLM): user intent → structured call (95%)</li>
+<li>Step 2 (deterministic tool): execute (98%)</li>
+<li>Step 3 (deterministic validation): parse + check (97%)</li>
+<li>Step 4 (LLM): result → response (96%)</li>
+</ul>
+<p>End-to-end: ~87%</p>
+<!--
+
+::::::{.cell layout-align="default"}
+
+:::::{.cell-output-display}
+
+::::{}
+`<figure class=''>`{=html}
+
+:::{}
+
+<pre class="mermaid mermaid-js">flowchart TB
+    subgraph A[&quot;All-LLM → 81%&quot;]
+        direction LR
+        A1[&quot;LLM 95%&quot;] --&gt; A2[&quot;LLM 95%&quot;] --&gt; A3[&quot;LLM 95%&quot;] --&gt; A4[&quot;LLM 95%&quot;]
+    end
+
+    subgraph B[&quot;Mixed → 87%&quot;]
+        direction LR
+        B1[&quot;LLM 95%&quot;] --&gt; B2[&quot;Tool 98%&quot;] --&gt; B3[&quot;Validate 97%&quot;] --&gt; B4[&quot;LLM 96%&quot;]
+    end
+</pre>
+:::
+`</figure>`{=html}
+::::
+:::::
+::::::
+-->
+<p><strong>Same model. Different architecture. 6+ point improvement.</strong></p>
+<hr>
+</section>
+<section id="two-high-leverage-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="two-high-leverage-approaches">Two high-leverage approaches</h2>
+<ol type="1">
+<li><strong>Remove 1 or many GenAI steps entirely</strong>, fewer chances to fail</li>
+<li><strong>Replace GenAI steps with deterministic ones</strong>, lower error rate per step</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These aren’t the only ways to reduce error (e.g.&nbsp;consensus systems, retries, etc) but the fundamentals expressed would apply everywhere, no matter whether it’s one agent or a swarm.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="what-makes-deterministic-steps-different" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-deterministic-steps-different">What makes deterministic steps different</h2>
+<p>Deterministic steps still fail, but the failure characteristics differ from LLM failures:</p>
+<ul>
+<li><strong>Bounded</strong>: failures come from a finite set of causes (parse error, timeout, missing field), not open-ended misinterpretation</li>
+<li><strong>Repeatable</strong>: same input, same failure: you can reproduce and fix it</li>
+<li><strong>Non-semantic</strong>: a crashed process doesn’t convince the next step that “actually the user meant X”</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This doesn’t mean deterministic = reliable. It means when things break, they break in less subtle ways and there’s a lot of software engineering history behind their robustness.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="the-design-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-design-pattern">The design pattern</h2>
+<p>LLMs do many hard parts (interpreting intent, choosing tools, dealing with syntax, reasoning through results, deciding what comes next).</p>
+<p>In a simplified flow, the model might:</p>
+<ol type="1">
+<li>Receive user intent (natural language)</li>
+<li>Decide which tool to call and with what parameters</li>
+<li>Receive structured output from the tool</li>
+<li>Decide: done, or call another tool?</li>
+<li>Repeat until ready to respond</li>
+<li>Translate the final result back to the user</li>
+</ol>
+<p>A lot of reasoning and orchestration happens there and the point isn’t to limit that but to give it good building blocks.</p>
+<p>A human user is more effective with better building blocks (e.g.&nbsp;well designed libraries or cli tools) and so is an LLM.</p>
+<p>What you want are building blocks that are:</p>
+<ul>
+<li>reusable</li>
+<li>composable</li>
+<li>well tested</li>
+<li>easy to change and maintain</li>
+<li>cost effective</li>
+</ul>
+<p>And a model that acts as a translation layer, not the tool running all the logic.</p>
+<hr>
+</section>
+<section id="practical-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="practical-recommendations">Practical recommendations</h2>
+<section id="identify-the-deterministic-core" class="level3">
+<h3 class="anchored" data-anchor-id="identify-the-deterministic-core">Identify the deterministic core</h3>
+<p>If you are writing a Claude skill and a step can be expressed as code, ask yourself why you’re not expressing it as code.</p>
+<p>The tradeoff is real:</p>
+<p><strong>Leaving logic in prose means:</strong></p>
+<ul>
+<li>Higher error rate at runtime</li>
+<li>Relying on <a href="https://www.promptfoo.dev/docs/configuration/expected-outputs/">evals</a> instead of <a href="https://docs.pytest.org/en/stable/how-to/unittest.html">unit tests</a> (if you don’t know what one or either of these are, then you’re definitely safer in the frozen code world)</li>
+<li>Paying the cost and error on every execution</li>
+<li>Yes, it <em>might</em> improve as models improve, but you’re paying for that uncertainty every time</li>
+</ul>
+<p><strong>Moving logic to code means:</strong></p>
+<ul>
+<li>Lower error rate (deterministic execution)</li>
+<li>Unit testable</li>
+<li>Cheaper to run</li>
+<li>Still easy to write with LLMs, have the model generate the code once instead of regenerating the logic from prose every time</li>
+<li>You can still ask LLMs to review or improve the code later if you want</li>
+</ul>
+<p>The second option gives you confidence that things actually work. The first option defers that confidence in exchange for alleged convenience.</p>
+<p>If the LLM can write code for you, why have it translate markdown to logic on every run? Make the translation once, freeze it as code, and test it properly.</p>
+</section>
+<section id="force-structure-at-boundaries" class="level3">
+<h3 class="anchored" data-anchor-id="force-structure-at-boundaries">Force structure at boundaries</h3>
+<p>Don’t pass prose between steps. Use formats that are easy to serialize and deserialize, like JSON/YAML with schemas you can validate against.</p>
+<p>Structure lets you validate, detect errors and attempt course correction or fail fast, diff, log, and evaluate deterministically.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This will even save you money, time and compute resources <a href="https://www.promptfoo.dev/docs/configuration/expected-outputs/deterministic/">by not having to use LLM as a Judge for assertion in your evals</a>.</p>
+</div>
+</div>
+</section>
+<section id="test-the-building-blocks" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-building-blocks">Test the building blocks</h3>
+<p>Write unit tests and integration tests for the core building blocks — same as you would’ve done before LLMs.</p>
+<hr>
+</section>
+</section>
+<section id="closing" class="level2">
+<h2 class="anchored" data-anchor-id="closing">Closing</h2>
+<p>This isn’t about distrusting models, it’s about giving them good building blocks to use.</p>
+<p>Use GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.</p>
+<p>That is how automation becomes something you can trust instead of manually testing once and being hopeful.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>engineering</category>
+  <category>genai</category>
+  <category>evals</category>
+  <guid>https://alexhans.github.io/posts/series/evals/error-compounding-genai-systems-approach.html</guid>
+  <pubDate>Wed, 28 Jan 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Stop Reformatting Markdown When Pasting into Slack</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html</link>
   <description><![CDATA[ 
+
 
 
 
@@ -485,6 +684,7 @@ font-style: inherit;">-</span>AsHtml</span></code></pre></div></div>
 
 
 
+
 <section id="pain-point" class="level2">
 <h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
 <p><code>pip install</code> hangs in WSL with no useful error, often after it starts fetching from <code>files.pythonhosted.org</code>.</p>
@@ -607,6 +807,7 @@ font-style: inherit;">true</span></span></code></pre></div></div>
 
 
 
+
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
 <p>As LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.</p>
@@ -632,6 +833,7 @@ font-style: inherit;">true</span></span></code></pre></div></div>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</link>
   <description><![CDATA[ 
+
 
 
 
@@ -684,6 +886,7 @@ font-style: inherit;">true</span></span></code></pre></div></div>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/aider-with-open-router.html</link>
   <description><![CDATA[ 
+
 
 
 
@@ -787,6 +990,7 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
 
 
 
+
 <!-- Merge and forget: Engineers don't have to follow deployments through to feel assured and can simply expect things to work, and context switch right after code merges happen. -->
 <section id="the-rule" class="level2">
 <h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
@@ -841,6 +1045,7 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</link>
   <description><![CDATA[ 
+
 
 
 
@@ -907,6 +1112,7 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
 
 
 
+
 <section id="pain-point" class="level1">
 <h1>Pain Point</h1>
 <!-- A huge productivity damager is having an excessive amount of meetings disrupting your week -->
@@ -949,6 +1155,7 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1034,6 +1241,7 @@ font-style: inherit;">$</span> sudo apt install mailutils</span></code></pre></d
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
   <link>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</link>
   <description><![CDATA[ 
+
 
 
 

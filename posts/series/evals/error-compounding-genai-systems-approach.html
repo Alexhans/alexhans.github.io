@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Guglielmone Nemi">
-<meta name="dcterms.date" content="2025-09-09">
+<meta name="dcterms.date" content="2026-01-28">
+<meta name="description" content="How chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.">
 
-<title>Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem – The Living Deadline</title>
+<title>Reducing Error Compounding in GenAI Systems – The Living Deadline</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,28 +26,28 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-e7ab87af057c297da0378775f9f838e3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-e7ab87af057c297da0378775f9f838e3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,12 +75,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -257,9 +261,9 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">The Living Deadline</span>
     </a>
   </div>
@@ -270,7 +274,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -290,11 +294,16 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</h1>
-            <p class="subtitle lead">Airflow Summit 2025 - Lightning Talk (5 min)</p>
-                                <div class="quarto-categories">
-                <div class="quarto-category">airflow</div>
-                <div class="quarto-category">talks</div>
+      <h1 class="title">Reducing Error Compounding in GenAI Systems</h1>
+                  <div>
+        <div class="description">
+          How chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">engineering</div>
+                <div class="quarto-category">genai</div>
+                <div class="quarto-category">evals</div>
               </div>
                   </div>
   </div>
@@ -312,7 +321,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 9, 2025</p>
+        <p class="date">January 28, 2026</p>
       </div>
     </div>
     
@@ -323,7 +332,25 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-bad-does-it-get" id="toc-how-bad-does-it-get" class="nav-link active" data-scroll-target="#how-bad-does-it-get">How bad does it get?</a></li>
+  <li><a href="#two-high-leverage-approaches" id="toc-two-high-leverage-approaches" class="nav-link" data-scroll-target="#two-high-leverage-approaches">Two high-leverage approaches</a></li>
+  <li><a href="#what-makes-deterministic-steps-different" id="toc-what-makes-deterministic-steps-different" class="nav-link" data-scroll-target="#what-makes-deterministic-steps-different">What makes deterministic steps different</a></li>
+  <li><a href="#the-design-pattern" id="toc-the-design-pattern" class="nav-link" data-scroll-target="#the-design-pattern">The design pattern</a></li>
+  <li><a href="#practical-recommendations" id="toc-practical-recommendations" class="nav-link" data-scroll-target="#practical-recommendations">Practical recommendations</a>
+  <ul class="collapse">
+  <li><a href="#identify-the-deterministic-core" id="toc-identify-the-deterministic-core" class="nav-link" data-scroll-target="#identify-the-deterministic-core">Identify the deterministic core</a></li>
+  <li><a href="#force-structure-at-boundaries" id="toc-force-structure-at-boundaries" class="nav-link" data-scroll-target="#force-structure-at-boundaries">Force structure at boundaries</a></li>
+  <li><a href="#test-the-building-blocks" id="toc-test-the-building-blocks" class="nav-link" data-scroll-target="#test-the-building-blocks">Test the building blocks</a></li>
+  </ul></li>
+  <li><a href="#closing" id="toc-closing" class="nav-link" data-scroll-target="#closing">Closing</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -332,16 +359,182 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="abstract" class="level1">
-<h1>Abstract</h1>
-<p>As LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.</p>
-</section>
-<section id="slides-and-transcript" class="level1">
-<h1>Slides and Transcript</h1>
+<p>GenAI is non-deterministic and can fail or produce different results for the same input.</p>
+<p>A typical prompt-to-action flow involves many LLM calls. Each call is a chance for the model to misinterpret, hallucinate, or produce an unusable output.</p>
+<p>The question isn’t if errors happen. It’s what happens when they do, and how many opportunities you give them to cascade.</p>
+<hr>
+<section id="how-bad-does-it-get" class="level2">
+<h2 class="anchored" data-anchor-id="how-bad-does-it-get">How bad does it get?</h2>
+<p>Consider a simple case with just 4 steps (note: this is illustrative, consider how your system might have 10, 20, or more LLM calls):</p>
 <ul>
-<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html">Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</a></li>
-<li>Transcript in VTT coming before 2026-02-01</li>
+<li>Step 1: 95% chance of correct</li>
+<li>Step 2: 95% chance of correct<br>
+</li>
+<li>Step 3: 95% chance of correct</li>
+<li>Step 4: 95% chance of correct</li>
 </ul>
+<p>End-to-end: ~81% chance everything is correct.</p>
+<p>Now compare:</p>
+<ul>
+<li>Step 1 (LLM): user intent → structured call (95%)</li>
+<li>Step 2 (deterministic tool): execute (98%)</li>
+<li>Step 3 (deterministic validation): parse + check (97%)</li>
+<li>Step 4 (LLM): result → response (96%)</li>
+</ul>
+<p>End-to-end: ~87%</p>
+<!--
+
+::::::{.cell layout-align="default"}
+
+:::::{.cell-output-display}
+
+::::{}
+`<figure class=''>`{=html}
+
+:::{}
+
+<pre class="mermaid mermaid-js">flowchart TB
+    subgraph A[&quot;All-LLM → 81%&quot;]
+        direction LR
+        A1[&quot;LLM 95%&quot;] --&gt; A2[&quot;LLM 95%&quot;] --&gt; A3[&quot;LLM 95%&quot;] --&gt; A4[&quot;LLM 95%&quot;]
+    end
+
+    subgraph B[&quot;Mixed → 87%&quot;]
+        direction LR
+        B1[&quot;LLM 95%&quot;] --&gt; B2[&quot;Tool 98%&quot;] --&gt; B3[&quot;Validate 97%&quot;] --&gt; B4[&quot;LLM 96%&quot;]
+    end
+</pre>
+:::
+`</figure>`{=html}
+::::
+:::::
+::::::
+-->
+<p><strong>Same model. Different architecture. 6+ point improvement.</strong></p>
+<hr>
+</section>
+<section id="two-high-leverage-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="two-high-leverage-approaches">Two high-leverage approaches</h2>
+<ol type="1">
+<li><strong>Remove 1 or many GenAI steps entirely</strong>, fewer chances to fail</li>
+<li><strong>Replace GenAI steps with deterministic ones</strong>, lower error rate per step</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These aren’t the only ways to reduce error (e.g.&nbsp;consensus systems, retries, etc) but the fundamentals expressed would apply everywhere, no matter whether it’s one agent or a swarm.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="what-makes-deterministic-steps-different" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-deterministic-steps-different">What makes deterministic steps different</h2>
+<p>Deterministic steps still fail, but the failure characteristics differ from LLM failures:</p>
+<ul>
+<li><strong>Bounded</strong>: failures come from a finite set of causes (parse error, timeout, missing field), not open-ended misinterpretation</li>
+<li><strong>Repeatable</strong>: same input, same failure: you can reproduce and fix it</li>
+<li><strong>Non-semantic</strong>: a crashed process doesn’t convince the next step that “actually the user meant X”</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This doesn’t mean deterministic = reliable. It means when things break, they break in less subtle ways and there’s a lot of software engineering history behind their robustness.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="the-design-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-design-pattern">The design pattern</h2>
+<p>LLMs do many hard parts (interpreting intent, choosing tools, dealing with syntax, reasoning through results, deciding what comes next).</p>
+<p>In a simplified flow, the model might:</p>
+<ol type="1">
+<li>Receive user intent (natural language)</li>
+<li>Decide which tool to call and with what parameters</li>
+<li>Receive structured output from the tool</li>
+<li>Decide: done, or call another tool?</li>
+<li>Repeat until ready to respond</li>
+<li>Translate the final result back to the user</li>
+</ol>
+<p>A lot of reasoning and orchestration happens there and the point isn’t to limit that but to give it good building blocks.</p>
+<p>A human user is more effective with better building blocks (e.g.&nbsp;well designed libraries or cli tools) and so is an LLM.</p>
+<p>What you want are building blocks that are:</p>
+<ul>
+<li>reusable</li>
+<li>composable</li>
+<li>well tested</li>
+<li>easy to change and maintain</li>
+<li>cost effective</li>
+</ul>
+<p>And a model that acts as a translation layer, not the tool running all the logic.</p>
+<hr>
+</section>
+<section id="practical-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="practical-recommendations">Practical recommendations</h2>
+<section id="identify-the-deterministic-core" class="level3">
+<h3 class="anchored" data-anchor-id="identify-the-deterministic-core">Identify the deterministic core</h3>
+<p>If you are writing a Claude skill and a step can be expressed as code, ask yourself why you’re not expressing it as code.</p>
+<p>The tradeoff is real:</p>
+<p><strong>Leaving logic in prose means:</strong></p>
+<ul>
+<li>Higher error rate at runtime</li>
+<li>Relying on <a href="https://www.promptfoo.dev/docs/configuration/expected-outputs/">evals</a> instead of <a href="https://docs.pytest.org/en/stable/how-to/unittest.html">unit tests</a> (if you don’t know what one or either of these are, then you’re definitely safer in the frozen code world)</li>
+<li>Paying the cost and error on every execution</li>
+<li>Yes, it <em>might</em> improve as models improve, but you’re paying for that uncertainty every time</li>
+</ul>
+<p><strong>Moving logic to code means:</strong></p>
+<ul>
+<li>Lower error rate (deterministic execution)</li>
+<li>Unit testable</li>
+<li>Cheaper to run</li>
+<li>Still easy to write with LLMs, have the model generate the code once instead of regenerating the logic from prose every time</li>
+<li>You can still ask LLMs to review or improve the code later if you want</li>
+</ul>
+<p>The second option gives you confidence that things actually work. The first option defers that confidence in exchange for alleged convenience.</p>
+<p>If the LLM can write code for you, why have it translate markdown to logic on every run? Make the translation once, freeze it as code, and test it properly.</p>
+</section>
+<section id="force-structure-at-boundaries" class="level3">
+<h3 class="anchored" data-anchor-id="force-structure-at-boundaries">Force structure at boundaries</h3>
+<p>Don’t pass prose between steps. Use formats that are easy to serialize and deserialize, like JSON/YAML with schemas you can validate against.</p>
+<p>Structure lets you validate, detect errors and attempt course correction or fail fast, diff, log, and evaluate deterministically.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This will even save you money, time and compute resources <a href="https://www.promptfoo.dev/docs/configuration/expected-outputs/deterministic/">by not having to use LLM as a Judge for assertion in your evals</a>.</p>
+</div>
+</div>
+</section>
+<section id="test-the-building-blocks" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-building-blocks">Test the building blocks</h3>
+<p>Write unit tests and integration tests for the core building blocks — same as you would’ve done before LLMs.</p>
+<hr>
+</section>
+</section>
+<section id="closing" class="level2">
+<h2 class="anchored" data-anchor-id="closing">Closing</h2>
+<p>This isn’t about distrusting models, it’s about giving them good building blocks to use.</p>
+<p>Use GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.</p>
+<p>That is how automation becomes something you can trust instead of manually testing once and being hopeful.</p>
 
 
 </section>

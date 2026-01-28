@@ -3,3 +3,8 @@ pre code {
   white-space: pre-wrap !important;  /* enable wrapping */
   word-break: break-word;            /* break long tokens */
 }
+
+/* Fix inline code in dark mode listings (code in <a> not <p>) */
+body.quarto-dark div.quarto-post a code:not(.sourceCode) {
+  background-color: rgba(67, 67, 67, .65);
+}

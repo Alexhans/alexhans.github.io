@@ -10,7 +10,134 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.25</generator>
-<lastBuildDate>Wed, 28 Jan 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 29 Jan 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Get the Value of a High-Quality Audit, All the Time</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/series/evals/automate-audits.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>We keep asking questions we should already know the answer to. And we usually ask them when a decision depends on it.</p>
+<p>Sometimes we guess. Sometimes we do a one-off investigation. Sometimes we shrug and move on.</p>
+<p>What if you could get the value of a high-quality audit <strong>all the time</strong>?</p>
+<hr>
+<section id="the-idea" class="level2">
+<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
+<p>Instead of running audits occasionally, automate the audit itself.</p>
+<p>An audit is just a set of questions.</p>
+<p>If you make those questions explicit, and make them answerable repeatedly, the audit stops being a one-off activity and becomes something you can run continuously.</p>
+<hr>
+</section>
+<section id="the-method" class="level2">
+<h2 class="anchored" data-anchor-id="the-method">The method</h2>
+<p>Start from pain points you already feel, or decisions you struggle to make.</p>
+<p>From each pain point, write the questions that would help you address it.</p>
+<p>Those questions imply dimensions (what you want coverage over) and, over time, a set of entities that describe your world.</p>
+<p>Don’t try to be complete. Just describe enough of your world to support the questions you care about.</p>
+<p>For example, “we don’t know if we can reproduce the data of our projects” is a pain point that may prompt the questions:</p>
+<ul>
+<li>Which projects have code packages?</li>
+<li>Which code packages have a README with reproducibility steps?</li>
+<li>Which README file instructions actually work?</li>
+</ul>
+<p>The first two should be relatively trivial to check (in this GenAI world) and you can decide how much value the third one gets but the important point is that you’ve introduced what you know and surfaced what you currently can answer in case it’s worth it later.</p>
+<p>The dimensions in our example are Code Packages and Projects.</p>
+<p>These are actionable and describe different states of knowledge and reproducibility readiness.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Other questions will likely arise from these such as “Which projects are ongoing? Which code packages belong to which projects?”</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="the-entities-in-your-world" class="level2">
+<h2 class="anchored" data-anchor-id="the-entities-in-your-world">The entities in your world</h2>
+<p>After writing a few questions, you can jump to a whiteboard and try to describe a lot of the entities in your world to brainstorm about what you own, what you interact with and how things cluster together. The entities are the targets of the questions, and dimensions allow you to define the coverage. Example: <em>“We have a total of 12 projects: 5 have READMEs with reproducibility steps, 2 don’t have READMEs, 5 have no packages.”</em></p>
+<p>It’s up to you whether you want to immediately define actions to take or treat it as a helpful data point for others to decide. The point is you stop spending time re-answering ad hoc questions.</p>
+</section>
+<section id="the-forcing-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-forcing-function">The forcing function</h2>
+<p>Once you have questions, you write evals, checks that verify you can answer them. (See <a href="https://www.promptfoo.dev/docs/configuration/expected-outputs/">promptfoo’s documentation</a> for one way to implement them.)</p>
+<p>An eval is simply:</p>
+<blockquote class="blockquote">
+<p><em>If I ask this question, I expect to get this kind of answer.</em></p>
+</blockquote>
+<p>Writing the eval is where the value appears.</p>
+<p>The moment you write it, you’re forced to confront whether you can actually answer the question at all.</p>
+<ul>
+<li>If you can, the eval is straightforward.</li>
+<li>If you can’t, you’ve discovered something you thought you knew but didn’t.</li>
+<li>If the answer is subjective, that gap becomes explicit.</li>
+</ul>
+<p>You don’t need perfect answers. You need to know which evals pass and which ones reveal that you never had a real answer.</p>
+<p>That alone is valuable.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While writing evals in a form that doesn’t break as things change requires some practice, it’s not your primary concern when starting. It’s fine to be explicit and baseline.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="what-you-get" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-get">What you get</h2>
+<p>Once questions have evals, answering them becomes an implementation detail. With MCPs (Model Context Protocol servers), <a href="https://playwright.dev/">Playwright</a>, etc. Programmatic access is easier than ever, the hard part isn’t answering questions, it’s knowing which ones to ask and systematizing what “good” looks like.</p>
+<p>Over time, you start to see where your questions apply, which are too vague, which are easier than expected, and where your description of the world is still thin.</p>
+<p>You don’t need to go all in. Start with a few questions and a small report that grows over time.</p>
+<p>At that point, you’re no longer redoing one-off audits.</p>
+<p>You’re running a <strong>continuous audit</strong> whose scope is defined by the questions you care about.</p>
+<hr>
+</section>
+<section id="why-this-is-low-risk" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-is-low-risk">Why this is low-risk</h2>
+<ul>
+<li>You don’t need to know everything upfront.</li>
+<li>You don’t need to define “good” everywhere.</li>
+<li>You don’t need a complete model of your world.</li>
+</ul>
+<p>You just need to acknowledge you may not know the answer for questions you’ve not explicitly tried to answer (quite similar to feeling pain when doing unit testing while being unsure of what you want)</p>
+<p>Even unanswered questions are useful. They tell you what’s unclear, subjective, or not worth investing in.</p>
+<hr>
+</section>
+<section id="closing" class="level2">
+<h2 class="anchored" data-anchor-id="closing">Closing</h2>
+<p>You don’t need to audit everything.</p>
+<p>You just need to stop rediscovering the same answers, and the same unknowns, over and over again.</p>
+<p>Start with a few questions. Let the audit grow.</p>
+<p>If it doesn’t help, stop.</p>
+<p>The cost is small. The insight compounds.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>engineering</category>
+  <category>productivity</category>
+  <category>genai</category>
+  <category>ops</category>
+  <guid>https://alexhans.github.io/posts/series/evals/automate-audits.html</guid>
+  <pubDate>Thu, 29 Jan 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Reducing Error Compounding in GenAI Systems</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

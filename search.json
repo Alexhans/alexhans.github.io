@@ -1,101 +1,10 @@
 [
   {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#pain-points",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#pain-points",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Pain Points",
-    "text": "Pain Points\n\nOverwhelming choice: MCPs, Agents\nWe can’t compare what we can’t measure\nCan I trust this to run on its own?\n\n\n\nTranscript coming soon in the form 00:00:00.000 –&gt; 00:00:13.000 My name is Alex - this is a placeholder transcript"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Automation",
-    "text": "Automation\nThis is not a new problem"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation-1",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation-1",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Automation",
-    "text": "Automation\n\nI need to:\n\nBe able to describe what I want\nUnderstand my risk profile"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Integration / Unit Tests",
-    "text": "Integration / Unit Tests"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-1",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-1",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Integration / Unit Tests",
-    "text": "Integration / Unit Tests\nf(input) -&gt; desired outcome [✓]"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-2",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-2",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Integration / Unit Tests",
-    "text": "Integration / Unit Tests\nf(model, prompt, system prompt, context) -&gt; desired outcome [✓]"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Existing Tools & Frameworks",
-    "text": "Existing Tools & Frameworks"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks-1",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks-1",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Existing Tools & Frameworks",
-    "text": "Existing Tools & Frameworks\n\nPromptfoo, Trulens, DeepEval, Ragas, LangFuse, your-custom-built-tool, and many many more"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "How do we write OUR benchmarks",
-    "text": "How do we write OUR benchmarks\n(Fast Iteration / Grounded Conversations)"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks-1",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks-1",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "How do we write OUR benchmarks",
-    "text": "How do we write OUR benchmarks\n\nIs any dag paused?, [\"dag_a\", \"dag_c\"]\nHas the backfill for X completed?, 'No, currently running tasks is [\"a.task_x\"]'\nHow many SLA breaches have we had in the last 2 weeks?, 4"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#call-to-action-lets-start",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#call-to-action-lets-start",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Call to Action: Let’s start",
-    "text": "Call to Action: Let’s start\n(“Reproducibility” First)"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#whos-interested",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#whos-interested",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Who’s interested?",
-    "text": "Who’s interested?\n(MCP pioneers, I’m looking at you)"
-  },
-  {
-    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#thank-you",
-    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#thank-you",
-    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "Thank you!",
-    "text": "Thank you!"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Living Deadline",
     "section": "",
-    "text": "I’ve been developing software professionally from 2008 so I’ve seen a thing or two, writing roguelikes with GCC 4.2, dealing with Visual C++ 6.0’s non standard quirks, writing triangles in OpenGL’s “Red Book”, writing fiscal printer firmware, creating multi country products, working in truly big data in Big Company (TM) and realizing that more often than not, the problem is not technical in nature.\nI’ve always found myself repeating insights, whether learned from others or my own experiences and realized I don’t always put them into text in the companies I work for and definitely not expose them in written form to the outside world.\nI should do that more. This is me getting into the habit of doing that more."
+    "text": "Get the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/meeting-budget.html",
@@ -133,53 +42,88 @@
     "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
   },
   {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html",
-    "title": "Reducing Error Compounding in GenAI Systems",
+    "objectID": "posts/accept-self-signed-cert-git-https.html",
+    "href": "posts/accept-self-signed-cert-git-https.html",
+    "title": "Accept a self-signed certificate with git",
     "section": "",
-    "text": "GenAI is non-deterministic and can fail or produce different results for the same input.\nA typical prompt-to-action flow involves many LLM calls. Each call is a chance for the model to misinterpret, hallucinate, or produce an unusable output.\nThe question isn’t if errors happen. It’s what happens when they do, and how many opportunities you give them to cascade."
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
   },
   {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "How bad does it get?",
-    "text": "How bad does it get?\nConsider a simple case with just 4 steps (note: this is illustrative, consider how your system might have 10, 20, or more LLM calls):\n\nStep 1: 95% chance of correct\nStep 2: 95% chance of correct\n\nStep 3: 95% chance of correct\nStep 4: 95% chance of correct\n\nEnd-to-end: ~81% chance everything is correct.\nNow compare:\n\nStep 1 (LLM): user intent → structured call (95%)\nStep 2 (deterministic tool): execute (98%)\nStep 3 (deterministic validation): parse + check (97%)\nStep 4 (LLM): result → response (96%)\n\nEnd-to-end: ~87%\n\nSame model. Different architecture. 6+ point improvement."
+    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
+    "href": "posts/accept-self-signed-cert-git-https.html#intro",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
   },
   {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "Two high-leverage approaches",
-    "text": "Two high-leverage approaches\n\nRemove 1 or many GenAI steps entirely, fewer chances to fail\nReplace GenAI steps with deterministic ones, lower error rate per step\n\n\n\n\n\n\n\nNote\n\n\n\nThese aren’t the only ways to reduce error (e.g. consensus systems, retries, etc) but the fundamentals expressed would apply everywhere, no matter whether it’s one agent or a swarm."
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Problem",
+    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
   },
   {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "What makes deterministic steps different",
-    "text": "What makes deterministic steps different\nDeterministic steps still fail, but the failure characteristics differ from LLM failures:\n\nBounded: failures come from a finite set of causes (parse error, timeout, missing field), not open-ended misinterpretation\nRepeatable: same input, same failure: you can reproduce and fix it\nNon-semantic: a crashed process doesn’t convince the next step that “actually the user meant X”\n\n\n\n\n\n\n\nNote\n\n\n\nThis doesn’t mean deterministic = reliable. It means when things break, they break in less subtle ways and there’s a lot of software engineering history behind their robustness."
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Solution",
+    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
   },
   {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "The design pattern",
-    "text": "The design pattern\nLLMs do many hard parts (interpreting intent, choosing tools, dealing with syntax, reasoning through results, deciding what comes next).\nIn a simplified flow, the model might:\n\nReceive user intent (natural language)\nDecide which tool to call and with what parameters\nReceive structured output from the tool\nDecide: done, or call another tool?\nRepeat until ready to respond\nTranslate the final result back to the user\n\nA lot of reasoning and orchestration happens there and the point isn’t to limit that but to give it good building blocks.\nA human user is more effective with better building blocks (e.g. well designed libraries or cli tools) and so is an LLM.\nWhat you want are building blocks that are:\n\nreusable\ncomposable\nwell tested\neasy to change and maintain\ncost effective\n\nAnd a model that acts as a translation layer, not the tool running all the logic."
+    "objectID": "posts/series/evals/automate-audits.html",
+    "href": "posts/series/evals/automate-audits.html",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "",
+    "text": "We keep asking questions we should already know the answer to. And we usually ask them when a decision depends on it.\nSometimes we guess. Sometimes we do a one-off investigation. Sometimes we shrug and move on.\nWhat if you could get the value of a high-quality audit all the time?"
   },
   {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "Practical recommendations",
-    "text": "Practical recommendations\n\nIdentify the deterministic core\nIf you are writing a Claude skill and a step can be expressed as code, ask yourself why you’re not expressing it as code.\nThe tradeoff is real:\nLeaving logic in prose means:\n\nHigher error rate at runtime\nRelying on evals instead of unit tests (if you don’t know what one or either of these are, then you’re definitely safer in the frozen code world)\nPaying the cost and error on every execution\nYes, it might improve as models improve, but you’re paying for that uncertainty every time\n\nMoving logic to code means:\n\nLower error rate (deterministic execution)\nUnit testable\nCheaper to run\nStill easy to write with LLMs, have the model generate the code once instead of regenerating the logic from prose every time\nYou can still ask LLMs to review or improve the code later if you want\n\nThe second option gives you confidence that things actually work. The first option defers that confidence in exchange for alleged convenience.\nIf the LLM can write code for you, why have it translate markdown to logic on every run? Make the translation once, freeze it as code, and test it properly.\n\n\nForce structure at boundaries\nDon’t pass prose between steps. Use formats that are easy to serialize and deserialize, like JSON/YAML with schemas you can validate against.\nStructure lets you validate, detect errors and attempt course correction or fail fast, diff, log, and evaluate deterministically.\n\n\n\n\n\n\nNote\n\n\n\nThis will even save you money, time and compute resources by not having to use LLM as a Judge for assertion in your evals.\n\n\n\n\nTest the building blocks\nWrite unit tests and integration tests for the core building blocks — same as you would’ve done before LLMs."
+    "objectID": "posts/series/evals/automate-audits.html#the-idea",
+    "href": "posts/series/evals/automate-audits.html#the-idea",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The idea",
+    "text": "The idea\nInstead of running audits occasionally, automate the audit itself.\nAn audit is just a set of questions.\nIf you make those questions explicit, and make them answerable repeatedly, the audit stops being a one-off activity and becomes something you can run continuously."
   },
   {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
-    "title": "Reducing Error Compounding in GenAI Systems",
+    "objectID": "posts/series/evals/automate-audits.html#the-method",
+    "href": "posts/series/evals/automate-audits.html#the-method",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The method",
+    "text": "The method\nStart from pain points you already feel, or decisions you struggle to make.\nFrom each pain point, write the questions that would help you address it.\nThose questions imply dimensions (what you want coverage over) and, over time, a set of entities that describe your world.\nDon’t try to be complete. Just describe enough of your world to support the questions you care about.\nFor example, “we don’t know if we can reproduce the data of our projects” is a pain point that may prompt the questions:\n\nWhich projects have code packages?\nWhich code packages have a README with reproducibility steps?\nWhich README file instructions actually work?\n\nThe first two should be relatively trivial to check (in this GenAI world) and you can decide how much value the third one gets but the important point is that you’ve introduced what you know and surfaced what you currently can answer in case it’s worth it later.\nThe dimensions in our example are Code Packages and Projects.\nThese are actionable and describe different states of knowledge and reproducibility readiness.\n\n\n\n\n\n\nNote\n\n\n\nOther questions will likely arise from these such as “Which projects are ongoing? Which code packages belong to which projects?”"
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#the-entities-in-your-world",
+    "href": "posts/series/evals/automate-audits.html#the-entities-in-your-world",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The entities in your world",
+    "text": "The entities in your world\nAfter writing a few questions, you can jump to a whiteboard and try to describe a lot of the entities in your world to brainstorm about what you own, what you interact with and how things cluster together. The entities are the targets of the questions, and dimensions allow you to define the coverage. Example: “We have a total of 12 projects: 5 have READMEs with reproducibility steps, 2 don’t have READMEs, 5 have no packages.”\nIt’s up to you whether you want to immediately define actions to take or treat it as a helpful data point for others to decide. The point is you stop spending time re-answering ad hoc questions."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#the-forcing-function",
+    "href": "posts/series/evals/automate-audits.html#the-forcing-function",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The forcing function",
+    "text": "The forcing function\nOnce you have questions, you write evals, checks that verify you can answer them. (See promptfoo’s documentation for one way to implement them.)\nAn eval is simply:\n\nIf I ask this question, I expect to get this kind of answer.\n\nWriting the eval is where the value appears.\nThe moment you write it, you’re forced to confront whether you can actually answer the question at all.\n\nIf you can, the eval is straightforward.\nIf you can’t, you’ve discovered something you thought you knew but didn’t.\nIf the answer is subjective, that gap becomes explicit.\n\nYou don’t need perfect answers. You need to know which evals pass and which ones reveal that you never had a real answer.\nThat alone is valuable.\n\n\n\n\n\n\nNote\n\n\n\nWhile writing evals in a form that doesn’t break as things change requires some practice, it’s not your primary concern when starting. It’s fine to be explicit and baseline."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#what-you-get",
+    "href": "posts/series/evals/automate-audits.html#what-you-get",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "What you get",
+    "text": "What you get\nOnce questions have evals, answering them becomes an implementation detail. With MCPs (Model Context Protocol servers), Playwright, etc. Programmatic access is easier than ever, the hard part isn’t answering questions, it’s knowing which ones to ask and systematizing what “good” looks like.\nOver time, you start to see where your questions apply, which are too vague, which are easier than expected, and where your description of the world is still thin.\nYou don’t need to go all in. Start with a few questions and a small report that grows over time.\nAt that point, you’re no longer redoing one-off audits.\nYou’re running a continuous audit whose scope is defined by the questions you care about."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#why-this-is-low-risk",
+    "href": "posts/series/evals/automate-audits.html#why-this-is-low-risk",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "Why this is low-risk",
+    "text": "Why this is low-risk\n\nYou don’t need to know everything upfront.\nYou don’t need to define “good” everywhere.\nYou don’t need a complete model of your world.\n\nYou just need to acknowledge you may not know the answer for questions you’ve not explicitly tried to answer (quite similar to feeling pain when doing unit testing while being unsure of what you want)\nEven unanswered questions are useful. They tell you what’s unclear, subjective, or not worth investing in."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#closing",
+    "href": "posts/series/evals/automate-audits.html#closing",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
     "section": "Closing",
-    "text": "Closing\nThis isn’t about distrusting models, it’s about giving them good building blocks to use.\nUse GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.\nThat is how automation becomes something you can trust instead of manually testing once and being hopeful."
+    "text": "Closing\nYou don’t need to audit everything.\nYou just need to stop rediscovering the same answers, and the same unknowns, over and over again.\nStart with a few questions. Let the audit grow.\nIf it doesn’t help, stop.\nThe cost is small. The insight compounds."
   },
   {
     "objectID": "posts/series/zeroops/merge-and-forget.html",
@@ -413,38 +357,52 @@
     "text": "Analogy\nThink of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html",
-    "href": "posts/accept-self-signed-cert-git-https.html",
-    "title": "Accept a self-signed certificate with git",
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html",
+    "title": "Reducing Error Compounding in GenAI Systems",
     "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+    "text": "GenAI is non-deterministic and can fail or produce different results for the same input.\nA typical prompt-to-action flow involves many LLM calls. Each call is a chance for the model to misinterpret, hallucinate, or produce an unusable output.\nThe question isn’t if errors happen. It’s what happens when they do, and how many opportunities you give them to cascade."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
-    "href": "posts/accept-self-signed-cert-git-https.html#intro",
-    "title": "Accept a self-signed certificate with git",
-    "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "How bad does it get?",
+    "text": "How bad does it get?\nConsider a simple case with just 4 steps (note: this is illustrative, consider how your system might have 10, 20, or more LLM calls):\n\nStep 1: 95% chance of correct\nStep 2: 95% chance of correct\n\nStep 3: 95% chance of correct\nStep 4: 95% chance of correct\n\nEnd-to-end: ~81% chance everything is correct.\nNow compare:\n\nStep 1 (LLM): user intent → structured call (95%)\nStep 2 (deterministic tool): execute (98%)\nStep 3 (deterministic validation): parse + check (97%)\nStep 4 (LLM): result → response (96%)\n\nEnd-to-end: ~87%\n\nSame model. Different architecture. 6+ point improvement."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Problem",
-    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Two high-leverage approaches",
+    "text": "Two high-leverage approaches\n\nRemove 1 or many GenAI steps entirely, fewer chances to fail\nReplace GenAI steps with deterministic ones, lower error rate per step\n\n\n\n\n\n\n\nNote\n\n\n\nThese aren’t the only ways to reduce error (e.g. consensus systems, retries, etc) but the fundamentals expressed would apply everywhere, no matter whether it’s one agent or a swarm."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Solution",
-    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "What makes deterministic steps different",
+    "text": "What makes deterministic steps different\nDeterministic steps still fail, but the failure characteristics differ from LLM failures:\n\nBounded: failures come from a finite set of causes (parse error, timeout, missing field), not open-ended misinterpretation\nRepeatable: same input, same failure: you can reproduce and fix it\nNon-semantic: a crashed process doesn’t convince the next step that “actually the user meant X”\n\n\n\n\n\n\n\nNote\n\n\n\nThis doesn’t mean deterministic = reliable. It means when things break, they break in less subtle ways and there’s a lot of software engineering history behind their robustness."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "The Living Deadline",
-    "section": "",
-    "text": "Reducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "The design pattern",
+    "text": "The design pattern\nLLMs do many hard parts (interpreting intent, choosing tools, dealing with syntax, reasoning through results, deciding what comes next).\nIn a simplified flow, the model might:\n\nReceive user intent (natural language)\nDecide which tool to call and with what parameters\nReceive structured output from the tool\nDecide: done, or call another tool?\nRepeat until ready to respond\nTranslate the final result back to the user\n\nA lot of reasoning and orchestration happens there and the point isn’t to limit that but to give it good building blocks.\nA human user is more effective with better building blocks (e.g. well designed libraries or cli tools) and so is an LLM.\nWhat you want are building blocks that are:\n\nreusable\ncomposable\nwell tested\neasy to change and maintain\ncost effective\n\nAnd a model that acts as a translation layer, not the tool running all the logic."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Practical recommendations",
+    "text": "Practical recommendations\n\nIdentify the deterministic core\nIf you are writing a Claude skill and a step can be expressed as code, ask yourself why you’re not expressing it as code.\nThe tradeoff is real:\nLeaving logic in prose means:\n\nHigher error rate at runtime\nRelying on evals instead of unit tests (if you don’t know what one or either of these are, then you’re definitely safer in the frozen code world)\nPaying the cost and error on every execution\nYes, it might improve as models improve, but you’re paying for that uncertainty every time\n\nMoving logic to code means:\n\nLower error rate (deterministic execution)\nUnit testable\nCheaper to run\nStill easy to write with LLMs, have the model generate the code once instead of regenerating the logic from prose every time\nYou can still ask LLMs to review or improve the code later if you want\n\nThe second option gives you confidence that things actually work. The first option defers that confidence in exchange for alleged convenience.\nIf the LLM can write code for you, why have it translate markdown to logic on every run? Make the translation once, freeze it as code, and test it properly.\n\n\nForce structure at boundaries\nDon’t pass prose between steps. Use formats that are easy to serialize and deserialize, like JSON/YAML with schemas you can validate against.\nStructure lets you validate, detect errors and attempt course correction or fail fast, diff, log, and evaluate deterministically.\n\n\n\n\n\n\nNote\n\n\n\nThis will even save you money, time and compute resources by not having to use LLM as a Judge for assertion in your evals.\n\n\n\n\nTest the building blocks\nWrite unit tests and integration tests for the core building blocks — same as you would’ve done before LLMs."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Closing",
+    "text": "Closing\nThis isn’t about distrusting models, it’s about giving them good building blocks to use.\nUse GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.\nThat is how automation becomes something you can trust instead of manually testing once and being hopeful."
   }
 ]

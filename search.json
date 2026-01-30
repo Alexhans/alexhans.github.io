@@ -1,10 +1,101 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "The Living Deadline",
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#pain-points",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#pain-points",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Pain Points",
+    "text": "Pain Points\n\nOverwhelming choice: MCPs, Agents\nWe can’t compare what we can’t measure\nCan I trust this to run on its own?\n\n\n\nTranscript coming soon in the form 00:00:00.000 –&gt; 00:00:13.000 My name is Alex - this is a placeholder transcript"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Automation",
+    "text": "Automation\nThis is not a new problem"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation-1",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation-1",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Automation",
+    "text": "Automation\n\nI need to:\n\nBe able to describe what I want\nUnderstand my risk profile"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Integration / Unit Tests",
+    "text": "Integration / Unit Tests"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-1",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-1",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Integration / Unit Tests",
+    "text": "Integration / Unit Tests\nf(input) -&gt; desired outcome [✓]"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-2",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-2",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Integration / Unit Tests",
+    "text": "Integration / Unit Tests\nf(model, prompt, system prompt, context) -&gt; desired outcome [✓]"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Existing Tools & Frameworks",
+    "text": "Existing Tools & Frameworks"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks-1",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks-1",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Existing Tools & Frameworks",
+    "text": "Existing Tools & Frameworks\n\nPromptfoo, Trulens, DeepEval, Ragas, LangFuse, your-custom-built-tool, and many many more"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "How do we write OUR benchmarks",
+    "text": "How do we write OUR benchmarks\n(Fast Iteration / Grounded Conversations)"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks-1",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks-1",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "How do we write OUR benchmarks",
+    "text": "How do we write OUR benchmarks\n\nIs any dag paused?, [\"dag_a\", \"dag_c\"]\nHas the backfill for X completed?, 'No, currently running tasks is [\"a.task_x\"]'\nHow many SLA breaches have we had in the last 2 weeks?, 4"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#call-to-action-lets-start",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#call-to-action-lets-start",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Call to Action: Let’s start",
+    "text": "Call to Action: Let’s start\n(“Reproducibility” First)"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#whos-interested",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#whos-interested",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Who’s interested?",
+    "text": "Who’s interested?\n(MCP pioneers, I’m looking at you)"
+  },
+  {
+    "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#thank-you",
+    "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#thank-you",
+    "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "Thank you!",
+    "text": "Thank you!"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Get the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "text": "I’ve been developing software professionally from 2008 so I’ve seen a thing or two, writing roguelikes with GCC 4.2, dealing with Visual C++ 6.0’s non standard quirks, writing triangles in OpenGL’s “Red Book”, writing fiscal printer firmware, creating multi country products, working in truly big data in Big Company (TM) and realizing that more often than not, the problem is not technical in nature.\nI’ve always found myself repeating insights, whether learned from others or my own experiences and realized I don’t always put them into text in the companies I work for and definitely not expose them in written form to the outside world.\nI should do that more. This is me getting into the habit of doing that more."
   },
   {
     "objectID": "posts/meeting-budget.html",
@@ -404,5 +495,12 @@
     "title": "Reducing Error Compounding in GenAI Systems",
     "section": "Closing",
     "text": "Closing\nThis isn’t about distrusting models, it’s about giving them good building blocks to use.\nUse GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.\nThat is how automation becomes something you can trust instead of manually testing once and being hopeful."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Living Deadline",
+    "section": "",
+    "text": "Get the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   }
 ]

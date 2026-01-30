@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://alexhans.github.io/index.html</loc>
-    <lastmod>2026-01-30T01:42:11.496Z</lastmod>
+    <loc>https://alexhans.github.io/talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
+    <lastmod>2026-01-13T04:12:31.802Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/about.html</loc>
+    <lastmod>2025-10-19T20:57:56.172Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/meeting-budget.html</loc>
@@ -51,5 +55,9 @@
   <url>
     <loc>https://alexhans.github.io/posts/series/evals/error-compounding-genai-systems-approach.html</loc>
     <lastmod>2026-01-28T10:00:30.270Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/index.html</loc>
+    <lastmod>2026-01-30T01:42:11.496Z</lastmod>
   </url>
 </urlset>

@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/series/evals/measure-first-optimize-last.html",
       "/posts/series/evals/automate-audits.html",
       "/posts/series/evals/error-compounding-genai-systems-approach.html",
       "/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",

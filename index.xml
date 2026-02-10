@@ -10,7 +10,84 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Thu, 29 Jan 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 10 Feb 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Measure First, Optimize Last: My Approach to AI Evals</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/series/evals/measure-first-optimize-last.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>If you can’t measure it, you’re guessing. Here’s how I think about evals, practical examples at <a href="https://ai-evals.io/">ai-evals.io</a>.</p>
+<section id="start-with-pain-not-tooling" class="level1">
+<h1>Start with pain, not tooling</h1>
+<p>My eval approach is pain-point driven:</p>
+<ul>
+<li>I can’t compare what I can’t measure.</li>
+<li>I can’t trust an AI system to run on its own if I can’t quantify failure.</li>
+</ul>
+<p>If those two are unresolved, I am not “doing evals.” I am guessing.</p>
+</section>
+<section id="treat-it-like-automation-engineering" class="level1">
+<h1>Treat it like automation engineering</h1>
+<p>I frame agent work the same way as any automation effort. Unlike traditional ML experimentation, automation engineering demands you define acceptable behaviour upfront. Not after deployment:</p>
+<ul>
+<li>Can I describe exactly what I want? (intentionality)</li>
+<li>What is the worst-case blast radius<sup>1</sup> if this fails?</li>
+</ul>
+<p>That framing forces clarity early and keeps risk visible.</p>
+</section>
+<section id="build-the-smallest-useful-test-loop" class="level1">
+<h1>Build the smallest useful test loop</h1>
+<p>I treat early eval work like integration testing plus TDD<sup>2</sup> habits:</p>
+<ul>
+<li>Skip big infra at the beginning.</li>
+<li>Put the agent where users already work so it behaves like an extra set of hands.</li>
+<li>Recreate real user stories and questions.</li>
+<li>Use <a href="../../../posts/series/evals/error-compounding-genai-systems-approach.html">deterministic checks</a> wherever possible; don’t default to LLM-as-a-judge for everything.</li>
+</ul>
+<p>The goal is not “more tests.” The goal is tests that maximize iteration speed and control.</p>
+</section>
+<section id="optimize-late" class="level1">
+<h1>Optimize late</h1>
+<p>This space moves fast. Over-optimizing too early is usually waste.</p>
+<p>I prefer to keep things:</p>
+<ul>
+<li>Minimal</li>
+<li>Easy to Change <a href="https://www.youtube.com/watch?v=c8AzqMr87gQ">(ETC)</a></li>
+</ul>
+<p>In practice that means:</p>
+<ul>
+<li>Parameterized experiments</li>
+<li>Easy comparison across runs, configs, and components</li>
+</ul>
+<p>Once benchmarks are stable, then optimize cost and latency:</p>
+<ul>
+<li>Pick the cheapest model/config that still meets the bar.</li>
+</ul>
+<p>That’s it: measure first, constrain risk, iterate fast, optimize last.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Blast Radius: refers to the extent of system, data, or user impact caused by a component failure, security breach, or faulty code deployment. See an <a href="https://www.morphisec.com/blog/blast-radius-fallout-strengthening-cyber-resilience-after-the-largest-it-crash/">extreme example in the Falcon Sensor 2024 crash</a>.↩︎</p></li>
+<li id="fn2"><p>TDD: Test Driven Development: The act of driving your code thinking intentionally about testability and what tests expose the behaviour you want. Dogmatically it can seem slow and unhelpful but thinking about testability and adding tests to catch prevent bugs from recurring are very useful practices to have. Otherwise, overbuilding is very easy.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>engineering</category>
+  <category>genai</category>
+  <category>evals</category>
+  <guid>https://alexhans.github.io/posts/series/evals/measure-first-optimize-last.html</guid>
+  <pubDate>Tue, 10 Feb 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Get the Value of a High-Quality Audit, All the Time</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

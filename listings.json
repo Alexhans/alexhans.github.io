@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/series/evals/building-agent-skills-incrementally.html",
       "/posts/series/evals/measure-first-optimize-last.html",
       "/posts/series/evals/automate-audits.html",
       "/posts/series/evals/error-compounding-genai-systems-approach.html",

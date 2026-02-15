@@ -10,7 +10,130 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Tue, 10 Feb 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 13 Feb 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Building Agent Skills: Intent, Determinism, and Stability</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>I want to offer a mental model and decision tree for building <a href="https://agentskills.io/home">Agent Skills</a> incrementally. It’s meant for anyone experimenting with them - not just for software developers - and focuses on staying in control as complexity grows or you start thinking about sharing or collaborating with others.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s awesome to see increased adoption of <a href="https://agentskills.io/home">Agent Skills</a> to package workflows <sup>1</sup> and I attribute a lot of their success to standardized contracts for central use and managing context through progressive disclosure <sup>2</sup> (More mature tools/MCPS and models definitely lowered friction as well).</p>
+</div>
+</div>
+<section id="mental-model" class="level1">
+<h1>Mental Model</h1>
+<p>You can think of <strong>Agents</strong> as <strong>assistants</strong> that can take the load from you and <strong>Agent Skills</strong> as the <strong>high level instructions</strong> you might leave to them, <strong>in a standardized format</strong>.</p>
+<p>You need to know what you want from them, and the tradeoffs between micromanagement and agency - <strong>Intent</strong>. You want to offload mechanical work so they’re not reasoning about things that a tool like a calculator or a spreadsheet could handle - <strong>Determinism</strong> and you want the whole thing to hold up even if you swap one assistant for another - <strong>Stability</strong>.</p>
+<p>Looking at the shape of an Agent Skill, you can mentally map it as:</p>
+<ul>
+<li>Intent -&gt; Markdown instructions</li>
+<li>Determinism -&gt; tools and scripts</li>
+<li>Stability -&gt; Tests and <a href="https://ai-evals.io">AI Evals</a></li>
+</ul>
+<p>If your intent is clear enough, the built-in <a href="https://github.com/metaskills/skill-builder">skill-builder</a> in many agent CLIs may be sufficient especially if you still validate outputs manually or stay in the loop for approvals. The more you want to change the skill without manually validating every run, or the more you worry about undesired/rogue behavior, the more determinism helps: scripts reduce <a href="../../../posts/series/evals/error-compounding-genai-systems-approach.html">error compounding</a>, and unit tests plus AI evals reduce drift risk and make iteration safer and faster, especially when sharing or collaborating.</p>
+</section>
+<section id="decision-tree" class="level1">
+<h1>Decision Tree</h1>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A([Start: I have or am developing an Agent Skill]) --&gt; Q1{Only for you&lt;br/&gt;and you're happy manually reviewing outputs?}
+
+  Q1 -- Yes --&gt; L0["Level 0: Intent (Markdown only might be enough for you)&lt;br/&gt;- Clear inputs/outputs help&lt;br/&gt;- Examples help&lt;br/&gt;- Define good enough"]
+  Q1 -- No --&gt; Q2{Need repeatable structure&lt;br/&gt;or mechanical consistency?}
+
+  Q2 -- No --&gt; L0
+  Q2 -- Yes --&gt; L1["Level 1: Determinism (Tools) &lt;br/&gt;- Move mechanical steps into tools/scripts&lt;br/&gt;- Use structured output&lt;br/&gt;- If possible, log tool inputs/outputs"]
+
+  L1 --&gt; Q3{Will others use it&lt;br/&gt;or will you modify it often&lt;br/&gt;without manual re-checking?}
+
+  Q3 -- No --&gt; L1
+  Q3 -- Yes --&gt; L2["Level 2: Stability (Tests + Evals)&lt;br/&gt;- Unit tests for tools/scripts&lt;br/&gt;- AI evals for behavior/user stories&lt;br/&gt;- Minimal Golden cases + some edge cases"]
+
+  L2 --&gt; Q4{Can it access sensitive data&lt;br/&gt;or take impactful actions&lt;br/&gt;or run unattended?}
+
+  Q4 -- No --&gt; L2
+  Q4 -- Yes --&gt; L3["Level 3: Safety/Scale&lt;br/&gt;- Guardrails + least privilege&lt;br/&gt;- Human approval for high impact&lt;br/&gt;- Security-focused evals"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Observability</strong>: This is a key point I omitted from the levels here. It lets you monitor cost (tokens spent), latency, tool selection, and more. You should add it as soon as you feel that you are missing that information. Investing in this space is important to answer questions about what happened in a particular “agent instruction following loop”.</p>
+</div>
+</div>
+<p><strong>Go deeper on each level:</strong></p>
+<ul>
+<li><strong>Level 0 - Intent:</strong> <a href="https://agentskills.io/what-are-skills">Skills Spec</a></li>
+<li><strong>Level 1 - Determinism:</strong> <a href="../../../posts/series/evals/error-compounding-genai-systems-approach.html">Error compounding + determinism</a></li>
+<li><strong>Level 2 - Stability:</strong> <a href="https://ai-evals.io">Evals primer</a></li>
+<li><strong>Level 3 - Security:</strong> If you’re here, least privilege and human approval for high-impact actions are usually a good baseline. For each integration point, ask what the worst-case outcome is. It’s also worth understanding <a href="https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/">Prompt Injection</a>.</li>
+</ul>
+<section id="a-note-on-experience" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-on-experience">A note on experience</h2>
+<p>The levels are illustrative and exist to prevent overwhelming yourself and avoid paralysis - either from fear of breaking things or from too many choices at the start.</p>
+<p>After you build a few skills, recognizing patterns becomes easier and you can decide where to invest based on your own <a href="../../../posts/series/evals/measure-first-optimize-last.html">pain points</a>. You may start thinking about intent, determinism, stability, and safety from the beginning.</p>
+<p>That does not mean implementing everything at once. It means being aware of more tradeoffs earlier.</p>
+<p>Build only what you need, and keep it as simple as possible.</p>
+</section>
+<section id="practical-takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="practical-takeaway">Practical Takeaway</h2>
+<p>Use skills to clarify intent. When a step stabilizes, move it into code or tools. Not because the model can’t do it, but because you don’t want to rediscover the same approach on every run. That lowers cost, reduces drift risk, and keeps room for directed experiments.</p>
+<p>You can build skills with your agent CLI of choice (Claude/Codex/OpenCode), or use frameworks that support the pattern, like Doug Trajano’s <a href="https://github.com/DougTrajano/pydantic-ai-skills">Agent Skills implementation for PydanticAI</a> (<a href="https://dougtrajano.github.io/pydantic-ai-skills/">docs</a>).</p>
+<hr>
+</section>
+<section id="call-to-action" class="level2">
+<h2 class="anchored" data-anchor-id="call-to-action">Call to action</h2>
+<p>If you have a skill you want to take beyond Markdown with determinism or <a href="https://ai-evals.io/">AI Evals</a>, share it. We can discuss which steps are missing to move from one level to the next. It may be simpler than it looks, and we could use it as a public-facing example to help others see specific ways to improve.</p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Turning a sequence of steps you’d otherwise repeat manually into a single, reusable instruction an agent can follow.↩︎</p></li>
+<li id="fn2"><p>Progressive disclosure means your agent doesn’t need every instruction in context at once. It can load what’s relevant when needed. See Doug Trajano’s <a href="https://github.com/DougTrajano/pydantic-ai-skills">PydanticAI Agent Skills implementation</a> and <a href="https://dougtrajano.github.io/pydantic-ai-skills/">docs</a>.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>genai</category>
+  <category>workflows</category>
+  <category>reliability</category>
+  <guid>https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html</guid>
+  <pubDate>Fri, 13 Feb 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Measure First, Optimize Last: My Approach to AI Evals</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

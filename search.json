@@ -112,60 +112,158 @@
     "text": "Footnotes\n\n\nBlast Radius: refers to the extent of system, data, or user impact caused by a component failure, security breach, or faulty code deployment. See an extreme example in the Falcon Sensor 2024 crash.↩︎\nTDD: Test Driven Development: The act of driving your code thinking intentionally about testability and what tests expose the behaviour you want. Dogmatically it can seem slow and unhelpful but thinking about testability and adding tests to catch prevent bugs from recurring are very useful practices to have. Otherwise, overbuilding is very easy.↩︎"
   },
   {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html",
-    "href": "posts/series/zeroops/no-news-is-good-news.html",
-    "title": "No News Is Good News",
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
     "section": "",
-    "text": "Do not check whether things are fine."
+    "text": "I want to offer a mental model and decision tree for building Agent Skills incrementally. It’s meant for anyone experimenting with them - not just for software developers - and focuses on staying in control as complexity grows or you start thinking about sharing or collaborating with others."
   },
   {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
-    "title": "No News Is Good News",
-    "section": "",
-    "text": "Do not check whether things are fine."
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#a-note-on-experience",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#a-note-on-experience",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "A note on experience",
+    "text": "A note on experience\nThe levels are illustrative and exist to prevent overwhelming yourself and avoid paralysis - either from fear of breaking things or from too many choices at the start.\nAfter you build a few skills, recognizing patterns becomes easier and you can decide where to invest based on your own pain points. You may start thinking about intent, determinism, stability, and safety from the beginning.\nThat does not mean implementing everything at once. It means being aware of more tradeoffs earlier.\nBuild only what you need, and keep it as simple as possible."
   },
   {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
-    "title": "No News Is Good News",
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#practical-takeaway",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#practical-takeaway",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "Practical Takeaway",
+    "text": "Practical Takeaway\nUse skills to clarify intent. When a step stabilizes, move it into code or tools. Not because the model can’t do it, but because you don’t want to rediscover the same approach on every run. That lowers cost, reduces drift risk, and keeps room for directed experiments.\nYou can build skills with your agent CLI of choice (Claude/Codex/OpenCode), or use frameworks that support the pattern, like Doug Trajano’s Agent Skills implementation for PydanticAI (docs)."
+  },
+  {
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#call-to-action",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#call-to-action",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "Call to action",
+    "text": "Call to action\nIf you have a skill you want to take beyond Markdown with determinism or AI Evals, share it. We can discuss which steps are missing to move from one level to the next. It may be simpler than it looks, and we could use it as a public-facing example to help others see specific ways to improve."
+  },
+  {
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#footnotes",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#footnotes",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nTurning a sequence of steps you’d otherwise repeat manually into a single, reusable instruction an agent can follow.↩︎\nProgressive disclosure means your agent doesn’t need every instruction in context at once. It can load what’s relevant when needed. See Doug Trajano’s PydanticAI Agent Skills implementation and docs.↩︎"
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html",
+    "href": "posts/series/zeroops/merge-and-forget.html",
+    "title": "Merge and Forget",
+    "section": "",
+    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#the-rule",
+    "href": "posts/series/zeroops/merge-and-forget.html#the-rule",
+    "title": "Merge and Forget",
+    "section": "",
+    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#pain-point",
+    "href": "posts/series/zeroops/merge-and-forget.html#pain-point",
+    "title": "Merge and Forget",
     "section": "Pain Point",
-    "text": "Pain Point\nManually checking systems to confirm they are “okay” creates unnecessary cognitive load.\nDashboards and queues become reassurance rituals: they consume time and attention without changing outcomes.\nIf something is broken, you should be told."
+    "text": "Pain Point\nTracking deployments “just in case” creates unnecessary cognitive load.\nIt turns delivery into a background worry: tabs left open, dashboards checked, attention fragmented.\nIf something requires attention, you should be told."
   },
   {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#do",
-    "title": "No News Is Good News",
+    "objectID": "posts/series/zeroops/merge-and-forget.html#do",
+    "href": "posts/series/zeroops/merge-and-forget.html#do",
+    "title": "Merge and Forget",
     "section": "Do",
-    "text": "Do\nFor anything that might require action, ensure there is an automated signal.\n\nThe signal should reach the people who can meaningfully act on it.\nIt does not need to prescribe the action.\nOver time, actions may be formalised (runbooks, automation), but that is secondary.\n\nIf something requires attention, it should create noise. If it does not, it should remain silent."
+    "text": "Do\nTreat delivery as a system property:\n\nPush “surprises” left: run fast, automated cross-system checks (e.g. integration tests) before merge, at code-review time, to minimise post-merge failures.\nYou should get a signal if something is blocked or broken.\nYou should not need manual reassurance.\nWhen the system is healthy, silence is expected.\n\n(see No News Is Good News)."
   },
   {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do-not",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#do-not",
-    "title": "No News Is Good News",
+    "objectID": "posts/series/zeroops/merge-and-forget.html#do-not",
+    "href": "posts/series/zeroops/merge-and-forget.html#do-not",
+    "title": "Merge and Forget",
     "section": "Do Not",
-    "text": "Do Not\n\nCreate mechanisms to confirm system health.\nRegularly inspect dashboards “just to be sure”.\nRely on manual checks for reassurance.\n\nSilence is expected when coverage is adequate."
+    "text": "Do Not\n\nFollow a deploy through the pipeline to feel safe.\nKeep checking “did it land yet?”\nWatch logs/dashboards after merge for reassurance."
   },
   {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#scope",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#scope",
-    "title": "No News Is Good News",
+    "objectID": "posts/series/zeroops/merge-and-forget.html#scope",
+    "href": "posts/series/zeroops/merge-and-forget.html#scope",
+    "title": "Merge and Forget",
     "section": "Scope",
-    "text": "Scope\nThis applies to operational, actionable failures: things that are broken now and require attention.\nThis does not cover:\n\nslow degradation\ntrend monitoring\npreemptive or exploratory analysis"
+    "text": "Scope\nThis is for routine, continuous delivery of typical changes.\nThis does not cover:\n\nmajor migrations\none-way / high-blast-radius changes\ncommunicating expected delivery times (ETAs)"
   },
   {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#analogy",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#analogy",
-    "title": "No News Is Good News",
-    "section": "Analogy",
-    "text": "Analogy\nThink of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine."
-  },
-  {
-    "objectID": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
-    "href": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
-    "title": "Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
     "section": "",
-    "text": "Abstract\nAs LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.\n\n\nSlides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript in VTT coming before 2026-02-01"
+    "text": "Slack only pastes rich formatting when the clipboard advertises text/html, otherwise it treats everything as plain text.\nIf my file sample.md looks like this:\n:robot_face: Tech updates :robot_face:\n\n# Some Title\n\n- **Project**: Did x in [google](https://google.com).\n  - aaa\n  - bbb\n      - ccc \n  - ddd\n\n# Another title\n\n- Another launch\n  - details\nCompare pasting directly on the left and what we want on the right.\n\n\n\nSide by Side comparison between markdown in plain text and the slack rich formatted version"
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "How to build latest xclip from source in Ubuntu",
+    "text": "How to build latest xclip from source in Ubuntu\nsudo apt install autoconf automake libtool libxmu-dev\ngit clone https://github.com/astrand/xclip\ncd xclip\nautoreconf -fi\n./configure --prefix=/usr/local\nmake\nsudo make install"
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "WSL and powershell are different beasts",
+    "text": "WSL and powershell are different beasts\nThis won’t work on WSL and slack as-is. You likely need to do it from powershell using a third-party program\nWSL cannot directly populate the Windows clipboard with rich HTML in a way Slack accepts; an intermediate Windows application re-copies the content with additional clipboard formats.\n\nPowershell 5\n\nGet-Content out.html -Raw | Set-Clipboard -AsHtml\n\nOpen LibreOffice Writer or any GUI and paste.\nSelect that and copy\nPaste into slack\n\n\nFormat HTML won’t be added to Powershell 7\nPeople are not happy"
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html",
+    "href": "posts/using-dbt-to-accelerate-science.html",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "",
+    "text": "This post is part of a series: “Factory of Domain Experts”:"
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
+    "href": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "What problem are we solving?",
+    "text": "What problem are we solving?\n“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?\nI challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.\n\nWhat we wanted to achieve:\n\nScale our team: Grow scientific output independent of engineering capacity.\nIterate in parallel, not sequentially: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.\nShare easily reproducible code: Produce reproducible code and data that makes cross-team collaboration easy and transparent.\n\nInstead of building custom solutions, we used a small set of industry-standard tools, dbt (Data Build Tool) with SQL, Apache Airflow (using astronomer-cosmos), and Git, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic."
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
+    "href": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "How dbt solves these problems",
+    "text": "How dbt solves these problems\nData Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. Crucially, there are no tradeoffs between scrappy exploration and production-ready code, the same code serves both purposes:\n\nProduction-ready from day one: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.\nCollaboration and early integration: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.\nSimple workflows that scale: A simple dbt run -s \"model_name+\" runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.\nModularity without orchestration headaches: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.\nAutomatic lineage and documentation: dbt generates interactive dependency graphs showing how your models connect. Schema documentation automatically appears in the warehouse tables.\nBuilt-in quality controls: Define data tests that run automatically.\nBuilt for integration and extensibility: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.\nCompliance and governance: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling."
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#impact",
+    "href": "posts/using-dbt-to-accelerate-science.html#impact",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "Impact",
+    "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html",
+    "href": "posts/notifications-for-command-line-tasks.html",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "",
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#intro",
+    "href": "posts/notifications-for-command-line-tasks.html#intro",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "",
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
+    "href": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Desktop notifications with notify-send",
+    "text": "Desktop notifications with notify-send\nHere’s the one I’m using lately and has served me well:\n# Add an \"alert\" alias for long running commands.  Use like so:\n#   sleep 10; alert\nalias alert='notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\"  \n\"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"'\nAs the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias alert (Remember that semi-colon ; means execute after the previous command is finished, no matter the return code, unlike && which only executes the next command if return code is 0 (success).\nSo if you’re compiling and running tests in a project you could just do:\nmake test; alert\nand you’ll get notified whenever make test ends.\nBut what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?"
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#email-notifications",
+    "href": "posts/notifications-for-command-line-tasks.html#email-notifications",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Email notifications",
+    "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
   },
   {
     "objectID": "posts/wsl-pip-hangs-ipv6.html",
@@ -224,123 +322,60 @@
     "text": "Notes\nIf you see multiple stuck installs, clear them before retrying:\npkill -f \"python -u -m pip install\" || true"
   },
   {
-    "objectID": "posts/notifications-for-command-line-tasks.html",
-    "href": "posts/notifications-for-command-line-tasks.html",
-    "title": "Get notifications in ubuntu when command line tasks end",
+    "objectID": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
+    "href": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
+    "title": "Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "",
-    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+    "text": "Abstract\nAs LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.\n\n\nSlides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript in VTT coming before 2026-02-01"
   },
   {
-    "objectID": "posts/notifications-for-command-line-tasks.html#intro",
-    "href": "posts/notifications-for-command-line-tasks.html#intro",
-    "title": "Get notifications in ubuntu when command line tasks end",
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html",
+    "href": "posts/series/zeroops/no-news-is-good-news.html",
+    "title": "No News Is Good News",
     "section": "",
-    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+    "text": "Do not check whether things are fine."
   },
   {
-    "objectID": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
-    "href": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "Desktop notifications with notify-send",
-    "text": "Desktop notifications with notify-send\nHere’s the one I’m using lately and has served me well:\n# Add an \"alert\" alias for long running commands.  Use like so:\n#   sleep 10; alert\nalias alert='notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\"  \n\"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"'\nAs the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias alert (Remember that semi-colon ; means execute after the previous command is finished, no matter the return code, unlike && which only executes the next command if return code is 0 (success).\nSo if you’re compiling and running tests in a project you could just do:\nmake test; alert\nand you’ll get notified whenever make test ends.\nBut what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?"
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html#email-notifications",
-    "href": "posts/notifications-for-command-line-tasks.html#email-notifications",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "Email notifications",
-    "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html",
-    "href": "posts/using-dbt-to-accelerate-science.html",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
+    "title": "No News Is Good News",
     "section": "",
-    "text": "This post is part of a series: “Factory of Domain Experts”:"
+    "text": "Do not check whether things are fine."
   },
   {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
-    "href": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "What problem are we solving?",
-    "text": "What problem are we solving?\n“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?\nI challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.\n\nWhat we wanted to achieve:\n\nScale our team: Grow scientific output independent of engineering capacity.\nIterate in parallel, not sequentially: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.\nShare easily reproducible code: Produce reproducible code and data that makes cross-team collaboration easy and transparent.\n\nInstead of building custom solutions, we used a small set of industry-standard tools, dbt (Data Build Tool) with SQL, Apache Airflow (using astronomer-cosmos), and Git, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic."
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
-    "href": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "How dbt solves these problems",
-    "text": "How dbt solves these problems\nData Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. Crucially, there are no tradeoffs between scrappy exploration and production-ready code, the same code serves both purposes:\n\nProduction-ready from day one: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.\nCollaboration and early integration: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.\nSimple workflows that scale: A simple dbt run -s \"model_name+\" runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.\nModularity without orchestration headaches: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.\nAutomatic lineage and documentation: dbt generates interactive dependency graphs showing how your models connect. Schema documentation automatically appears in the warehouse tables.\nBuilt-in quality controls: Define data tests that run automatically.\nBuilt for integration and extensibility: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.\nCompliance and governance: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling."
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#impact",
-    "href": "posts/using-dbt-to-accelerate-science.html#impact",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "Impact",
-    "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "",
-    "text": "Slack only pastes rich formatting when the clipboard advertises text/html, otherwise it treats everything as plain text.\nIf my file sample.md looks like this:\n:robot_face: Tech updates :robot_face:\n\n# Some Title\n\n- **Project**: Did x in [google](https://google.com).\n  - aaa\n  - bbb\n      - ccc \n  - ddd\n\n# Another title\n\n- Another launch\n  - details\nCompare pasting directly on the left and what we want on the right.\n\n\n\nSide by Side comparison between markdown in plain text and the slack rich formatted version"
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "How to build latest xclip from source in Ubuntu",
-    "text": "How to build latest xclip from source in Ubuntu\nsudo apt install autoconf automake libtool libxmu-dev\ngit clone https://github.com/astrand/xclip\ncd xclip\nautoreconf -fi\n./configure --prefix=/usr/local\nmake\nsudo make install"
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "WSL and powershell are different beasts",
-    "text": "WSL and powershell are different beasts\nThis won’t work on WSL and slack as-is. You likely need to do it from powershell using a third-party program\nWSL cannot directly populate the Windows clipboard with rich HTML in a way Slack accepts; an intermediate Windows application re-copies the content with additional clipboard formats.\n\nPowershell 5\n\nGet-Content out.html -Raw | Set-Clipboard -AsHtml\n\nOpen LibreOffice Writer or any GUI and paste.\nSelect that and copy\nPaste into slack\n\n\nFormat HTML won’t be added to Powershell 7\nPeople are not happy"
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html",
-    "href": "posts/series/zeroops/merge-and-forget.html",
-    "title": "Merge and Forget",
-    "section": "",
-    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#the-rule",
-    "href": "posts/series/zeroops/merge-and-forget.html#the-rule",
-    "title": "Merge and Forget",
-    "section": "",
-    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#pain-point",
-    "href": "posts/series/zeroops/merge-and-forget.html#pain-point",
-    "title": "Merge and Forget",
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
+    "title": "No News Is Good News",
     "section": "Pain Point",
-    "text": "Pain Point\nTracking deployments “just in case” creates unnecessary cognitive load.\nIt turns delivery into a background worry: tabs left open, dashboards checked, attention fragmented.\nIf something requires attention, you should be told."
+    "text": "Pain Point\nManually checking systems to confirm they are “okay” creates unnecessary cognitive load.\nDashboards and queues become reassurance rituals: they consume time and attention without changing outcomes.\nIf something is broken, you should be told."
   },
   {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#do",
-    "href": "posts/series/zeroops/merge-and-forget.html#do",
-    "title": "Merge and Forget",
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#do",
+    "title": "No News Is Good News",
     "section": "Do",
-    "text": "Do\nTreat delivery as a system property:\n\nPush “surprises” left: run fast, automated cross-system checks (e.g. integration tests) before merge, at code-review time, to minimise post-merge failures.\nYou should get a signal if something is blocked or broken.\nYou should not need manual reassurance.\nWhen the system is healthy, silence is expected.\n\n(see No News Is Good News)."
+    "text": "Do\nFor anything that might require action, ensure there is an automated signal.\n\nThe signal should reach the people who can meaningfully act on it.\nIt does not need to prescribe the action.\nOver time, actions may be formalised (runbooks, automation), but that is secondary.\n\nIf something requires attention, it should create noise. If it does not, it should remain silent."
   },
   {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#do-not",
-    "href": "posts/series/zeroops/merge-and-forget.html#do-not",
-    "title": "Merge and Forget",
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do-not",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#do-not",
+    "title": "No News Is Good News",
     "section": "Do Not",
-    "text": "Do Not\n\nFollow a deploy through the pipeline to feel safe.\nKeep checking “did it land yet?”\nWatch logs/dashboards after merge for reassurance."
+    "text": "Do Not\n\nCreate mechanisms to confirm system health.\nRegularly inspect dashboards “just to be sure”.\nRely on manual checks for reassurance.\n\nSilence is expected when coverage is adequate."
   },
   {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#scope",
-    "href": "posts/series/zeroops/merge-and-forget.html#scope",
-    "title": "Merge and Forget",
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#scope",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#scope",
+    "title": "No News Is Good News",
     "section": "Scope",
-    "text": "Scope\nThis is for routine, continuous delivery of typical changes.\nThis does not cover:\n\nmajor migrations\none-way / high-blast-radius changes\ncommunicating expected delivery times (ETAs)"
+    "text": "Scope\nThis applies to operational, actionable failures: things that are broken now and require attention.\nThis does not cover:\n\nslow degradation\ntrend monitoring\npreemptive or exploratory analysis"
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#analogy",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#analogy",
+    "title": "No News Is Good News",
+    "section": "Analogy",
+    "text": "Analogy\nThink of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine."
   },
   {
     "objectID": "posts/series/evals/automate-audits.html",
@@ -515,6 +550,6 @@
     "href": "index.html",
     "title": "The Living Deadline",
     "section": "",
-    "text": "Measure First, Optimize Last: My Approach to AI Evals\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nA pain-driven approach to AI evals: measure first, constrain risk, iterate fast, optimize last.\n\n\n\n\n\nFeb 10, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "text": "Building Agent Skills: Intent, Determinism, and Stability\n\n\n\n\n\n\ngenai\n\nworkflows\n\nreliability\n\n\n\nA mental model and decision tree for building agent skills incrementally: start with intent, add deterministic tools, then use tests and AI evals to reduce drift and risk.\n\n\n\n\n\nFeb 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMeasure First, Optimize Last: My Approach to AI Evals\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nA pain-driven approach to AI evals: measure first, constrain risk, iterate fast, optimize last.\n\n\n\n\n\nFeb 10, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   }
 ]

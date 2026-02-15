@@ -13,32 +13,36 @@
     <lastmod>2026-02-10T23:25:28.980Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</loc>
-    <lastmod>2025-12-17T00:20:48.163Z</lastmod>
+    <loc>https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html</loc>
+    <lastmod>2026-02-15T16:06:14.047Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
-    <lastmod>2026-01-13T06:13:12.145Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</loc>
-    <lastmod>2026-01-13T03:51:55.319Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</loc>
-    <lastmod>2025-10-19T20:57:55.036Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</loc>
-    <lastmod>2026-01-12T04:15:21.052Z</lastmod>
+    <loc>https://alexhans.github.io/posts/series/zeroops/merge-and-forget.html</loc>
+    <lastmod>2025-12-17T00:30:45.711Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html</loc>
     <lastmod>2026-01-19T00:35:53.325Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/series/zeroops/merge-and-forget.html</loc>
-    <lastmod>2025-12-17T00:30:45.711Z</lastmod>
+    <loc>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</loc>
+    <lastmod>2026-01-12T04:15:21.052Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</loc>
+    <lastmod>2025-10-19T20:57:55.036Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</loc>
+    <lastmod>2026-01-13T03:51:55.319Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
+    <lastmod>2026-01-13T06:13:12.145Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</loc>
+    <lastmod>2025-12-17T00:20:48.163Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/series/evals/automate-audits.html</loc>

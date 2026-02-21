@@ -1,0 +1,118 @@
+WEBVTT
+
+00:00.000 --> 00:07.500
+My name is Alex, I'm an Airflow user. I have more than 15 years of
+
+00:07.500 --> 00:21.000
+experience in software development, so I've seen a few things. I came to talk about a shared vision for LLM evaluation in the Airflow ecosystem.
+
+00:21.000 --> 00:31.000
+Every time someone comes to me and talks to me about an AI tool, I stop them and ask: what is your pain point?
+
+00:31.000 --> 00:37.000
+Because typically, if they don't work backwards from a pain point, they're just using some tool for no reason, right?
+
+00:37.000 --> 00:46.000
+Chasing the latest thing. And what is our pain point when we're thinking about LLM development in the Airflow community?
+
+00:46.000 --> 00:56.000
+Well, first is overwhelming choice. Every day we have a new tool, a new foundational model, MCP servers, agents, plugins, it's just insane.
+
+00:56.000 --> 01:04.000
+It's very hard to reason clearly. Fundamentally, we cannot compare what we can't measure.
+
+01:04.000 --> 01:15.000
+People might point to published foundation-model benchmarks, but what matters is what we can measure in our own context. Not what is published somewhere.
+
+01:15.000 --> 01:23.000
+And then the other thing is, let's say you have an LLM solution and you want to put it somewhere. Can you trust it?
+
+01:23.000 --> 01:31.000
+Can you trust that it will run on its own and do the right thing? This is not an unknown problem. This is not new.
+
+01:31.000 --> 01:39.000
+This is automation. We've done it. We've done software development. We've done MLOps, DevOps, whatever you want to say.
+
+01:39.000 --> 01:47.000
+Not a new problem. So, when I'm thinking about automation, what do I need if I had a manual process?
+
+01:47.000 --> 01:52.000
+I need to be able to describe what I want in detail. I need to know what I'm doing.
+
+01:52.000 --> 02:00.000
+If I can't describe it clearly, it rarely comes out right. And the second thing is, I need to understand my risk profile.
+
+02:00.000 --> 02:12.000
+If it's an MCP server workflow summarizing documents and producing something that people might derive insights from, correlations, it's fine.
+
+02:12.000 --> 02:24.000
+I can screw up sometimes. If it's a medical device where people's lives depend on it, then my risk tolerance is almost zero.
+
+02:24.000 --> 02:33.000
+You need to know that. And how have we solved this up to now? We've used integration tests.
+
+02:33.000 --> 02:42.000
+We've used unit tests. They've grounded us in our, not just the automation side of it, but also the quick feedback loop.
+
+02:42.000 --> 02:50.000
+So, if you want to do, TDD (Test Driven development) or you want to rapidly iterate on something, instead of manually testing what happens after you introduce a change,
+
+02:50.000 --> 02:56.000
+you have this to cover you quickly and with certain convergence and certainty.
+
+02:56.000 --> 03:09.000
+At a very generic level, it's some function, some input. It has an outcome, and you check whether it's the desired outcome.
+
+03:09.000 --> 03:16.000
+Right? Check. I move on. Next thing. How does that look in the LLM world?
+
+03:17.000 --> 03:23.000
+Maybe you could say, well, my parameters here are some model, some prompt.
+
+03:23.000 --> 03:29.000
+Maybe you want to separate and say some system prompt, because it's kind of hidden in layers of agents or whatever.
+
+03:29.000 --> 03:37.000
+Some context, we may start to talk about, well, is the context inside? It's a whole RAG setup. It doesn't matter.
+
+03:37.000 --> 03:46.000
+Fundamentally, the concepts are the same. Some function, a set of inputs, and a desired outcome.
+
+03:46.000 --> 03:51.000
+How we measure it might vary, but we still want this.
+
+03:51.000 --> 04:00.000
+So, what do we use? There's a lot of tools and frameworks. Some have existed and been created very fast.
+
+04:00.000 --> 04:06.000
+New tools will keep coming, and many of you will build your own.
+
+04:06.000 --> 04:16.000
+A lot of people are building their own. It almost doesn't matter. Provided we decouple from them.
+
+04:16.000 --> 04:25.000
+Let's write our own benchmarks to be able to iterate fast and ground ourselves in reality to have conversations,
+
+04:25.000 --> 04:31.000
+such that when people are talking about two different implementations and MCP servers, I can reproduce your code.
+
+04:31.000 --> 04:39.000
+You can reproduce mine. What can that look like?
+
+04:39.000 --> 04:45.000
+Here's a very silly test harness, test bed, a set of unit tests, whatever you want to call it.
+
+04:45.000 --> 04:50.000
+Is any DAG paused? Response: list.
+
+04:50.000 --> 04:56.000
+Has the backfill for X been completed for this dag? No. The running tasks are these ones.
+
+04:56.000 --> 05:03.000
+How many SLA breaches have we had in the last two weeks? Four. You might dispute how it has to look, but that's part of the beauty.
+
+05:03.000 --> 05:09.000
+We need to have this conversation. We need to create this as a community and be able to compare stuff.
+
+05:09.000 --> 05:19.000
+I'm over time so, let's start.  Reproducibility first. Who's interested? I'm looking at you MCP pioneers. Whoever it is. Thanks.

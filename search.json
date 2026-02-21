@@ -4,91 +4,91 @@
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#pain-points",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Pain Points",
-    "text": "Pain Points\n\nOverwhelming choice: MCPs, Agents\nWe can’t compare what we can’t measure\nCan I trust this to run on its own?\n\n\n\nTranscript coming soon in the form 00:00:00.000 –&gt; 00:00:13.000 My name is Alex - this is a placeholder transcript"
+    "text": "Pain Points\n\nOverwhelming choice: MCPs, Agents\nWe can’t compare what we can’t measure\nCan I trust this to run on its own?\n\n\n[00:00-01:23] - My name is Alex, I’m an Airflow user. I have more than 15 years of experience in software development, so I’ve seen a few things. I came to talk about a shared vision for LLM evaluation in the Airflow ecosystem. - Every time someone comes to me and talks to me about an AI tool, I stop them and ask: what is your pain point? - Because typically, if they don’t work backwards from a pain point, they’re just using some tool for no reason, right? - Chasing the latest thing. And what is our pain point when we’re thinking about LLM development in the Airflow community? - Well, first is overwhelming choice. Every day we have a new tool, a new foundational model, MCP servers, agents, plugins, it’s just insane. - It’s very hard to reason clearly. Fundamentally, we cannot compare what we can’t measure. - People might point to published foundation-model benchmarks, but what matters is what we can measure in our own context. Not what is published somewhere. - And then the other thing is, let’s say you have an LLM solution and you want to put it somewhere. Can you trust it?"
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Automation",
-    "text": "Automation\nThis is not a new problem"
+    "text": "Automation\nThis is not a new problem\n\n[01:23-01:47] - Can you trust that it will run on its own and do the right thing? This is not an unknown problem. This is not new. - This is automation. We’ve done it. We’ve done software development. We’ve done MLOps, DevOps, whatever you want to say. - Not a new problem. So, when I’m thinking about automation, what do I need if I had a manual process?"
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation-1",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#automation-1",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Automation",
-    "text": "Automation\n\nI need to:\n\nBe able to describe what I want\nUnderstand my risk profile"
+    "text": "Automation\n\nI need to:\n\nBe able to describe what I want\nUnderstand my risk profile\n\n\n\n[01:47-02:24] - I need to be able to describe what I want in detail. I need to know what I’m doing. - If I can’t describe it clearly, it rarely comes out right. And the second thing is, I need to understand my risk profile. - If it’s an MCP server workflow summarizing documents and producing something that people might derive insights from, correlations, it’s fine. - I can screw up sometimes. If it’s a medical device where people’s lives depend on it, then my risk tolerance is almost zero."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Integration / Unit Tests",
-    "text": "Integration / Unit Tests"
+    "text": "Integration / Unit Tests\n\n[02:24-02:56] - You need to know that. And how have we solved this up to now? We’ve used integration tests. - We’ve used unit tests. They’ve grounded us in our, not just the automation side of it, but also the quick feedback loop. - So, if you want to do, TDD (Test Driven development) or you want to rapidly iterate on something, instead of manually testing what happens after you introduce a change, you have this to cover you quickly and with certain convergence and certainty."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-1",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-1",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Integration / Unit Tests",
-    "text": "Integration / Unit Tests\nf(input) -&gt; desired outcome [✓]"
+    "text": "Integration / Unit Tests\nf(input) -&gt; desired outcome [✓]\n\n[02:56-03:09] - At a very generic level, it’s some function, some input. It has an outcome, and you check whether it’s the desired outcome."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-2",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#integration-unit-tests-2",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Integration / Unit Tests",
-    "text": "Integration / Unit Tests\nf(model, prompt, system prompt, context) -&gt; desired outcome [✓]"
+    "text": "Integration / Unit Tests\nf(model, prompt, system prompt, context) -&gt; desired outcome [✓]\n\n[03:09-03:51] - Right? Check. I move on. Next thing. How does that look in the LLM world? - Maybe you could say, well, my parameters here are some model, some prompt. - Maybe you want to separate and say some system prompt, because it’s kind of hidden in layers of agents or whatever. - Some context, we may start to talk about, well, is the context inside? It’s a whole RAG setup. It doesn’t matter. - Fundamentally, the concepts are the same. Some function, a set of inputs, and a desired outcome. - How we measure it might vary, but we still want this."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Existing Tools & Frameworks",
-    "text": "Existing Tools & Frameworks"
+    "text": "Existing Tools & Frameworks\n\n[03:51-04:06] - So, what do we use? There’s a lot of tools and frameworks. Some have existed and been created very fast. - New tools will keep coming, and many of you will build your own."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks-1",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#existing-tools-frameworks-1",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Existing Tools & Frameworks",
-    "text": "Existing Tools & Frameworks\n\nPromptfoo, Trulens, DeepEval, Ragas, LangFuse, your-custom-built-tool, and many many more"
+    "text": "Existing Tools & Frameworks\n\nPromptfoo, Trulens, DeepEval, Ragas, LangFuse, your-custom-built-tool, and many many more\n\n\n[04:06-04:16] - A lot of people are building their own. It almost doesn’t matter. Provided we decouple from them."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "How do we write OUR benchmarks",
-    "text": "How do we write OUR benchmarks\n(Fast Iteration / Grounded Conversations)"
+    "text": "How do we write OUR benchmarks\n(Fast Iteration / Grounded Conversations)\n\n[04:16-04:39] - Let’s write our own benchmarks to be able to iterate fast and ground ourselves in reality to have conversations, such that when people are talking about two different implementations and MCP servers, I can reproduce your code. - You can reproduce mine. What can that look like?"
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks-1",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#how-do-we-write-our-benchmarks-1",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "How do we write OUR benchmarks",
-    "text": "How do we write OUR benchmarks\n\nIs any dag paused?, [\"dag_a\", \"dag_c\"]\nHas the backfill for X completed?, 'No, currently running tasks is [\"a.task_x\"]'\nHow many SLA breaches have we had in the last 2 weeks?, 4"
+    "text": "How do we write OUR benchmarks\n\nIs any dag paused?, [\"dag_a\", \"dag_c\"]\nHas the backfill for X completed?, 'No, currently running tasks is [\"a.task_x\"]'\nHow many SLA breaches have we had in the last 2 weeks?, 4\n\n\n[04:39-05:03] - Here’s a very silly test harness, test bed, a set of unit tests, whatever you want to call it. - Is any DAG paused? Response: list. - Has the backfill for X been completed for this dag? No. The running tasks are these ones. - How many SLA breaches have we had in the last two weeks? Four. You might dispute how it has to look, but that’s part of the beauty."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#call-to-action-lets-start",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#call-to-action-lets-start",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Call to Action: Let’s start",
-    "text": "Call to Action: Let’s start\n(“Reproducibility” First)"
+    "text": "Call to Action: Let’s start\n(“Reproducibility” First)\n\n[05:03-05:12] - We need to have this conversation. We need to create this as a community and be able to compare stuff. - I’m over time so, let’s start. Reproducibility first."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#whos-interested",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#whos-interested",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Who’s interested?",
-    "text": "Who’s interested?\n(MCP pioneers, I’m looking at you)"
+    "text": "Who’s interested?\n(MCP pioneers, I’m looking at you)\n\n[05:12-05:19] - Who’s interested? I’m looking at you MCP pioneers."
   },
   {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#thank-you",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#thank-you",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Thank you!",
-    "text": "Thank you!"
+    "text": "Thank you!\n\n[05:19] - Whoever it is. Thanks."
   },
   {
     "objectID": "about.html",
@@ -189,81 +189,11 @@
     "text": "Scope\nThis is for routine, continuous delivery of typical changes.\nThis does not cover:\n\nmajor migrations\none-way / high-blast-radius changes\ncommunicating expected delivery times (ETAs)"
   },
   {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "objectID": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
+    "href": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
+    "title": "Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "",
-    "text": "Slack only pastes rich formatting when the clipboard advertises text/html, otherwise it treats everything as plain text.\nIf my file sample.md looks like this:\n:robot_face: Tech updates :robot_face:\n\n# Some Title\n\n- **Project**: Did x in [google](https://google.com).\n  - aaa\n  - bbb\n      - ccc \n  - ddd\n\n# Another title\n\n- Another launch\n  - details\nCompare pasting directly on the left and what we want on the right.\n\n\n\nSide by Side comparison between markdown in plain text and the slack rich formatted version"
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "How to build latest xclip from source in Ubuntu",
-    "text": "How to build latest xclip from source in Ubuntu\nsudo apt install autoconf automake libtool libxmu-dev\ngit clone https://github.com/astrand/xclip\ncd xclip\nautoreconf -fi\n./configure --prefix=/usr/local\nmake\nsudo make install"
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "WSL and powershell are different beasts",
-    "text": "WSL and powershell are different beasts\nThis won’t work on WSL and slack as-is. You likely need to do it from powershell using a third-party program\nWSL cannot directly populate the Windows clipboard with rich HTML in a way Slack accepts; an intermediate Windows application re-copies the content with additional clipboard formats.\n\nPowershell 5\n\nGet-Content out.html -Raw | Set-Clipboard -AsHtml\n\nOpen LibreOffice Writer or any GUI and paste.\nSelect that and copy\nPaste into slack\n\n\nFormat HTML won’t be added to Powershell 7\nPeople are not happy"
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html",
-    "href": "posts/using-dbt-to-accelerate-science.html",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "",
-    "text": "This post is part of a series: “Factory of Domain Experts”:"
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
-    "href": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "What problem are we solving?",
-    "text": "What problem are we solving?\n“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?\nI challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.\n\nWhat we wanted to achieve:\n\nScale our team: Grow scientific output independent of engineering capacity.\nIterate in parallel, not sequentially: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.\nShare easily reproducible code: Produce reproducible code and data that makes cross-team collaboration easy and transparent.\n\nInstead of building custom solutions, we used a small set of industry-standard tools, dbt (Data Build Tool) with SQL, Apache Airflow (using astronomer-cosmos), and Git, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic."
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
-    "href": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "How dbt solves these problems",
-    "text": "How dbt solves these problems\nData Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. Crucially, there are no tradeoffs between scrappy exploration and production-ready code, the same code serves both purposes:\n\nProduction-ready from day one: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.\nCollaboration and early integration: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.\nSimple workflows that scale: A simple dbt run -s \"model_name+\" runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.\nModularity without orchestration headaches: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.\nAutomatic lineage and documentation: dbt generates interactive dependency graphs showing how your models connect. Schema documentation automatically appears in the warehouse tables.\nBuilt-in quality controls: Define data tests that run automatically.\nBuilt for integration and extensibility: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.\nCompliance and governance: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling."
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#impact",
-    "href": "posts/using-dbt-to-accelerate-science.html#impact",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "Impact",
-    "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html",
-    "href": "posts/notifications-for-command-line-tasks.html",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "",
-    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html#intro",
-    "href": "posts/notifications-for-command-line-tasks.html#intro",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "",
-    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
-    "href": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "Desktop notifications with notify-send",
-    "text": "Desktop notifications with notify-send\nHere’s the one I’m using lately and has served me well:\n# Add an \"alert\" alias for long running commands.  Use like so:\n#   sleep 10; alert\nalias alert='notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\"  \n\"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"'\nAs the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias alert (Remember that semi-colon ; means execute after the previous command is finished, no matter the return code, unlike && which only executes the next command if return code is 0 (success).\nSo if you’re compiling and running tests in a project you could just do:\nmake test; alert\nand you’ll get notified whenever make test ends.\nBut what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?"
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html#email-notifications",
-    "href": "posts/notifications-for-command-line-tasks.html#email-notifications",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "Email notifications",
-    "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+    "text": "Abstract\nAs LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.\n\n\nSlides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript (WebVTT)"
   },
   {
     "objectID": "posts/wsl-pip-hangs-ipv6.html",
@@ -322,11 +252,81 @@
     "text": "Notes\nIf you see multiple stuck installs, clear them before retrying:\npkill -f \"python -u -m pip install\" || true"
   },
   {
-    "objectID": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
-    "href": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
-    "title": "Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "objectID": "posts/notifications-for-command-line-tasks.html",
+    "href": "posts/notifications-for-command-line-tasks.html",
+    "title": "Get notifications in ubuntu when command line tasks end",
     "section": "",
-    "text": "Abstract\nAs LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.\n\n\nSlides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript in VTT coming before 2026-02-01"
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#intro",
+    "href": "posts/notifications-for-command-line-tasks.html#intro",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "",
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
+    "href": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Desktop notifications with notify-send",
+    "text": "Desktop notifications with notify-send\nHere’s the one I’m using lately and has served me well:\n# Add an \"alert\" alias for long running commands.  Use like so:\n#   sleep 10; alert\nalias alert='notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\"  \n\"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"'\nAs the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias alert (Remember that semi-colon ; means execute after the previous command is finished, no matter the return code, unlike && which only executes the next command if return code is 0 (success).\nSo if you’re compiling and running tests in a project you could just do:\nmake test; alert\nand you’ll get notified whenever make test ends.\nBut what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?"
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#email-notifications",
+    "href": "posts/notifications-for-command-line-tasks.html#email-notifications",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Email notifications",
+    "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html",
+    "href": "posts/using-dbt-to-accelerate-science.html",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "",
+    "text": "This post is part of a series: “Factory of Domain Experts”:"
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
+    "href": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "What problem are we solving?",
+    "text": "What problem are we solving?\n“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?\nI challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.\n\nWhat we wanted to achieve:\n\nScale our team: Grow scientific output independent of engineering capacity.\nIterate in parallel, not sequentially: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.\nShare easily reproducible code: Produce reproducible code and data that makes cross-team collaboration easy and transparent.\n\nInstead of building custom solutions, we used a small set of industry-standard tools, dbt (Data Build Tool) with SQL, Apache Airflow (using astronomer-cosmos), and Git, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic."
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
+    "href": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "How dbt solves these problems",
+    "text": "How dbt solves these problems\nData Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. Crucially, there are no tradeoffs between scrappy exploration and production-ready code, the same code serves both purposes:\n\nProduction-ready from day one: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.\nCollaboration and early integration: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.\nSimple workflows that scale: A simple dbt run -s \"model_name+\" runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.\nModularity without orchestration headaches: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.\nAutomatic lineage and documentation: dbt generates interactive dependency graphs showing how your models connect. Schema documentation automatically appears in the warehouse tables.\nBuilt-in quality controls: Define data tests that run automatically.\nBuilt for integration and extensibility: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.\nCompliance and governance: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling."
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#impact",
+    "href": "posts/using-dbt-to-accelerate-science.html#impact",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "Impact",
+    "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "",
+    "text": "Slack only pastes rich formatting when the clipboard advertises text/html, otherwise it treats everything as plain text.\nIf my file sample.md looks like this:\n:robot_face: Tech updates :robot_face:\n\n# Some Title\n\n- **Project**: Did x in [google](https://google.com).\n  - aaa\n  - bbb\n      - ccc \n  - ddd\n\n# Another title\n\n- Another launch\n  - details\nCompare pasting directly on the left and what we want on the right.\n\n\n\nSide by Side comparison between markdown in plain text and the slack rich formatted version"
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "How to build latest xclip from source in Ubuntu",
+    "text": "How to build latest xclip from source in Ubuntu\nsudo apt install autoconf automake libtool libxmu-dev\ngit clone https://github.com/astrand/xclip\ncd xclip\nautoreconf -fi\n./configure --prefix=/usr/local\nmake\nsudo make install"
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "WSL and powershell are different beasts",
+    "text": "WSL and powershell are different beasts\nThis won’t work on WSL and slack as-is. You likely need to do it from powershell using a third-party program\nWSL cannot directly populate the Windows clipboard with rich HTML in a way Slack accepts; an intermediate Windows application re-copies the content with additional clipboard formats.\n\nPowershell 5\n\nGet-Content out.html -Raw | Set-Clipboard -AsHtml\n\nOpen LibreOffice Writer or any GUI and paste.\nSelect that and copy\nPaste into slack\n\n\nFormat HTML won’t be added to Powershell 7\nPeople are not happy"
   },
   {
     "objectID": "posts/series/zeroops/no-news-is-good-news.html",

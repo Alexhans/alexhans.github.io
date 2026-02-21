@@ -150,9 +150,7 @@ Alex Guglielmone Nemi
 <li>Can I trust this to run on its own?</li>
 </ul>
 <aside class="notes">
-<ul>
-<li>Transcript coming soon in the form 00:00:00.000 –&gt; 00:00:13.000 My name is Alex - this is a placeholder transcript</li>
-</ul>
+<p>[00:00-01:23] - My name is Alex, I’m an Airflow user. I have more than 15 years of experience in software development, so I’ve seen a few things. I came to talk about a shared vision for LLM evaluation in the Airflow ecosystem. - Every time someone comes to me and talks to me about an AI tool, I stop them and ask: what is your pain point? - Because typically, if they don’t work backwards from a pain point, they’re just using some tool for no reason, right? - Chasing the latest thing. And what is our pain point when we’re thinking about LLM development in the Airflow community? - Well, first is overwhelming choice. Every day we have a new tool, a new foundational model, MCP servers, agents, plugins, it’s just insane. - It’s very hard to reason clearly. Fundamentally, we cannot compare what we can’t measure. - People might point to published foundation-model benchmarks, but what matters is what we can measure in our own context. Not what is published somewhere. - And then the other thing is, let’s say you have an LLM solution and you want to put it somewhere. Can you trust it?</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -168,6 +166,19 @@ Alex Guglielmone Nemi
 <section id="automation" class="slide level2 center">
 <h2>Automation</h2>
 <p>This is not a new problem</p>
+<aside class="notes">
+<p>[01:23-01:47] - Can you trust that it will run on its own and do the right thing? This is not an unknown problem. This is not new. - This is automation. We’ve done it. We’ve done software development. We’ve done MLOps, DevOps, whatever you want to say. - Not a new problem. So, when I’m thinking about automation, what do I need if I had a manual process?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="automation-1" class="slide level2 center">
 <h2>Automation</h2>
@@ -178,30 +189,121 @@ Alex Guglielmone Nemi
 <li>Understand my risk profile</li>
 </ul></li>
 </ul>
+<aside class="notes">
+<p>[01:47-02:24] - I need to be able to describe what I want in detail. I need to know what I’m doing. - If I can’t describe it clearly, it rarely comes out right. And the second thing is, I need to understand my risk profile. - If it’s an MCP server workflow summarizing documents and producing something that people might derive insights from, correlations, it’s fine. - I can screw up sometimes. If it’s a medical device where people’s lives depend on it, then my risk tolerance is almost zero.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="integration-unit-tests" class="slide level2 center">
 <h2>Integration / Unit Tests</h2>
+<aside class="notes">
+<p>[02:24-02:56] - You need to know that. And how have we solved this up to now? We’ve used integration tests. - We’ve used unit tests. They’ve grounded us in our, not just the automation side of it, but also the quick feedback loop. - So, if you want to do, TDD (Test Driven development) or you want to rapidly iterate on something, instead of manually testing what happens after you introduce a change, you have this to cover you quickly and with certain convergence and certainty.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="integration-unit-tests-1" class="slide level2 center">
 <h2>Integration / Unit Tests</h2>
 <p><code>f(input) -&gt; desired outcome [✓]</code></p>
+<aside class="notes">
+<p>[02:56-03:09] - At a very generic level, it’s some function, some input. It has an outcome, and you check whether it’s the desired outcome.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="integration-unit-tests-2" class="slide level2 center">
 <h2>Integration / Unit Tests</h2>
 <p><code>f(model, prompt, system prompt, context) -&gt; desired outcome [✓]</code></p>
+<aside class="notes">
+<p>[03:09-03:51] - Right? Check. I move on. Next thing. How does that look in the LLM world? - Maybe you could say, well, my parameters here are some model, some prompt. - Maybe you want to separate and say some system prompt, because it’s kind of hidden in layers of agents or whatever. - Some context, we may start to talk about, well, is the context inside? It’s a whole RAG setup. It doesn’t matter. - Fundamentally, the concepts are the same. Some function, a set of inputs, and a desired outcome. - How we measure it might vary, but we still want this.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="existing-tools-frameworks" class="slide level2 center">
 <h2>Existing Tools &amp; Frameworks</h2>
+<aside class="notes">
+<p>[03:51-04:06] - So, what do we use? There’s a lot of tools and frameworks. Some have existed and been created very fast. - New tools will keep coming, and many of you will build your own.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="existing-tools-frameworks-1" class="slide level2 center">
 <h2>Existing Tools &amp; Frameworks</h2>
 <ul>
 <li>Promptfoo, Trulens, DeepEval, Ragas, LangFuse, your-custom-built-tool, and many many more</li>
 </ul>
+<aside class="notes">
+<p>[04:06-04:16] - A lot of people are building their own. It almost doesn’t matter. Provided we decouple from them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="how-do-we-write-our-benchmarks" class="slide level2 center">
 <h2>How do we write OUR benchmarks</h2>
 <p>(Fast Iteration / Grounded Conversations)</p>
+<aside class="notes">
+<p>[04:16-04:39] - Let’s write our own benchmarks to be able to iterate fast and ground ourselves in reality to have conversations, such that when people are talking about two different implementations and MCP servers, I can reproduce your code. - You can reproduce mine. What can that look like?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="how-do-we-write-our-benchmarks-1" class="slide level2 center">
 <h2>How do we write OUR benchmarks</h2>
@@ -210,17 +312,69 @@ Alex Guglielmone Nemi
 <li>Has the backfill for X completed?, <code>'No, currently running tasks is ["a.task_x"]'</code></li>
 <li>How many SLA breaches have we had in the last 2 weeks?, <code>4</code></li>
 </ul>
+<aside class="notes">
+<p>[04:39-05:03] - Here’s a very silly test harness, test bed, a set of unit tests, whatever you want to call it. - Is any DAG paused? Response: list. - Has the backfill for X been completed for this dag? No.&nbsp;The running tasks are these ones. - How many SLA breaches have we had in the last two weeks? Four. You might dispute how it has to look, but that’s part of the beauty.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="call-to-action-lets-start" class="slide level2 center">
 <h2>Call to Action: Let’s start</h2>
 <p>(“Reproducibility” First)</p>
+<aside class="notes">
+<p>[05:03-05:12] - We need to have this conversation. We need to create this as a community and be able to compare stuff. - I’m over time so, let’s start. Reproducibility first.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="whos-interested" class="slide level2 center">
 <h2>Who’s interested?</h2>
 <p>(MCP pioneers, I’m looking at you)</p>
+<aside class="notes">
+<p>[05:12-05:19] - Who’s interested? I’m looking at you MCP pioneers.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="thank-you" class="slide level2 center">
 <h2>Thank you!</h2>
+<aside class="notes">
+<p>[05:19] - Whoever it is. Thanks.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 
 
 </section>

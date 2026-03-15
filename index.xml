@@ -10,7 +10,209 @@
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Hans&#39;s blog</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Fri, 13 Feb 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 16 Mar 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>From scribble to searchable: building a sketch-to-text Agent Skill</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/series/evals/sketch-to-text-skill.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>I like sketching on an <a href="https://euroshop.boox.com/products/boox-note-air3-c?variant=42967495770312">Onyx Boox</a>. Diagrams, flowcharts and rough system designs can go here as freehand ink.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/posts/series/evals/fake-diagram-boox.jpg" class="img-fluid figure-img"></p>
+<figcaption>Onyx Boox Air 3 C With a Fake Diagram</figcaption>
+</figure>
+</div>
+<p>What I do not like is what happens next.</p>
+<p>Transcribing or re-drawing in a diagramming tool is wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.</p>
+<p>Text is something agents and humans can both read, and is easy to store in <a href="https://en.wikipedia.org/wiki/Git">source control</a>. So I built an <a href="https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html">Agent Skill</a> to do the conversion.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I show you this, not so you necessarily use this, but so you get a sense of how easy it is to apply this same methodology to your own pain points. Michael Kennedy from Talk Python to me called it <a href="https://mkennedy.codes/posts/what-hyper-personal-software-looks-like/">hyper-personal software</a>.</p>
+</div>
+</div>
+<section id="the-skill" class="level1">
+<h1>The Skill</h1>
+<p><a href="https://github.com/Alexhans/blog-samples/tree/main/skills/sketch-to-text"><code>sketch-to-text</code></a> takes a handwritten PDF or image and converts it into a <a href="https://quarto.org/">Quarto</a> <code>.qmd</code> file with <a href="https://mermaid.js.org/">Mermaid</a> diagrams. The output renders, links, and lives with the rest of my writing.</p>
+<p>Here’s one of my sketches converted (<a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-1.pdf">original PDF</a>):</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    start("I want to share a game to teach")
+    describe{"Can I describe the game? Intent"}
+    tell_ai("Tell the AI to create game")
+    explain("Explain it to the AI and play up scenarios that you had")
+    iterate["Iterate asking for changes"]
+    client_only{"Only client side?"}
+    firebase[/Firebase/]
+    publish("Publish to easy app")
+
+    start --&gt; describe
+    describe -- yes --&gt; tell_ai
+    describe -- no --&gt; explain
+    explain --&gt; describe
+    tell_ai --&gt; iterate
+    iterate --&gt; iterate
+    iterate --&gt; client_only
+    client_only -- yes --&gt; publish
+    client_only -- no --&gt; firebase
+    firebase --&gt; publish
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>That came from telling Claude: “convert diagram-1.pdf to quarto”.</p>
+</section>
+<section id="how-i-built-it" class="level1">
+<h1>How I built it</h1>
+<section id="rubber-duck-first" class="level2">
+<h2 class="anchored" data-anchor-id="rubber-duck-first">Rubber duck first</h2>
+<p>I didn’t start by building anything, I started by complaining about what was annoying to an LLM and thinking through what a good solution would look like.<sup>1</sup></p>
+<p>I went through the Boox sync options: BOOXDrop, WebDAV, Obsidian, the various export formats (vector PDF, bitmap PDF, .note) that appear in the UI. Most had friction or lock-in I didn’t want. Then, as a test, I drew a quick <a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-2.pdf">diagram</a> and asked the LLM to convert it to Mermaid.</p>
+<p>It worked well enough to make the skill idea feel viable. I decided Quarto as a destination and any agent CLI as a runner were both fine, and that my only real work would be building good enough ground truth to test against.<sup>2</sup></p>
+</section>
+<section id="talk-then-build" class="level2">
+<h2 class="anchored" data-anchor-id="talk-then-build">Talk, then build</h2>
+<p>Once I knew what I wanted, I described it to my agent and let it write the skill. The skill’s flow is: read → classify → extract structure → generate Mermaid → self-check → write. I didn’t have to think about it that much. I was already drawing a few more diagrams to build the ground truth.</p>
+</section>
+<section id="polish-with-evals" class="level2">
+<h2 class="anchored" data-anchor-id="polish-with-evals">Polish with evals</h2>
+<p>After I had 6 diagrams, drawn in a rush with handwriting that could be a challenge even for me, I converted all 6 into expected baseline <code>.qmd</code> files and manually compared what rendered with what I’d intended to draw.</p>
+<p>This exposed issues fast and forced me to decide details that are hard to foresee. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in <a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-4.pdf">diagram 4</a>, I had to decide: <code>@{ shape: cloud }</code> (newer Mermaid, unsupported) or <code>((("text")))</code> (double circle, universally supported, semantically close enough)? The ground truth file is where that decision got made and recorded. That decision did not live in my head after that. It lived in the ground truth.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    bus(("Bus data"))
+    tram(("Tram data"))
+    prices(("Prices"))
+    pt["Public Transport"]
+    sim["Simulation"]
+    qt["Quality Table"]
+    dash((("exposure: Dashboard")))
+    result((("exposure: result_table")))
+
+    bus --&gt; pt
+    tram --&gt; pt
+    prices --&gt; sim
+    pt --&gt; sim
+    sim --&gt; qt
+    sim --&gt; dash
+    sim --&gt; result
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>For each issue I found, I iterated with the agent and it updated the skill. The loop is simple: try on real input, see what breaks, make the decision explicit, validate.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When building ground truth you’re allowed to change the data, the expected output, and/or the skill logic. Whatever works to get a baseline that’s honest and easy to iterate against.</p>
+</div>
+</div>
+<p>With ground truth in place, I ran <a href="https://promptfoo.dev">promptfoo</a><sup>3</sup> evals: each diagram PDF went through the skill, the output was checked against the reference with <a href="https://ai-evals.io/cookbook/eval-ception"><code>icontains</code> assertions and <code>llm-rubric</code> grading</a> via a local <code>deepseek-r1:14b</code>. The exact tool stack is not the important part.</p>
+<p>First run: 5/6. <a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-5.pdf">Diagram 5</a> failed. The skill dropped the edge labels on the three branches.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    banner["Design, De-Risk &amp; Jumpstart"]
+    intent["Intent"]
+    goals["`Reduce effort
+      Increase ROI
+      Fail fast`"]
+    guardrails["Guardrails"]
+
+    banner -- Design --&gt; intent
+    banner -- De-Risk --&gt; goals
+    banner -- Jumpstart --&gt; guardrails
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The fix was one line in <code>SKILL.md</code>: preserve every label written on or beside an arrow; a labelled arrow must use <code>-- label --&gt;</code> not bare <code>--&gt;</code>. Re-run: 6/6.</p>
+<p>A failing eval tells you exactly what the skill missed. One quick instruction to the agent, a re-run, and you know it holds.</p>
+</section>
+</section>
+<section id="why-the-evals-matter-more-than-the-skill" class="level1">
+<h1>Why the evals matter more than the skill</h1>
+<p>The skill is useful on day one. The evals are what make it safe to change on day ten.</p>
+<p>Without evals, this would still be a neat personal trick.</p>
+<p><code>sketch-to-text</code> handles flowcharts well for what I tested and is harmless enough to use whenever. If I notice inaccuracies, I can figure out whether the problem is in the source file, the skill logic, or the model. Fix it, add the new case to the evals, and catch future regressions. If I want to expand it, I’ll know I haven’t broken anything for my existing cases.</p>
+<p>The investment is a bit of ground truth up front, in exchange for confidence on every future change.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The eval inputs and ground truth files are co-located with the skill for now while the right distribution format for Agent Skill evals is still being worked out. See the <a href="https://github.com/alexhans/blog-samples/tree/main/skills/sketch-to-text/evals">evals README</a>.</p>
+</div>
+</div>
+</section>
+<section id="check-it-out" class="level1">
+<h1>Check it out</h1>
+<ul>
+<li>Skill: <a href="https://github.com/Alexhans/blog-samples/tree/main/skills/sketch-to-text">blog-samples/skills/sketch-to-text</a></li>
+<li>Evals: <a href="https://github.com/Alexhans/github-eval-ception/tree/main/exams/sketch-to-text">github-eval-ception/exams/sketch-to-text</a></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Rubber duck debugging is the practice of explaining a problem out loud (originally to a rubber duck) to clarify your own thinking before asking for help. Popularised by Hunt and Thomas in <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/">The Pragmatic Programmer</a>.↩︎</p></li>
+<li id="fn2"><p>Ground truth is a manually verified reference output used to measure whether a system is working correctly. In evals, it’s the answer you’d accept if a human did the task well.↩︎</p></li>
+<li id="fn3"><p>Promptfoo is one of several open-source eval frameworks. See <a href="https://ai-evals.io/tools/compare">ai-evals.io/tools/compare</a> for a comparison of the main options.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>genai</category>
+  <category>productivity</category>
+  <category>workflows</category>
+  <guid>https://alexhans.github.io/posts/series/evals/sketch-to-text-skill.html</guid>
+  <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Building Agent Skills: Intent, Determinism, and Stability</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

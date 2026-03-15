@@ -91,25 +91,116 @@
     "text": "Thank you!\n\n[05:19] - Whoever it is. Thanks."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "diag2.html",
+    "href": "diag2.html",
+    "title": "Process improvement",
     "section": "",
-    "text": "I’ve been developing software professionally from 2008 so I’ve seen a thing or two, writing roguelikes with GCC 4.2, dealing with Visual C++ 6.0’s non standard quirks, writing triangles in OpenGL’s “Red Book”, writing fiscal printer firmware, creating multi country products, working in truly big data in Big Company (TM) and realizing that more often than not, the problem is not technical in nature.\nI’ve always found myself repeating insights, whether learned from others or my own experiences and realized I don’t always put them into text in the companies I work for and definitely not expose them in written form to the outside world.\nI should do that more. This is me getting into the habit of doing that more."
+    "text": "Draw a diagram in BOOX and turn it into Mermaid Markdown or Quarto.\n\n\nflowchart LR google[“Google Calendar”] outlook[“Work Outlook”] alex[“Anon Block”] availability[“Shared availability”]\ngoogle &lt;--&gt; |pull/push| alex\noutlook --&gt; |pull/push| alex\nalex --&gt; |share| availability"
   },
   {
-    "objectID": "posts/series/evals/measure-first-optimize-last.html",
-    "href": "posts/series/evals/measure-first-optimize-last.html",
-    "title": "Measure First, Optimize Last: My Approach to AI Evals",
+    "objectID": "diag2.html#example",
+    "href": "diag2.html#example",
+    "title": "Process improvement",
     "section": "",
-    "text": "If you can’t measure it, you’re guessing. Here’s how I think about evals, practical examples at ai-evals.io."
+    "text": "flowchart LR google[“Google Calendar”] outlook[“Work Outlook”] alex[“Anon Block”] availability[“Shared availability”]\ngoogle &lt;--&gt; |pull/push| alex\noutlook --&gt; |pull/push| alex\nalex --&gt; |share| availability"
   },
   {
-    "objectID": "posts/series/evals/measure-first-optimize-last.html#footnotes",
-    "href": "posts/series/evals/measure-first-optimize-last.html#footnotes",
-    "title": "Measure First, Optimize Last: My Approach to AI Evals",
+    "objectID": "posts/meeting-budget.html",
+    "href": "posts/meeting-budget.html",
+    "title": "Set a Meeting Budget",
+    "section": "",
+    "text": "Pain Point\n\nToo many recurring meetings drain your week’s productivity.\n\n\nThe Rule\n\nSet a hard budget for fixed meetings.\nExample: 40 h week, 6 h meeting budget.\n\nTotal - Budget = Free -&gt; 40 - 6 = 34\n\nIf you go over budget, cut or shrink the least important meetings.\nYou can adjust the budget, but do so rarely, otherwise it loses meaning.\nAd-hoc syncs are fine. It’s the recurring ones that eat up your time.\n\nConsider doing a similar thing for ad-hoc meetings, if they become a problem.\n\nLike code, less is better. Always look for ways to reduce, even if you’re under budget.\n\n\n\nAnalogy\nThis is similar to the U.S. Senate’s PAYGO rule:\n\nif Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html",
+    "href": "posts/aider-with-open-router.html",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "",
+    "text": "Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.\nHere are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html#local-llms",
+    "href": "posts/aider-with-open-router.html#local-llms",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Local LLMs",
+    "text": "Local LLMs\n\nMake sure you have ollama installed and running.\nNote down a wich model(s) you have installed and plan to use. We’ll use deepseek-r1 and qwen2.5-coder as example models. Deepseek is general purpose and a good candidate for reasoning while qwen2.5-coder is specialized for coding tasks.\n\n$ ollama list\n\nNAME                                        ID              SIZE      MODIFIED\ndeepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago\nqwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago\nI’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The Ollama models site is very handy to get information about models and their distilled versions.\n\nfollow the guide which tells you to run:\n\naider --model ollama_chat/&lt;model&gt;\nSo in our case, that becomes:\naider --model \"ollama_chat/deepseek-r1:14b\" --editor-model \"ollama_chat/qwen2.5-coder:14b\"\nWe could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.\nUse aider --help or visit the options page on aider’s site to understand the differences between --model (main model), --editor-model (editor tasks), and --weak-model (commit messages and history summarization)."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html#cheaply-with-openrouter",
+    "href": "posts/aider-with-open-router.html#cheaply-with-openrouter",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Cheaply with OpenRouter",
+    "text": "Cheaply with OpenRouter\nIf you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.\nThe advantage of using OpenRouter over a specific LLM service like Claude, ChatGPT API or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.\nuser u/Baldur-Norddahl Reddit LocalLLama shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:\nexport OPENROUTER_API_KEY=sk-or-v1-xxxx\naider --architect --model openrouter/deepseek/deepseek-r1 --editor-model openrouter/anthropic/claude-3.7-sonnet --watch-files\nYou can easily monitor your activity an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html#in-closing",
+    "href": "posts/aider-with-open-router.html#in-closing",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "In Closing",
+    "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html",
+    "href": "posts/accept-self-signed-cert-git-https.html",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
+    "href": "posts/accept-self-signed-cert-git-https.html#intro",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Problem",
+    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Solution",
+    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html",
+    "href": "posts/series/evals/sketch-to-text-skill.html",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "",
+    "text": "I like sketching on an Onyx Boox. Diagrams, flowcharts and rough system designs can go here as freehand ink.\nWhat I do not like is what happens next.\nTranscribing or re-drawing in a diagramming tool is wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.\nText is something agents and humans can both read, and is easy to store in source control. So I built an Agent Skill to do the conversion."
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#rubber-duck-first",
+    "href": "posts/series/evals/sketch-to-text-skill.html#rubber-duck-first",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "Rubber duck first",
+    "text": "Rubber duck first\nI didn’t start by building anything, I started by complaining about what was annoying to an LLM and thinking through what a good solution would look like.1\nI went through the Boox sync options: BOOXDrop, WebDAV, Obsidian, the various export formats (vector PDF, bitmap PDF, .note) that appear in the UI. Most had friction or lock-in I didn’t want. Then, as a test, I drew a quick diagram and asked the LLM to convert it to Mermaid.\nIt worked well enough to make the skill idea feel viable. I decided Quarto as a destination and any agent CLI as a runner were both fine, and that my only real work would be building good enough ground truth to test against.2"
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#talk-then-build",
+    "href": "posts/series/evals/sketch-to-text-skill.html#talk-then-build",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "Talk, then build",
+    "text": "Talk, then build\nOnce I knew what I wanted, I described it to my agent and let it write the skill. The skill’s flow is: read → classify → extract structure → generate Mermaid → self-check → write. I didn’t have to think about it that much. I was already drawing a few more diagrams to build the ground truth."
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#polish-with-evals",
+    "href": "posts/series/evals/sketch-to-text-skill.html#polish-with-evals",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "Polish with evals",
+    "text": "Polish with evals\nAfter I had 6 diagrams, drawn in a rush with handwriting that could be a challenge even for me, I converted all 6 into expected baseline .qmd files and manually compared what rendered with what I’d intended to draw.\nThis exposed issues fast and forced me to decide details that are hard to foresee. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in diagram 4, I had to decide: @{ shape: cloud } (newer Mermaid, unsupported) or (((\"text\"))) (double circle, universally supported, semantically close enough)? The ground truth file is where that decision got made and recorded. That decision did not live in my head after that. It lived in the ground truth.\n\n\n\n\n\nflowchart TD\n    bus((\"Bus data\"))\n    tram((\"Tram data\"))\n    prices((\"Prices\"))\n    pt[\"Public Transport\"]\n    sim[\"Simulation\"]\n    qt[\"Quality Table\"]\n    dash(((\"exposure: Dashboard\")))\n    result(((\"exposure: result_table\")))\n\n    bus --&gt; pt\n    tram --&gt; pt\n    prices --&gt; sim\n    pt --&gt; sim\n    sim --&gt; qt\n    sim --&gt; dash\n    sim --&gt; result\n\n\n\n\n\n\nFor each issue I found, I iterated with the agent and it updated the skill. The loop is simple: try on real input, see what breaks, make the decision explicit, validate.\n\n\n\n\n\n\nNote\n\n\n\nWhen building ground truth you’re allowed to change the data, the expected output, and/or the skill logic. Whatever works to get a baseline that’s honest and easy to iterate against.\n\n\nWith ground truth in place, I ran promptfoo3 evals: each diagram PDF went through the skill, the output was checked against the reference with icontains assertions and llm-rubric grading via a local deepseek-r1:14b. The exact tool stack is not the important part.\nFirst run: 5/6. Diagram 5 failed. The skill dropped the edge labels on the three branches.\n\n\n\n\n\nflowchart TD\n    banner[\"Design, De-Risk & Jumpstart\"]\n    intent[\"Intent\"]\n    goals[\"`Reduce effort\n      Increase ROI\n      Fail fast`\"]\n    guardrails[\"Guardrails\"]\n\n    banner -- Design --&gt; intent\n    banner -- De-Risk --&gt; goals\n    banner -- Jumpstart --&gt; guardrails\n\n\n\n\n\n\nThe fix was one line in SKILL.md: preserve every label written on or beside an arrow; a labelled arrow must use -- label --&gt; not bare --&gt;. Re-run: 6/6.\nA failing eval tells you exactly what the skill missed. One quick instruction to the agent, a re-run, and you know it holds."
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#footnotes",
+    "href": "posts/series/evals/sketch-to-text-skill.html#footnotes",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nBlast Radius: refers to the extent of system, data, or user impact caused by a component failure, security breach, or faulty code deployment. See an extreme example in the Falcon Sensor 2024 crash.↩︎\nTDD: Test Driven Development: The act of driving your code thinking intentionally about testability and what tests expose the behaviour you want. Dogmatically it can seem slow and unhelpful but thinking about testability and adding tests to catch prevent bugs from recurring are very useful practices to have. Otherwise, overbuilding is very easy.↩︎"
+    "text": "Footnotes\n\n\nRubber duck debugging is the practice of explaining a problem out loud (originally to a rubber duck) to clarify your own thinking before asking for help. Popularised by Hunt and Thomas in The Pragmatic Programmer.↩︎\nGround truth is a manually verified reference output used to measure whether a system is working correctly. In evals, it’s the answer you’d accept if a human did the task well.↩︎\nPromptfoo is one of several open-source eval frameworks. See ai-evals.io/tools/compare for a comparison of the main options.↩︎"
   },
   {
     "objectID": "posts/series/evals/building-agent-skills-incrementally.html",
@@ -483,73 +574,31 @@
     "text": "Closing\nThis isn’t about distrusting models, it’s about giving them good building blocks to use.\nUse GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.\nThat is how automation becomes something you can trust instead of manually testing once and being hopeful."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html",
-    "href": "posts/accept-self-signed-cert-git-https.html",
-    "title": "Accept a self-signed certificate with git",
+    "objectID": "posts/series/evals/measure-first-optimize-last.html",
+    "href": "posts/series/evals/measure-first-optimize-last.html",
+    "title": "Measure First, Optimize Last: My Approach to AI Evals",
     "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+    "text": "If you can’t measure it, you’re guessing. Here’s how I think about evals, practical examples at ai-evals.io."
   },
   {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
-    "href": "posts/accept-self-signed-cert-git-https.html#intro",
-    "title": "Accept a self-signed certificate with git",
+    "objectID": "posts/series/evals/measure-first-optimize-last.html#footnotes",
+    "href": "posts/series/evals/measure-first-optimize-last.html#footnotes",
+    "title": "Measure First, Optimize Last: My Approach to AI Evals",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nBlast Radius: refers to the extent of system, data, or user impact caused by a component failure, security breach, or faulty code deployment. See an extreme example in the Falcon Sensor 2024 crash.↩︎\nTDD: Test Driven Development: The act of driving your code thinking intentionally about testability and what tests expose the behaviour you want. Dogmatically it can seem slow and unhelpful but thinking about testability and adding tests to catch prevent bugs from recurring are very useful practices to have. Otherwise, overbuilding is very easy.↩︎"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
-  },
-  {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Problem",
-    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
-  },
-  {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Solution",
-    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html",
-    "href": "posts/aider-with-open-router.html",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "",
-    "text": "Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.\nHere are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter."
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html#local-llms",
-    "href": "posts/aider-with-open-router.html#local-llms",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "Local LLMs",
-    "text": "Local LLMs\n\nMake sure you have ollama installed and running.\nNote down a wich model(s) you have installed and plan to use. We’ll use deepseek-r1 and qwen2.5-coder as example models. Deepseek is general purpose and a good candidate for reasoning while qwen2.5-coder is specialized for coding tasks.\n\n$ ollama list\n\nNAME                                        ID              SIZE      MODIFIED\ndeepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago\nqwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago\nI’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The Ollama models site is very handy to get information about models and their distilled versions.\n\nfollow the guide which tells you to run:\n\naider --model ollama_chat/&lt;model&gt;\nSo in our case, that becomes:\naider --model \"ollama_chat/deepseek-r1:14b\" --editor-model \"ollama_chat/qwen2.5-coder:14b\"\nWe could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.\nUse aider --help or visit the options page on aider’s site to understand the differences between --model (main model), --editor-model (editor tasks), and --weak-model (commit messages and history summarization)."
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html#cheaply-with-openrouter",
-    "href": "posts/aider-with-open-router.html#cheaply-with-openrouter",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "Cheaply with OpenRouter",
-    "text": "Cheaply with OpenRouter\nIf you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.\nThe advantage of using OpenRouter over a specific LLM service like Claude, ChatGPT API or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.\nuser u/Baldur-Norddahl Reddit LocalLLama shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:\nexport OPENROUTER_API_KEY=sk-or-v1-xxxx\naider --architect --model openrouter/deepseek/deepseek-r1 --editor-model openrouter/anthropic/claude-3.7-sonnet --watch-files\nYou can easily monitor your activity an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs."
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html#in-closing",
-    "href": "posts/aider-with-open-router.html#in-closing",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "In Closing",
-    "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
-  },
-  {
-    "objectID": "posts/meeting-budget.html",
-    "href": "posts/meeting-budget.html",
-    "title": "Set a Meeting Budget",
-    "section": "",
-    "text": "Pain Point\n\nToo many recurring meetings drain your week’s productivity.\n\n\nThe Rule\n\nSet a hard budget for fixed meetings.\nExample: 40 h week, 6 h meeting budget.\n\nTotal - Budget = Free -&gt; 40 - 6 = 34\n\nIf you go over budget, cut or shrink the least important meetings.\nYou can adjust the budget, but do so rarely, otherwise it loses meaning.\nAd-hoc syncs are fine. It’s the recurring ones that eat up your time.\n\nConsider doing a similar thing for ad-hoc meetings, if they become a problem.\n\nLike code, less is better. Always look for ways to reduce, even if you’re under budget.\n\n\n\nAnalogy\nThis is similar to the U.S. Senate’s PAYGO rule:\n\nif Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it."
+    "text": "I’ve been developing software professionally from 2008 so I’ve seen a thing or two, writing roguelikes with GCC 4.2, dealing with Visual C++ 6.0’s non standard quirks, writing triangles in OpenGL’s “Red Book”, writing fiscal printer firmware, creating multi country products, working in truly big data in Big Company (TM) and realizing that more often than not, the problem is not technical in nature.\nI’ve always found myself repeating insights, whether learned from others or my own experiences and realized I don’t always put them into text in the companies I work for and definitely not expose them in written form to the outside world.\nI should do that more. This is me getting into the habit of doing that more."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "The Living Deadline",
     "section": "",
-    "text": "Building Agent Skills: Intent, Determinism, and Stability\n\n\n\n\n\n\ngenai\n\nworkflows\n\nreliability\n\n\n\nA mental model and decision tree for building agent skills incrementally: start with intent, add deterministic tools, then use tests and AI evals to reduce drift and risk.\n\n\n\n\n\nFeb 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMeasure First, Optimize Last: My Approach to AI Evals\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nA pain-driven approach to AI evals: measure first, constrain risk, iterate fast, optimize last.\n\n\n\n\n\nFeb 10, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+    "text": "From scribble to searchable: building a sketch-to-text Agent Skill\n\n\n\n\n\n\ngenai\n\nproductivity\n\nworkflows\n\n\n\nWhy evals matter more than the skill itself, illustrated with a small personal workflow.\n\n\n\n\n\nMar 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding Agent Skills: Intent, Determinism, and Stability\n\n\n\n\n\n\ngenai\n\nworkflows\n\nreliability\n\n\n\nA mental model and decision tree for building agent skills incrementally: start with intent, add deterministic tools, then use tests and AI evals to reduce drift and risk.\n\n\n\n\n\nFeb 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMeasure First, Optimize Last: My Approach to AI Evals\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nA pain-driven approach to AI evals: measure first, constrain risk, iterate fast, optimize last.\n\n\n\n\n\nFeb 10, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   }
 ]

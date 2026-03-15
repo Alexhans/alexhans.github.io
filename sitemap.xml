@@ -2,15 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://alexhans.github.io/talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
-    <lastmod>2026-02-21T13:47:14.134Z</lastmod>
+    <lastmod>2026-02-22T23:58:31.919Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/about.html</loc>
-    <lastmod>2025-10-19T20:57:56.172Z</lastmod>
+    <loc>https://alexhans.github.io/diag2.html</loc>
+    <lastmod>2026-03-15T18:10:18.033Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/series/evals/measure-first-optimize-last.html</loc>
-    <lastmod>2026-02-10T23:25:28.980Z</lastmod>
+    <loc>https://alexhans.github.io/posts/meeting-budget.html</loc>
+    <lastmod>2026-02-22T23:58:31.931Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/aider-with-open-router.html</loc>
+    <lastmod>2025-10-19T20:57:54.550Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</loc>
+    <lastmod>2025-10-19T20:57:54.032Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/evals/sketch-to-text-skill.html</loc>
+    <lastmod>2026-03-16T02:19:01.874Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html</loc>
@@ -22,7 +34,7 @@
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
-    <lastmod>2026-02-21T13:45:23.563Z</lastmod>
+    <lastmod>2026-02-22T23:58:31.919Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</loc>
@@ -41,10 +53,6 @@
     <lastmod>2026-01-19T00:35:53.325Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/sandbox-notes.html</loc>
-    <lastmod>2026-02-21T07:52:21.920Z</lastmod>
-  </url>
-  <url>
     <loc>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</loc>
     <lastmod>2025-12-17T00:20:48.163Z</lastmod>
   </url>
@@ -57,16 +65,12 @@
     <lastmod>2026-01-28T10:00:30.270Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</loc>
-    <lastmod>2025-10-19T20:57:54.032Z</lastmod>
+    <loc>https://alexhans.github.io/posts/series/evals/measure-first-optimize-last.html</loc>
+    <lastmod>2026-02-10T23:25:28.980Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/aider-with-open-router.html</loc>
-    <lastmod>2025-10-19T20:57:54.550Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/meeting-budget.html</loc>
-    <lastmod>2025-10-19T21:06:54.913Z</lastmod>
+    <loc>https://alexhans.github.io/about.html</loc>
+    <lastmod>2025-10-19T20:57:56.172Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/index.html</loc>

@@ -91,18 +91,25 @@
     "text": "Thank you!\n\n[05:19] - Whoever it is. Thanks."
   },
   {
-    "objectID": "diag2.html",
-    "href": "diag2.html",
-    "title": "Process improvement",
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
     "section": "",
-    "text": "Draw a diagram in BOOX and turn it into Mermaid Markdown or Quarto.\n\n\nflowchart LR google[“Google Calendar”] outlook[“Work Outlook”] alex[“Anon Block”] availability[“Shared availability”]\ngoogle &lt;--&gt; |pull/push| alex\noutlook --&gt; |pull/push| alex\nalex --&gt; |share| availability"
+    "text": "AI-Evals.io is a community site about AI evals. It focuses on practical comparisons, shared language and design with intent across roles. Part of the goal is to make evaluation ideas easier to understand through concrete, runnable examples.\n\n\nEval-Ception is one such example: a hands-on companion project for testing whether an agent can speak on behalf of a site, product or organization."
   },
   {
-    "objectID": "diag2.html#example",
-    "href": "diag2.html#example",
-    "title": "Process improvement",
+    "objectID": "projects.html#ai-evals.io",
+    "href": "projects.html#ai-evals.io",
+    "title": "Projects",
     "section": "",
-    "text": "flowchart LR google[“Google Calendar”] outlook[“Work Outlook”] alex[“Anon Block”] availability[“Shared availability”]\ngoogle &lt;--&gt; |pull/push| alex\noutlook --&gt; |pull/push| alex\nalex --&gt; |share| availability"
+    "text": "AI-Evals.io is a community site about AI evals. It focuses on practical comparisons, shared language and design with intent across roles. Part of the goal is to make evaluation ideas easier to understand through concrete, runnable examples.\n\n\nEval-Ception is one such example: a hands-on companion project for testing whether an agent can speak on behalf of a site, product or organization."
+  },
+  {
+    "objectID": "projects.html#blog-samples",
+    "href": "projects.html#blog-samples",
+    "title": "Projects",
+    "section": "Blog Samples",
+    "text": "Blog Samples\nBlog Samples collects code and examples that support posts on this site.\nMore projects will land here over time."
   },
   {
     "objectID": "posts/meeting-budget.html",
@@ -172,7 +179,7 @@
     "href": "posts/series/evals/sketch-to-text-skill.html",
     "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
     "section": "",
-    "text": "I like sketching on an Onyx Boox. Diagrams, flowcharts and rough system designs can go here as freehand ink.\nWhat I do not like is what happens next.\nTranscribing or re-drawing in a diagramming tool is wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.\nText is something agents and humans can both read, and is easy to store in source control. So I built an Agent Skill to do the conversion."
+    "text": "I like sketching on an Onyx Boox. Diagrams, flowcharts and rough system designs can go here as freehand ink.\nWhat I do not like is transcribing or re-drawing in a diagramming tool. It’s wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.\nText is something agents and humans can both read, and is easy to store in source control. So I built an Agent Skill to do the conversion."
   },
   {
     "objectID": "posts/series/evals/sketch-to-text-skill.html#rubber-duck-first",
@@ -193,7 +200,7 @@
     "href": "posts/series/evals/sketch-to-text-skill.html#polish-with-evals",
     "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
     "section": "Polish with evals",
-    "text": "Polish with evals\nAfter I had 6 diagrams, drawn in a rush with handwriting that could be a challenge even for me, I converted all 6 into expected baseline .qmd files and manually compared what rendered with what I’d intended to draw.\nThis exposed issues fast and forced me to decide details that are hard to foresee. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in diagram 4, I had to decide: @{ shape: cloud } (newer Mermaid, unsupported) or (((\"text\"))) (double circle, universally supported, semantically close enough)? The ground truth file is where that decision got made and recorded. That decision did not live in my head after that. It lived in the ground truth.\n\n\n\n\n\nflowchart TD\n    bus((\"Bus data\"))\n    tram((\"Tram data\"))\n    prices((\"Prices\"))\n    pt[\"Public Transport\"]\n    sim[\"Simulation\"]\n    qt[\"Quality Table\"]\n    dash(((\"exposure: Dashboard\")))\n    result(((\"exposure: result_table\")))\n\n    bus --&gt; pt\n    tram --&gt; pt\n    prices --&gt; sim\n    pt --&gt; sim\n    sim --&gt; qt\n    sim --&gt; dash\n    sim --&gt; result\n\n\n\n\n\n\nFor each issue I found, I iterated with the agent and it updated the skill. The loop is simple: try on real input, see what breaks, make the decision explicit, validate.\n\n\n\n\n\n\nNote\n\n\n\nWhen building ground truth you’re allowed to change the data, the expected output, and/or the skill logic. Whatever works to get a baseline that’s honest and easy to iterate against.\n\n\nWith ground truth in place, I ran promptfoo3 evals: each diagram PDF went through the skill, the output was checked against the reference with icontains assertions and llm-rubric grading via a local deepseek-r1:14b. The exact tool stack is not the important part.\nFirst run: 5/6. Diagram 5 failed. The skill dropped the edge labels on the three branches.\n\n\n\n\n\nflowchart TD\n    banner[\"Design, De-Risk & Jumpstart\"]\n    intent[\"Intent\"]\n    goals[\"`Reduce effort\n      Increase ROI\n      Fail fast`\"]\n    guardrails[\"Guardrails\"]\n\n    banner -- Design --&gt; intent\n    banner -- De-Risk --&gt; goals\n    banner -- Jumpstart --&gt; guardrails\n\n\n\n\n\n\nThe fix was one line in SKILL.md: preserve every label written on or beside an arrow; a labelled arrow must use -- label --&gt; not bare --&gt;. Re-run: 6/6.\nA failing eval tells you exactly what the skill missed. One quick instruction to the agent, a re-run, and you know it holds."
+    "text": "Polish with evals\nAfter I had 6 diagrams (with rushed handwritten that proved hard to read, even for myself) I converted them into the baseline quarto files and manually compared actual vs expected respectively.\nThis exposed issues fast and forced me to decide details that were hard to foresee upfront. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in diagram 4, I had to decide what to do with @{ shape: cloud } which is newer Mermaid and unsupported, and opted for (((\"text\"))) since it’s supported, and the double circle is visually impactful and also represents a “Stop Point”.\n\n\n\n\n\nflowchart TD\n    bus((\"Bus data\"))\n    tram((\"Tram data\"))\n    prices((\"Prices\"))\n    pt[\"Public Transport\"]\n    sim[\"Simulation\"]\n    qt[\"Quality Table\"]\n    dash(((\"exposure: Dashboard\")))\n    result(((\"exposure: result_table\")))\n\n    bus --&gt; pt\n    tram --&gt; pt\n    prices --&gt; sim\n    pt --&gt; sim\n    sim --&gt; qt\n    sim --&gt; dash\n    sim --&gt; result\n\n\n\n\n\n\nFor each issue I found, I iterated with the agent and it updated the skill. The loop is simple: try on real input, see what breaks, make the decision explicit, validate.\n\n\n\n\n\n\nNote\n\n\n\nWhen building ground truth you’re allowed to change the data, the expected output, and/or the skill logic. Whatever works to get a baseline that’s honest and easy to iterate against.\n\n\nWith ground truth in place, I ran promptfoo3 evals: each diagram PDF went through the skill, the output was checked against the reference via deterministic checks whenever I could (icontains assertions) and LLM as a Judge with local deepseek-r1:14b elsewhere. The exact tool used is really not the important part.\nOne run I got 5/6 since Diagram 5 had failed. The skill dropped the edge labels on the three branches.\n\n\n\n\n\nflowchart TD\n    banner[\"Design, De-Risk & Jumpstart\"]\n    intent[\"Intent\"]\n    goals[\"`Reduce effort\n      Increase ROI\n      Fail fast`\"]\n    guardrails[\"Guardrails\"]\n\n    banner -- Design --&gt; intent\n    banner -- De-Risk --&gt; goals\n    banner -- Jumpstart --&gt; guardrails\n\n\n\n\n\n\nThe fix was one line in SKILL.md to preserve every label written on or beside an arrow; a labelled arrow must use -- label --&gt; not bare --&gt;. I re run for a 6/6 outcome. I didn’t edit the skill manually. It was all conversation.\nA failing eval tells you exactly what the skill missed. One quick instruction to the agent, a re-run, and you know it holds."
   },
   {
     "objectID": "posts/series/evals/sketch-to-text-skill.html#footnotes",

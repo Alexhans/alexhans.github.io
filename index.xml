@@ -8,7 +8,7 @@
 <title>The Living Deadline</title>
 <link>https://alexhans.github.io/</link>
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
-<description>Alex Hans&#39;s blog</description>
+<description>Alex Guglielmone Nemi&#39;s blog</description>
 <generator>quarto-1.8.27</generator>
 <lastBuildDate>Mon, 16 Mar 2026 00:00:00 GMT</lastBuildDate>
 <item>
@@ -29,8 +29,7 @@
 <figcaption>Onyx Boox Air 3 C With a Fake Diagram</figcaption>
 </figure>
 </div>
-<p>What I do not like is what happens next.</p>
-<p>Transcribing or re-drawing in a diagramming tool is wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.</p>
+<p>What I do not like is transcribing or re-drawing in a diagramming tool. It’s wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.</p>
 <p>Text is something agents and humans can both read, and is easy to store in <a href="https://en.wikipedia.org/wiki/Git">source control</a>. So I built an <a href="https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html">Agent Skill</a> to do the conversion.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -96,8 +95,8 @@ Note
 </section>
 <section id="polish-with-evals" class="level2">
 <h2 class="anchored" data-anchor-id="polish-with-evals">Polish with evals</h2>
-<p>After I had 6 diagrams, drawn in a rush with handwriting that could be a challenge even for me, I converted all 6 into expected baseline <code>.qmd</code> files and manually compared what rendered with what I’d intended to draw.</p>
-<p>This exposed issues fast and forced me to decide details that are hard to foresee. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in <a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-4.pdf">diagram 4</a>, I had to decide: <code>@{ shape: cloud }</code> (newer Mermaid, unsupported) or <code>((("text")))</code> (double circle, universally supported, semantically close enough)? The ground truth file is where that decision got made and recorded. That decision did not live in my head after that. It lived in the ground truth.</p>
+<p>After I had 6 diagrams (with rushed handwritten that proved hard to read, even for myself) I converted them into the baseline quarto files and manually compared actual vs expected respectively.</p>
+<p>This exposed issues fast and forced me to decide details that were hard to foresee upfront. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in <a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-4.pdf">diagram 4</a>, I had to decide what to do with <code>@{ shape: cloud }</code> which is newer Mermaid and unsupported, and opted for <code>((("text")))</code> since it’s supported, and the double circle is visually impactful and also represents a “Stop Point”.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -140,8 +139,8 @@ Note
 <p>When building ground truth you’re allowed to change the data, the expected output, and/or the skill logic. Whatever works to get a baseline that’s honest and easy to iterate against.</p>
 </div>
 </div>
-<p>With ground truth in place, I ran <a href="https://promptfoo.dev">promptfoo</a><sup>3</sup> evals: each diagram PDF went through the skill, the output was checked against the reference with <a href="https://ai-evals.io/cookbook/eval-ception"><code>icontains</code> assertions and <code>llm-rubric</code> grading</a> via a local <code>deepseek-r1:14b</code>. The exact tool stack is not the important part.</p>
-<p>First run: 5/6. <a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-5.pdf">Diagram 5</a> failed. The skill dropped the edge labels on the three branches.</p>
+<p>With ground truth in place, I ran <a href="https://promptfoo.dev">promptfoo</a><sup>3</sup> evals: each diagram PDF went through the skill, the output was checked against the reference via deterministic checks whenever I could (<code>icontains</code> assertions) and LLM as a Judge with local <code>deepseek-r1:14b</code> elsewhere. The exact tool used is really not the important part.</p>
+<p>One run I got 5/6 since <a href="https://github.com/Alexhans/blog-samples/blob/main/skills/sketch-to-text/evals/diagram-5.pdf">Diagram 5</a> had failed. The skill dropped the edge labels on the three branches.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -164,14 +163,13 @@ Note
 </div>
 </div>
 </div>
-<p>The fix was one line in <code>SKILL.md</code>: preserve every label written on or beside an arrow; a labelled arrow must use <code>-- label --&gt;</code> not bare <code>--&gt;</code>. Re-run: 6/6.</p>
+<p>The fix was one line in <code>SKILL.md</code> to preserve every label written on or beside an arrow; a labelled arrow must use <code>-- label --&gt;</code> not bare <code>--&gt;</code>. I re run for a 6/6 outcome. I didn’t edit the skill manually. It was all conversation.</p>
 <p>A failing eval tells you exactly what the skill missed. One quick instruction to the agent, a re-run, and you know it holds.</p>
 </section>
 </section>
 <section id="why-the-evals-matter-more-than-the-skill" class="level1">
 <h1>Why the evals matter more than the skill</h1>
-<p>The skill is useful on day one. The evals are what make it safe to change on day ten.</p>
-<p>Without evals, this would still be a neat personal trick.</p>
+<p>The skill is useful immediatly but the evals are what make it safe and easy to change weeks later when you don’t remember any of the details.</p>
 <p><code>sketch-to-text</code> handles flowcharts well for what I tested and is harmless enough to use whenever. If I notice inaccuracies, I can figure out whether the problem is in the source file, the skill logic, or the model. Fix it, add the new case to the evals, and catch future regressions. If I want to expand it, I’ll know I haven’t broken anything for my existing cases.</p>
 <p>The investment is a bit of ground truth up front, in exchange for confidence on every future change.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -188,8 +186,8 @@ Note
 </div>
 </div>
 </section>
-<section id="check-it-out" class="level1">
-<h1>Check it out</h1>
+<section id="links" class="level1">
+<h1>Links</h1>
 <ul>
 <li>Skill: <a href="https://github.com/Alexhans/blog-samples/tree/main/skills/sketch-to-text">blog-samples/skills/sketch-to-text</a></li>
 <li>Evals: <a href="https://github.com/Alexhans/github-eval-ception/tree/main/exams/sketch-to-text">github-eval-ception/exams/sketch-to-text</a></li>

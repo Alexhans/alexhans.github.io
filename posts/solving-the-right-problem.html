@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Guglielmone Nemi">
-<meta name="dcterms.date" content="2025-09-09">
+<meta name="dcterms.date" content="2026-06-07">
+<meta name="description" content="Sometimes the most important thing is learning how to iterate fast, in order to fail faster and more often with little penalty.">
 
-<title>Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem – The Living Deadline</title>
+<title>Solving The Right Problem – The Living Deadline</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -293,11 +294,14 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</h1>
-            <p class="subtitle lead">Airflow Summit 2025 - Lightning Talk (5 min)</p>
-                                <div class="quarto-categories">
-                <div class="quarto-category">airflow</div>
-                <div class="quarto-category">talks</div>
+      <h1 class="title">Solving The Right Problem</h1>
+                  <div>
+        <div class="description">
+          Sometimes the most important thing is learning how to iterate fast, in order to fail faster and more often with little penalty.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">engineering</div>
               </div>
                   </div>
   </div>
@@ -315,7 +319,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 9, 2025</p>
+        <p class="date">June 7, 2026</p>
       </div>
     </div>
     
@@ -335,21 +339,29 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="abstract" class="level1">
-<h1>Abstract</h1>
-<p>As LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.</p>
-</section>
-<section id="slides-and-transcript" class="level1">
-<h1>Slides and Transcript</h1>
-<ul>
-<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html">Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</a></li>
-<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.vtt">Transcript (WebVTT)</a></li>
-</ul>
+<p>Paul MacCready won the <a href="https://en.wikipedia.org/wiki/Kremer_prize#Royal_Aeronautical_Society_Human_Powered_Flight_Group">Kremer Prize</a> for human-powered flight in 1977, after the prize had been open for 18 years. Other teams spent years building aircraft, tested them once, crashed, and started over, meaning they had at most one learning cycle per year.</p>
+<p>MacCready reframed the problem. Instead of “how do I build a human-powered aircraft,” he asked “how do I build something I can crash and rebuild in hours.” His <a href="https://en.wikipedia.org/wiki/MacCready_Gossamer_Condor">Gossamer Condor</a> was built from aluminium tubes, mylar, and piano wire, and it crashed constantly, but he’d rebuild it the same afternoon and fly again.</p>
+<p>His competitors were solving the airplane problem, while he chose to solve the iteration problem.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/macready.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%" alt="Traditional team vs Paul MacCready: one learning cycle per year vs 20+ per day. The breakthrough was shortening the learning loop. Generated with ChatGPT."></p>
+</figure>
+</div>
+<p>When I first <a href="https://uxmag.com/articles/you-are-solving-the-wrong-problem">read this story</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, I realized how useful of a framework it was. Identifying and solving the real problem demanded that one take a step back and think, resisting the urge to immediately chase the appearance of productivity or “bias for action”, and often facing the challenging task of convincing others to go against established norms.</p>
+<p>Despite the challenges, the rewards were worthwhile: greatly increased chances of success, reduced cost of failure by making it fast, and sometimes the signal that the task wasn’t even worth embarking on in the first place.</p>
+<p>Speed of iteration, like in MacCready’s case, can be the right problem<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> because it allows you to stay nimble, react fast and adapt to your needs, business or otherwise. When working across groups of people, it can often mean <a href="../posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving">removing yourself from being a bottleneck</a> so you can tackle bigger and better things.</p>
+<p>Stop and find the real problem. Often it’s speed. The time you spend making iteration cheap pays back faster than jumping straight into the work.</p>
 
 
-</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>I read this in 2011 from Aza Raskin, who was Head of UX at Mozilla at the time. It’s influenced my thinking since.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This applies directly to AI and coding agents. See <a href="../posts/solving-the-right-problem-economist-edition-part-01.html">Solving the Right Problem: Economist Edition, Part 1</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script src="https://giscus.app/client.js" data-repo="Alexhans/alexhans.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnk5MjAwNTAyNw==" data-category="Comments" data-category-id="DIC_kwDOBXvio84CzzNh" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="en" crossorigin="anonymous" async="">
 </script>
 <script id="quarto-html-after-body" type="application/javascript">

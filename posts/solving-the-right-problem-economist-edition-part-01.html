@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Guglielmone Nemi">
-<meta name="dcterms.date" content="2025-09-09">
+<meta name="dcterms.date" content="2026-06-09">
+<meta name="description" content="What an economics team delegates to AI coding agents, what they never delegate, and why identification stays with the scientist.">
 
-<title>Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem – The Living Deadline</title>
+<title>Solving the Right Problem: Economist Edition, Part 1 – The Living Deadline</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -293,11 +294,15 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</h1>
-            <p class="subtitle lead">Airflow Summit 2025 - Lightning Talk (5 min)</p>
-                                <div class="quarto-categories">
-                <div class="quarto-category">airflow</div>
-                <div class="quarto-category">talks</div>
+      <h1 class="title">Solving the Right Problem: Economist Edition, Part 1</h1>
+                  <div>
+        <div class="description">
+          What an economics team delegates to AI coding agents, what they never delegate, and why identification stays with the scientist.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">economics</div>
+                <div class="quarto-category">genai</div>
               </div>
                   </div>
   </div>
@@ -315,7 +320,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 9, 2025</p>
+        <p class="date">June 9, 2026</p>
       </div>
     </div>
     
@@ -335,21 +340,57 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="abstract" class="level1">
-<h1>Abstract</h1>
-<p>As LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.</p>
+<p>From my <a href="../posts/talk.ai-coding-agents-in-an-economics-team.html">talk at NABE TEC EU 2026</a>. Benjamin Tanz <a href="https://www.linkedin.com/posts/benjamintanz_what-a-great-and-inspiring-day-at-nabe-tec-ugcPost-7466857289833066496-Be1U/">summarized one part as</a>:</p>
+<blockquote class="blockquote">
+<p>[…] speaking about the engineering aspects of using AI agents in Econ teams, and in particular which tasks to delegate vs.&nbsp;not to delegate to agents. <strong>And yes, identification is with the scientist</strong>.</p>
+</blockquote>
+<p>This resonates a lot with the idea of <a href="../posts/solving-the-right-problem.html">solving the right problem</a> and how your subject matter expertise guides what you delegate and what you don’t.</p>
+<hr>
+<section id="some-context-on-my-economics-team" class="level2">
+<h2 class="anchored" data-anchor-id="some-context-on-my-economics-team">Some context on my economics team</h2>
+<p>I lead engineering in a cross-functional team called Economic Decision Science at Amazon, the central economics team in Europe. It’s mostly PhD economists, with a small embedded engineering function. The engineering vision predates AI agents entirely: economists should be able to deliver without engineering bottlenecks. We defined the things economists should be able to do (we called them capabilities) and built reusable building blocks <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> with good UX that they can mix and match to tackle ambiguous problems fast. We called the framework <a href="../posts/using-dbt-to-accelerate-science.html">“Factory of Economics”</a> where work goes straight to production, without the sometimes common practice of “producing scrappy code and handing over to devs to scale”.</p>
+<p>When we started adopting coding agents in 2025, the fit was immediate. The ways of working we already had (<a href="../posts/series/evals/building-agent-skills-incrementally.html">capabilities</a>, building blocks, fast iteration) mapped directly onto how agent skills work. Late 2025, models got noticeably better<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. It became easier to advocate internally because the broader community was visibly succeeding with these tools, and our own economists were seeing more success in more tasks, which increased trust and ambition in what to delegate.</p>
 </section>
-<section id="slides-and-transcript" class="level1">
-<h1>Slides and Transcript</h1>
-<ul>
-<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html">Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem</a></li>
-<li><a href="../talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.vtt">Transcript (WebVTT)</a></li>
-</ul>
+<section id="everyone-uses-them-not-just-for-code" class="level2">
+<h2 class="anchored" data-anchor-id="everyone-uses-them-not-just-for-code">Everyone uses them, not just for code</h2>
+<p>Today, the entire cross-functional team uses coding agents. They help across roughly everything: analysis and research design, data pipelines, operations, writing and communication, troubleshooting. The “coding” in “coding agents” undersells it; a lot of the value is in reasoning through problems conversationally, without directly manipulating the implementation yourself. The agent is effective because it works where the economist works: it has access to their tools, data, and machine.</p>
+<p>The talk showed three illustrative patterns:</p>
+<blockquote class="blockquote">
+<p><strong>“Explain this model to me.”</strong> You have SQL or a model you wrote months ago. You ask the agent to explain it. It doesn’t matter how long it is. During the explanation you use your judgment and spot something wrong, like “counting the wrong window.” You know what correct looks like and conversationally get it fixed. In fifteen minutes it can be in production.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>“Help me analyze this policy.”</strong> You start from a policy question with no design yet. You’re basically rubber ducking<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> with the agent, externalizing your own thoughts: what methodology? what assumptions? what could go wrong? (e.g.&nbsp;Power analysis, clustering, spillovers). The nice thing is that as you go along, you’re actually proving and validating things. You might try twenty variations in an afternoon and land on a research design you trust.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>“Help me respond to this challenge.”</strong> Your methodology gets challenged in a meeting. It’s very cheap for stakeholders to challenge and it used to be very hard to produce the right data, come back and respond effectively. Now you can open the agent, pull the data, produce the chart, draft an appropriate response immediately after the meeting, knowing it’s backed by real numbers.</p>
+</blockquote>
+</section>
+<section id="what-economists-never-delegate" class="level2">
+<h2 class="anchored" data-anchor-id="what-economists-never-delegate">What economists <u>never</u> delegate</h2>
+<p>With all that delegation, here’s what stays with the economist:</p>
+<ol type="1">
+<li><strong>Methodology selection</strong>: “which estimator, which design”</li>
+<li><strong>Causal identification</strong>: “how to isolate the effect”</li>
+<li><strong>Economic interpretation</strong>: “whether results make sense”</li>
+<li><strong>Stakeholder judgment</strong>: “tone, framing, politics”</li>
+<li><strong>Research taste</strong>: “what questions matter”</li>
+</ol>
+<p>The economists may discuss these things with the agent, but delegation means handing over the decision, and that stays with the economist.</p>
+<p>I’ve seen on occasion well-meaning software engineers build tools that pick methodologies for economists: “define your problem and the AI will choose the right approach.” Economists reject these immediately. If you don’t know why you framed the problem a certain way, you can’t validate whether the output is taking you where you need to go, which takes us back to the issue of <a href="../posts/solving-the-right-problem.html">solving the right problem</a>.</p>
+<p>In a follow-up post I’ll cover Part 2: the pain points of working with AI agents, and how to keep control while being bolder on delegation.</p>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Recently Mitchell Hashimoto published <a href="https://mitchellh.com/writing/building-block-economy">The Building Block Economy</a> which fits very well with our mental models.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Better tool calling, longer autonomous runs, less babysitting, more reliable first-attempt behavior. See <a href="https://metr.org/time-horizons">METR Task Horizons</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Rubber duck debugging is the practice of explaining a problem out loud (originally to a rubber duck) to clarify your own thinking before asking for help. Popularised by Hunt and Thomas in <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/">The Pragmatic Programmer</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script src="https://giscus.app/client.js" data-repo="Alexhans/alexhans.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnk5MjAwNTAyNw==" data-category="Comments" data-category-id="DIC_kwDOBXvio84CzzNh" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="en" crossorigin="anonymous" async="">
 </script>
 <script id="quarto-html-after-body" type="application/javascript">

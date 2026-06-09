@@ -2,6 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/solving-the-right-problem-economist-edition-part-01.html",
+      "/posts/solving-the-right-problem.html",
+      "/posts/talk.ai-coding-agents-in-an-economics-team.html",
       "/posts/series/evals/sketch-to-text-skill.html",
       "/posts/series/evals/building-agent-skills-incrementally.html",
       "/posts/series/evals/measure-first-optimize-last.html",

@@ -1,5 +1,670 @@
 [
   {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#how-the-team-works",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#how-the-team-works",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "How the team works",
+    "text": "How the team works\n\nAlex Guglielmone Nemi\nEconomic Decision Science, Amazon — Engineering Lead\nCross-functional team: Economists + Engineers\n\n\n\nGoal: economists deliver without engineering bottlenecks\nFast iteration, minimal infrastructure\nNo tradeoff between exploration and production"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#late-2025-quality-jump",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#late-2025-quality-jump",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "Late-2025 quality jump",
+    "text": "Late-2025 quality jump\n\n\nSource: METR Task Horizons · metr.org/time-horizons"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#how-we-leverage-coding-agents",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#how-we-leverage-coding-agents",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "How we leverage Coding Agents",
+    "text": "How we leverage Coding Agents\n\nd3 = require(\"d3@7\")\n\ndata2 = [\n  {category: \"Analysis & research design\", pct: 31},\n  {category: \"Data pipelines\", pct: 27},\n  {category: \"Operations\", pct: 17},\n  {category: \"Writing & comms\", pct: 13},\n  {category: \"Troubleshooting\", pct: 12}\n]\n\n{\n  const width = 900;\n  const height = 500;\n\n  const color = d3.scaleOrdinal()\n    .domain(data2.map(d =&gt; d.category))\n    .range([\"#f28e2b\", \"#4e79a7\", \"#e15759\", \"#76b7b2\", \"#59a14f\"]);\n\n  const root = d3.hierarchy({children: data2})\n    .sum(d =&gt; d.pct)\n    .sort((a, b) =&gt; b.value - a.value);\n\n  d3.treemap()\n    .size([width, height])\n    .padding(3)\n    .round(true)(root);\n\n  const svg = d3.create(\"svg\")\n    .attr(\"width\", width)\n    .attr(\"height\", height)\n    .attr(\"viewBox\", [0, 0, width, height])\n    .style(\"display\", \"block\")\n    .style(\"margin\", \"0 auto\");\n\n  const leaf = svg.selectAll(\"g\")\n    .data(root.leaves())\n    .join(\"g\")\n    .attr(\"transform\", d =&gt; `translate(${d.x0},${d.y0})`);\n\n  leaf.append(\"rect\")\n    .attr(\"width\", d =&gt; d.x1 - d.x0)\n    .attr(\"height\", d =&gt; d.y1 - d.y0)\n    .attr(\"fill\", d =&gt; color(d.data.category))\n    .attr(\"rx\", 4);\n\n  leaf.append(\"foreignObject\")\n    .attr(\"width\", d =&gt; d.x1 - d.x0)\n    .attr(\"height\", d =&gt; d.y1 - d.y0)\n    .append(\"xhtml:div\")\n    .style(\"width\", \"100%\")\n    .style(\"height\", \"100%\")\n    .style(\"display\", \"flex\")\n    .style(\"flex-direction\", \"column\")\n    .style(\"align-items\", \"center\")\n    .style(\"justify-content\", \"center\")\n    .style(\"padding\", \"6px\")\n    .style(\"box-sizing\", \"border-box\")\n    .style(\"text-align\", \"center\")\n    .style(\"overflow\", \"hidden\")\n    .html(d =&gt; `\n      &lt;span style=\"font-size:${(d.x1 - d.x0) &gt; 120 ? 26 : 18}px; font-weight:bold; color:#1a1a1a; line-height:1.2;\"&gt;${d.data.category}&lt;/span&gt;\n    `);\n\n  return svg.node();\n}"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#explain-this-model-to-me",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#explain-this-model-to-me",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "1. “Explain this model to me”",
+    "text": "1. “Explain this model to me”\n\n“Explain this model to me”\nAgent explains methodology step by step\nEconomist spots: “that’s counting the wrong window”\n\n(or: wrong benchmark scope, double-counting, extensive vs intensive confusion…)\n\n“Fix it” → corrected pipeline in 15 minutes"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#help-me-analyze-this-policy",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#help-me-analyze-this-policy",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "2. “Help me analyze this policy”",
+    "text": "2. “Help me analyze this policy”\n\nEconomist has a policy question, no design yet\nDialogue: what’s the right approach? assumptions? what could go wrong?\nPower analysis, clustering, spillovers. Methodology through conversation\nComplete research design"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#help-me-respond-to-this-challenge",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#help-me-respond-to-this-challenge",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "3. “Help me respond to this challenge”",
+    "text": "3. “Help me respond to this challenge”\n\nLeadership / stakeholders challenge methodology in a meeting\nEconomist uses agent: pull the data, produce the chart, draft the response\nProve it instantly instead of deferring it.\nReal data backing the argument without effort or time wasted"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#quick-clarification",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#quick-clarification",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "Quick clarification",
+    "text": "Quick clarification\n\nWe also leverage AI-powered economics workflows (synthetic conjoints, model-driven scoring systems, text extraction and harmonization for assortment models)\nCoding agents are the focus: the everyday working interface\nBroad, open-ended, close to the production process\nWhat I’ll discuss next applies to both"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#what-economists-never-delegate",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#what-economists-never-delegate",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "What economists never delegate",
+    "text": "What economists never delegate\n\n  \n    1\n    Methodology selection — Which estimator. Which design.\n\n    2\n    Causal identification — How to isolate the effect.\n\n    3\n    Economic interpretation — Whether results make sense.\n\n    4\n    Stakeholder judgment — Tone, framing, politics.\n\n    5\n    Research taste — What questions matter."
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#pain-points",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#pain-points",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "Pain points",
+    "text": "Pain points\n\nTrust: “How do we know it’s right?”\nReliability: “It worked yesterday, not today”\nBlast radius: “What happens if it goes rogue?”\nObservability: “Can’t explain what happened”\nTool churn: “Everything keeps changing”\nCost: “Fast iteration without runaway spend”\nSpeed: “Too slow to explore effectively”"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#section",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#section",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "",
+    "text": "Control"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#the-ra-analogy",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#the-ra-analogy",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "The RA analogy",
+    "text": "The RA analogy\n\n  \n\n    \n      \n      \n\n      \n      Day 1\n      Day 15\n      Day 30\n\n      \n      \n      \n      RA A\n\n      \n      ↻\n\n      \n      \n      \n      RA B\n\n      \n      ↻\n\n      \n      \n      \n      RA C\n\n      \n      \n      \n      \n\n      \n      \n      Your qualification exam\n\n      \n      persists across all replacements\n    \n\n    \n      Same qualification. Different agent."
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#what-an-exam-looks-like",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#what-an-exam-looks-like",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "What an exam looks like",
+    "text": "What an exam looks like\nname: econ-model-runner\nquestions:\n  - name: runs-scenario\n    input: Run scenario for client ABC, target €100k. Scope: EU5\n    intention: Agent picks the right skill and executes with correct params\n    assert:\n      - type: tool-called\n        value: run-model --client ABC --ask 100000 --scope EU5\n\n  - name: plans-batch-safely\n    input: Run all clients under €300k, all markets, 20% above last cycle\n    intention: Agent should plan before executing a large ambiguous batch\n    assert:\n      - type: plan-contains\n        judge:\n          - clarifies 'last cycle' time range\n          - identifies source table\n          - smoke tests one case before full run\n          - estimates total effort"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#the-feedback-loop",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#the-feedback-loop",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "The feedback loop",
+    "text": "The feedback loop\n\n\n\n  \n  \n  Your exam\n\n  \n  \n  \n\n  \n  \n  FAIL\n\n  \n  \n  \n  \n  \n  \n\n  \n  \n\n  \n  \n  Prompt\n\n  \n  Skill\n\n  \n  Tool / MCP\n\n  \n  Code\n\n  \n  Environment\n\n  \n  \n  \n\n  \n  \n  PASS\n\n  \n  Human or agent iterates against the same exam"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#operational-realities",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#operational-realities",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "Operational realities",
+    "text": "Operational realities\n\nSlow tools kill fast iteration\nContext management is still a challenge\nSecurity boundaries must live outside the LLM\nBe a good boss: delegate, but own outcomes\nThe agent needs to work where the economist works"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#takeaways",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#takeaways",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nSketch the workflow early. Try the UX.\nBreak long tasks into testable blocks\nUse code for stable steps; use LLMs for reasoning and tool calling\nUse Exam First Iteration to keep control"
+  },
+  {
+    "objectID": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#questions",
+    "href": "talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html#questions",
+    "title": "AI Coding Agents in an Economics Team",
+    "section": "Questions?",
+    "text": "Questions?\n\n\nhttps://linktr.ee/alex.guglielmone.nemi\n\nWritings · Github · LinkedIn"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Living Deadline",
+    "section": "",
+    "text": "Solving the Right Problem: Economist Edition, Part 1\n\n\n\n\n\n\neconomics\n\ngenai\n\n\n\nWhat an economics team delegates to AI coding agents, what they never delegate, and why identification stays with the scientist.\n\n\n\n\n\nJun 9, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSolving The Right Problem\n\n\n\n\n\n\nengineering\n\n\n\nSometimes the most important thing is learning how to iterate fast, in order to fail faster and more often with little penalty.\n\n\n\n\n\nJun 7, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: AI Coding Agents in an Economics Team\n\n\nNABE TEC EU 2026 - Amsterdam\n\n\n\neconomics\n\ntalks\n\n\n\n\n\n\n\n\n\nMay 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFrom scribble to searchable: building a sketch-to-text Agent Skill\n\n\n\n\n\n\ngenai\n\nproductivity\n\nworkflows\n\n\n\nWhy evals matter more than the skill itself, illustrated with a small personal workflow.\n\n\n\n\n\nMar 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding Agent Skills: Intent, Determinism, and Stability\n\n\n\n\n\n\ngenai\n\nworkflows\n\nreliability\n\n\n\nA mental model and decision tree for building agent skills incrementally: start with intent, add deterministic tools, then use tests and AI evals to reduce drift and risk.\n\n\n\n\n\nFeb 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMeasure First, Optimize Last: My Approach to AI Evals\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nA pain-driven approach to AI evals: measure first, constrain risk, iterate fast, optimize last.\n\n\n\n\n\nFeb 10, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/meeting-budget.html",
+    "href": "posts/meeting-budget.html",
+    "title": "Set a Meeting Budget",
+    "section": "",
+    "text": "Pain Point\n\nToo many recurring meetings drain your week’s productivity.\n\n\nThe Rule\n\nSet a hard budget for fixed meetings.\nExample: 40 h week, 6 h meeting budget.\n\nTotal - Budget = Free -&gt; 40 - 6 = 34\n\nIf you go over budget, cut or shrink the least important meetings.\nYou can adjust the budget, but do so rarely, otherwise it loses meaning.\nAd-hoc syncs are fine. It’s the recurring ones that eat up your time.\n\nConsider doing a similar thing for ad-hoc meetings, if they become a problem.\n\nLike code, less is better. Always look for ways to reduce, even if you’re under budget.\n\n\n\nAnalogy\nThis is similar to the U.S. Senate’s PAYGO rule:\n\nif Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html",
+    "href": "posts/aider-with-open-router.html",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "",
+    "text": "Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.\nHere are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html#local-llms",
+    "href": "posts/aider-with-open-router.html#local-llms",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Local LLMs",
+    "text": "Local LLMs\n\nMake sure you have ollama installed and running.\nNote down a wich model(s) you have installed and plan to use. We’ll use deepseek-r1 and qwen2.5-coder as example models. Deepseek is general purpose and a good candidate for reasoning while qwen2.5-coder is specialized for coding tasks.\n\n$ ollama list\n\nNAME                                        ID              SIZE      MODIFIED\ndeepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago\nqwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago\nI’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The Ollama models site is very handy to get information about models and their distilled versions.\n\nfollow the guide which tells you to run:\n\naider --model ollama_chat/&lt;model&gt;\nSo in our case, that becomes:\naider --model \"ollama_chat/deepseek-r1:14b\" --editor-model \"ollama_chat/qwen2.5-coder:14b\"\nWe could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.\nUse aider --help or visit the options page on aider’s site to understand the differences between --model (main model), --editor-model (editor tasks), and --weak-model (commit messages and history summarization)."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html#cheaply-with-openrouter",
+    "href": "posts/aider-with-open-router.html#cheaply-with-openrouter",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "Cheaply with OpenRouter",
+    "text": "Cheaply with OpenRouter\nIf you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.\nThe advantage of using OpenRouter over a specific LLM service like Claude, ChatGPT API or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.\nuser u/Baldur-Norddahl Reddit LocalLLama shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:\nexport OPENROUTER_API_KEY=sk-or-v1-xxxx\naider --architect --model openrouter/deepseek/deepseek-r1 --editor-model openrouter/anthropic/claude-3.7-sonnet --watch-files\nYou can easily monitor your activity an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs."
+  },
+  {
+    "objectID": "posts/aider-with-open-router.html#in-closing",
+    "href": "posts/aider-with-open-router.html#in-closing",
+    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
+    "section": "In Closing",
+    "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
+  },
+  {
+    "objectID": "posts/solving-the-right-problem-economist-edition-part-01.html",
+    "href": "posts/solving-the-right-problem-economist-edition-part-01.html",
+    "title": "Solving the Right Problem: Economist Edition, Part 1",
+    "section": "",
+    "text": "From my talk at NABE TEC EU 2026. Benjamin Tanz summarized one part as:\nThis resonates a lot with the idea of solving the right problem and how your subject matter expertise guides what you delegate and what you don’t."
+  },
+  {
+    "objectID": "posts/solving-the-right-problem-economist-edition-part-01.html#some-context-on-my-economics-team",
+    "href": "posts/solving-the-right-problem-economist-edition-part-01.html#some-context-on-my-economics-team",
+    "title": "Solving the Right Problem: Economist Edition, Part 1",
+    "section": "Some context on my economics team",
+    "text": "Some context on my economics team\nI lead engineering in a cross-functional team called Economic Decision Science at Amazon, the central economics team in Europe. It’s mostly PhD economists, with a small embedded engineering function. The engineering vision predates AI agents entirely: economists should be able to deliver without engineering bottlenecks. We defined the things economists should be able to do (we called them capabilities) and built reusable building blocks 1 with good UX that they can mix and match to tackle ambiguous problems fast. We called the framework “Factory of Economics” where work goes straight to production, without the sometimes common practice of “producing scrappy code and handing over to devs to scale”.\nWhen we started adopting coding agents in 2025, the fit was immediate. The ways of working we already had (capabilities, building blocks, fast iteration) mapped directly onto how agent skills work. Late 2025, models got noticeably better2. It became easier to advocate internally because the broader community was visibly succeeding with these tools, and our own economists were seeing more success in more tasks, which increased trust and ambition in what to delegate."
+  },
+  {
+    "objectID": "posts/solving-the-right-problem-economist-edition-part-01.html#everyone-uses-them-not-just-for-code",
+    "href": "posts/solving-the-right-problem-economist-edition-part-01.html#everyone-uses-them-not-just-for-code",
+    "title": "Solving the Right Problem: Economist Edition, Part 1",
+    "section": "Everyone uses them, not just for code",
+    "text": "Everyone uses them, not just for code\nToday, the entire cross-functional team uses coding agents. They help across roughly everything: analysis and research design, data pipelines, operations, writing and communication, troubleshooting. The “coding” in “coding agents” undersells it; a lot of the value is in reasoning through problems conversationally, without directly manipulating the implementation yourself. The agent is effective because it works where the economist works: it has access to their tools, data, and machine.\nThe talk showed three illustrative patterns:\n\n“Explain this model to me.” You have SQL or a model you wrote months ago. You ask the agent to explain it. It doesn’t matter how long it is. During the explanation you use your judgment and spot something wrong, like “counting the wrong window.” You know what correct looks like and conversationally get it fixed. In fifteen minutes it can be in production.\n\n\n“Help me analyze this policy.” You start from a policy question with no design yet. You’re basically rubber ducking3 with the agent, externalizing your own thoughts: what methodology? what assumptions? what could go wrong? (e.g. Power analysis, clustering, spillovers). The nice thing is that as you go along, you’re actually proving and validating things. You might try twenty variations in an afternoon and land on a research design you trust.\n\n\n“Help me respond to this challenge.” Your methodology gets challenged in a meeting. It’s very cheap for stakeholders to challenge and it used to be very hard to produce the right data, come back and respond effectively. Now you can open the agent, pull the data, produce the chart, draft an appropriate response immediately after the meeting, knowing it’s backed by real numbers."
+  },
+  {
+    "objectID": "posts/solving-the-right-problem-economist-edition-part-01.html#what-economists-never-delegate",
+    "href": "posts/solving-the-right-problem-economist-edition-part-01.html#what-economists-never-delegate",
+    "title": "Solving the Right Problem: Economist Edition, Part 1",
+    "section": "What economists never delegate",
+    "text": "What economists never delegate\nWith all that delegation, here’s what stays with the economist:\n\nMethodology selection: “which estimator, which design”\nCausal identification: “how to isolate the effect”\nEconomic interpretation: “whether results make sense”\nStakeholder judgment: “tone, framing, politics”\nResearch taste: “what questions matter”\n\nThe economists may discuss these things with the agent, but delegation means handing over the decision, and that stays with the economist.\nI’ve seen on occasion well-meaning software engineers build tools that pick methodologies for economists: “define your problem and the AI will choose the right approach.” Economists reject these immediately. If you don’t know why you framed the problem a certain way, you can’t validate whether the output is taking you where you need to go, which takes us back to the issue of solving the right problem.\nIn a follow-up post I’ll cover Part 2: the pain points of working with AI agents, and how to keep control while being bolder on delegation."
+  },
+  {
+    "objectID": "posts/solving-the-right-problem-economist-edition-part-01.html#footnotes",
+    "href": "posts/solving-the-right-problem-economist-edition-part-01.html#footnotes",
+    "title": "Solving the Right Problem: Economist Edition, Part 1",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nRecently Mitchell Hashimoto published The Building Block Economy which fits very well with our mental models.↩︎\nBetter tool calling, longer autonomous runs, less babysitting, more reliable first-attempt behavior. See METR Task Horizons.↩︎\nRubber duck debugging is the practice of explaining a problem out loud (originally to a rubber duck) to clarify your own thinking before asking for help. Popularised by Hunt and Thomas in The Pragmatic Programmer.↩︎"
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html",
+    "href": "posts/series/zeroops/merge-and-forget.html",
+    "title": "Merge and Forget",
+    "section": "",
+    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#the-rule",
+    "href": "posts/series/zeroops/merge-and-forget.html#the-rule",
+    "title": "Merge and Forget",
+    "section": "",
+    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#pain-point",
+    "href": "posts/series/zeroops/merge-and-forget.html#pain-point",
+    "title": "Merge and Forget",
+    "section": "Pain Point",
+    "text": "Pain Point\nTracking deployments “just in case” creates unnecessary cognitive load.\nIt turns delivery into a background worry: tabs left open, dashboards checked, attention fragmented.\nIf something requires attention, you should be told."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#do",
+    "href": "posts/series/zeroops/merge-and-forget.html#do",
+    "title": "Merge and Forget",
+    "section": "Do",
+    "text": "Do\nTreat delivery as a system property:\n\nPush “surprises” left: run fast, automated cross-system checks (e.g. integration tests) before merge, at code-review time, to minimise post-merge failures.\nYou should get a signal if something is blocked or broken.\nYou should not need manual reassurance.\nWhen the system is healthy, silence is expected.\n\n(see No News Is Good News)."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#do-not",
+    "href": "posts/series/zeroops/merge-and-forget.html#do-not",
+    "title": "Merge and Forget",
+    "section": "Do Not",
+    "text": "Do Not\n\nFollow a deploy through the pipeline to feel safe.\nKeep checking “did it land yet?”\nWatch logs/dashboards after merge for reassurance."
+  },
+  {
+    "objectID": "posts/series/zeroops/merge-and-forget.html#scope",
+    "href": "posts/series/zeroops/merge-and-forget.html#scope",
+    "title": "Merge and Forget",
+    "section": "Scope",
+    "text": "Scope\nThis is for routine, continuous delivery of typical changes.\nThis does not cover:\n\nmajor migrations\none-way / high-blast-radius changes\ncommunicating expected delivery times (ETAs)"
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html",
+    "href": "posts/series/evals/sketch-to-text-skill.html",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "",
+    "text": "I like sketching on an Onyx Boox. Diagrams, flowcharts and rough system designs can go here as freehand ink.\nWhat I do not like is transcribing or re-drawing in a diagramming tool. It’s wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.\nText is something agents and humans can both read, and is easy to store in source control. So I built an Agent Skill to do the conversion."
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#rubber-duck-first",
+    "href": "posts/series/evals/sketch-to-text-skill.html#rubber-duck-first",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "Rubber duck first",
+    "text": "Rubber duck first\nI didn’t start by building anything, I started by complaining about what was annoying to an LLM and thinking through what a good solution would look like.1\nI went through the Boox sync options: BOOXDrop, WebDAV, Obsidian, the various export formats (vector PDF, bitmap PDF, .note) that appear in the UI. Most had friction or lock-in I didn’t want. Then, as a test, I drew a quick diagram and asked the LLM to convert it to Mermaid.\nIt worked well enough to make the skill idea feel viable. I decided Quarto as a destination and any agent CLI as a runner were both fine, and that my only real work would be building good enough ground truth to test against.2"
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#talk-then-build",
+    "href": "posts/series/evals/sketch-to-text-skill.html#talk-then-build",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "Talk, then build",
+    "text": "Talk, then build\nOnce I knew what I wanted, I described it to my agent and let it write the skill. The skill’s flow is: read → classify → extract structure → generate Mermaid → self-check → write. I didn’t have to think about it that much. I was already drawing a few more diagrams to build the ground truth."
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#polish-with-evals",
+    "href": "posts/series/evals/sketch-to-text-skill.html#polish-with-evals",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "Polish with evals",
+    "text": "Polish with evals\nAfter I had 6 diagrams (with rushed handwritten that proved hard to read, even for myself) I converted them into the baseline quarto files and manually compared actual vs expected respectively.\nThis exposed issues fast and forced me to decide details that were hard to foresee upfront. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in diagram 4, I had to decide what to do with @{ shape: cloud } which is newer Mermaid and unsupported, and opted for (((\"text\"))) since it’s supported, and the double circle is visually impactful and also represents a “Stop Point”.\n\n\n\n\n\nflowchart TD\n    bus((\"Bus data\"))\n    tram((\"Tram data\"))\n    prices((\"Prices\"))\n    pt[\"Public Transport\"]\n    sim[\"Simulation\"]\n    qt[\"Quality Table\"]\n    dash(((\"exposure: Dashboard\")))\n    result(((\"exposure: result_table\")))\n\n    bus --&gt; pt\n    tram --&gt; pt\n    prices --&gt; sim\n    pt --&gt; sim\n    sim --&gt; qt\n    sim --&gt; dash\n    sim --&gt; result\n\n\n\n\n\n\nFor each issue I found, I iterated with the agent and it updated the skill. The loop is simple: try on real input, see what breaks, make the decision explicit, validate.\n\n\n\n\n\n\nNote\n\n\n\nWhen building ground truth you’re allowed to change the data, the expected output, and/or the skill logic. Whatever works to get a baseline that’s honest and easy to iterate against.\n\n\nWith ground truth in place, I ran promptfoo3 evals: each diagram PDF went through the skill, the output was checked against the reference via deterministic checks whenever I could (icontains assertions) and LLM as a Judge with local deepseek-r1:14b elsewhere. The exact tool used is really not the important part.\nOne run I got 5/6 since Diagram 5 had failed. The skill dropped the edge labels on the three branches.\n\n\n\n\n\nflowchart TD\n    banner[\"Design, De-Risk & Jumpstart\"]\n    intent[\"Intent\"]\n    goals[\"`Reduce effort\n      Increase ROI\n      Fail fast`\"]\n    guardrails[\"Guardrails\"]\n\n    banner -- Design --&gt; intent\n    banner -- De-Risk --&gt; goals\n    banner -- Jumpstart --&gt; guardrails\n\n\n\n\n\n\nThe fix was one line in SKILL.md to preserve every label written on or beside an arrow; a labelled arrow must use -- label --&gt; not bare --&gt;. I re run for a 6/6 outcome. I didn’t edit the skill manually. It was all conversation.\nA failing eval tells you exactly what the skill missed. One quick instruction to the agent, a re-run, and you know it holds."
+  },
+  {
+    "objectID": "posts/series/evals/sketch-to-text-skill.html#footnotes",
+    "href": "posts/series/evals/sketch-to-text-skill.html#footnotes",
+    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nRubber duck debugging is the practice of explaining a problem out loud (originally to a rubber duck) to clarify your own thinking before asking for help. Popularised by Hunt and Thomas in The Pragmatic Programmer.↩︎\nGround truth is a manually verified reference output used to measure whether a system is working correctly. In evals, it’s the answer you’d accept if a human did the task well.↩︎\nPromptfoo is one of several open-source eval frameworks. See ai-evals.io/tools/compare for a comparison of the main options.↩︎"
+  },
+  {
+    "objectID": "posts/series/evals/measure-first-optimize-last.html",
+    "href": "posts/series/evals/measure-first-optimize-last.html",
+    "title": "Measure First, Optimize Last: My Approach to AI Evals",
+    "section": "",
+    "text": "If you can’t measure it, you’re guessing. Here’s how I think about evals, practical examples at ai-evals.io."
+  },
+  {
+    "objectID": "posts/series/evals/measure-first-optimize-last.html#footnotes",
+    "href": "posts/series/evals/measure-first-optimize-last.html#footnotes",
+    "title": "Measure First, Optimize Last: My Approach to AI Evals",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nBlast Radius: refers to the extent of system, data, or user impact caused by a component failure, security breach, or faulty code deployment. See an extreme example in the Falcon Sensor 2024 crash.↩︎\nTDD: Test Driven Development: The act of driving your code thinking intentionally about testability and what tests expose the behaviour you want. Dogmatically it can seem slow and unhelpful but thinking about testability and adding tests to catch prevent bugs from recurring are very useful practices to have. Otherwise, overbuilding is very easy.↩︎"
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "",
+    "text": "Given at NABE TEC EU 2026 (National Association for Business Economics, Technology Economics Conference), Amsterdam.\n\nAbstract\nHow a cross-functional economics team at Amazon uses AI coding agents operationally - across analysis, data pipelines, operations, writing, and troubleshooting. The talk covers what economists delegate (implementation, iteration, exploration) and what they never delegate (methodology selection, causal identification, economic interpretation, stakeholder judgment, research taste). It introduces exam-first iteration as a feedback loop for maintaining control as delegation scales: encode intent, let the agent iterate against it, and use failure as an informative signal.\n\n\nSlides\n\nAI Coding Agents in an Economics Team\nDownload PDF\n\n\n\nRelated\n\nSolving the Right Problem: Economist Edition, Part 1 — blog post expanding on the core idea"
+  },
+  {
+    "objectID": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
+    "href": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
+    "title": "Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
+    "section": "",
+    "text": "Abstract\nAs LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.\n\n\nSlides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript (WebVTT)"
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html",
+    "href": "posts/wsl-pip-hangs-ipv6.html",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "",
+    "text": "pip install hangs in WSL with no useful error, often after it starts fetching from files.pythonhosted.org."
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html#pain-point",
+    "href": "posts/wsl-pip-hangs-ipv6.html#pain-point",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "",
+    "text": "pip install hangs in WSL with no useful error, often after it starts fetching from files.pythonhosted.org."
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html#the-rule",
+    "href": "posts/wsl-pip-hangs-ipv6.html#the-rule",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "The Rule",
+    "text": "The Rule\nIf DNS/connection to files.pythonhosted.org hangs but pypi.org works, suspect IPv6 preference + broken IPv6 routing."
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html#minimal-diagnosis",
+    "href": "posts/wsl-pip-hangs-ipv6.html#minimal-diagnosis",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "Minimal Diagnosis",
+    "text": "Minimal Diagnosis\npython -c \"import urllib.request; print(urllib.request.urlopen('https://pypi.org/simple/').status)\"\n# expected: 200\ngetent hosts pypi.org\n# returns quickly\ngetent hosts files.pythonhosted.org\n# may hang\nIf files.pythonhosted.org hangs, pip will hang. That host is where wheels and sdists are served from."
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html#fix",
+    "href": "posts/wsl-pip-hangs-ipv6.html#fix",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "Fix",
+    "text": "Fix\nPrefer IPv4 for address selection using gai.conf:\nsudo tee /etc/gai.conf &gt;/dev/null &lt;&lt;'EOF'\nprecedence ::ffff:0:0/96  100\nEOF\nThis does not disable IPv6. It changes the precedence so IPv4 is tried first."
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html#verify",
+    "href": "posts/wsl-pip-hangs-ipv6.html#verify",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "Verify",
+    "text": "Verify\ngetent hosts files.pythonhosted.org\n# should return immediately\nThen retry:\npip install ipython"
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html#revert",
+    "href": "posts/wsl-pip-hangs-ipv6.html#revert",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "Revert",
+    "text": "Revert\nsudo tee /etc/gai.conf &gt;/dev/null &lt;&lt;'EOF'\n# empty override: use glibc defaults\nEOF"
+  },
+  {
+    "objectID": "posts/wsl-pip-hangs-ipv6.html#notes",
+    "href": "posts/wsl-pip-hangs-ipv6.html#notes",
+    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
+    "section": "Notes",
+    "text": "Notes\nIf you see multiple stuck installs, clear them before retrying:\npkill -f \"python -u -m pip install\" || true"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I’ve been developing software professionally from 2008 so I’ve seen a thing or two, writing roguelikes with GCC 4.2, dealing with Visual C++ 6.0’s non standard quirks, writing triangles in OpenGL’s “Red Book”, writing fiscal printer firmware, creating multi country products, working in truly big data in Big Company (TM) and realizing that more often than not, the problem is not technical in nature.\nI’ve always found myself repeating insights, whether learned from others or my own experiences and realized I don’t always put them into text in the companies I work for and definitely not expose them in written form to the outside world.\nI should do that more. This is me getting into the habit of doing that more."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html",
+    "href": "posts/notifications-for-command-line-tasks.html",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "",
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#intro",
+    "href": "posts/notifications-for-command-line-tasks.html#intro",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "",
+    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
+    "href": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Desktop notifications with notify-send",
+    "text": "Desktop notifications with notify-send\nHere’s the one I’m using lately and has served me well:\n# Add an \"alert\" alias for long running commands.  Use like so:\n#   sleep 10; alert\nalias alert='notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\"  \n\"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"'\nAs the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias alert (Remember that semi-colon ; means execute after the previous command is finished, no matter the return code, unlike && which only executes the next command if return code is 0 (success).\nSo if you’re compiling and running tests in a project you could just do:\nmake test; alert\nand you’ll get notified whenever make test ends.\nBut what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?"
+  },
+  {
+    "objectID": "posts/notifications-for-command-line-tasks.html#email-notifications",
+    "href": "posts/notifications-for-command-line-tasks.html#email-notifications",
+    "title": "Get notifications in ubuntu when command line tasks end",
+    "section": "Email notifications",
+    "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html",
+    "href": "posts/using-dbt-to-accelerate-science.html",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "",
+    "text": "This post is part of a series: “Factory of Domain Experts”:"
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
+    "href": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "What problem are we solving?",
+    "text": "What problem are we solving?\n“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?\nI challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.\n\nWhat we wanted to achieve:\n\nScale our team: Grow scientific output independent of engineering capacity.\nIterate in parallel, not sequentially: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.\nShare easily reproducible code: Produce reproducible code and data that makes cross-team collaboration easy and transparent.\n\nInstead of building custom solutions, we used a small set of industry-standard tools, dbt (Data Build Tool) with SQL, Apache Airflow (using astronomer-cosmos), and Git, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic."
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
+    "href": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "How dbt solves these problems",
+    "text": "How dbt solves these problems\nData Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. Crucially, there are no tradeoffs between scrappy exploration and production-ready code, the same code serves both purposes:\n\nProduction-ready from day one: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.\nCollaboration and early integration: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.\nSimple workflows that scale: A simple dbt run -s \"model_name+\" runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.\nModularity without orchestration headaches: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.\nAutomatic lineage and documentation: dbt generates interactive dependency graphs showing how your models connect. Schema documentation automatically appears in the warehouse tables.\nBuilt-in quality controls: Define data tests that run automatically.\nBuilt for integration and extensibility: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.\nCompliance and governance: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling."
+  },
+  {
+    "objectID": "posts/using-dbt-to-accelerate-science.html#impact",
+    "href": "posts/using-dbt-to-accelerate-science.html#impact",
+    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
+    "section": "Impact",
+    "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "",
+    "text": "GenAI is non-deterministic and can fail or produce different results for the same input.\nA typical prompt-to-action flow involves many LLM calls. Each call is a chance for the model to misinterpret, hallucinate, or produce an unusable output.\nThe question isn’t if errors happen. It’s what happens when they do, and how many opportunities you give them to cascade."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "How bad does it get?",
+    "text": "How bad does it get?\nConsider a simple case with just 4 steps (note: this is illustrative, consider how your system might have 10, 20, or more LLM calls):\n\nStep 1: 95% chance of correct\nStep 2: 95% chance of correct\n\nStep 3: 95% chance of correct\nStep 4: 95% chance of correct\n\nEnd-to-end: ~81% chance everything is correct.\nNow compare:\n\nStep 1 (LLM): user intent → structured call (95%)\nStep 2 (deterministic tool): execute (98%)\nStep 3 (deterministic validation): parse + check (97%)\nStep 4 (LLM): result → response (96%)\n\nEnd-to-end: ~87%\n\nSame model. Different architecture. 6+ point improvement."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Two high-leverage approaches",
+    "text": "Two high-leverage approaches\n\nRemove 1 or many GenAI steps entirely, fewer chances to fail\nReplace GenAI steps with deterministic ones, lower error rate per step\n\n\n\n\n\n\n\nNote\n\n\n\nThese aren’t the only ways to reduce error (e.g. consensus systems, retries, etc) but the fundamentals expressed would apply everywhere, no matter whether it’s one agent or a swarm."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "What makes deterministic steps different",
+    "text": "What makes deterministic steps different\nDeterministic steps still fail, but the failure characteristics differ from LLM failures:\n\nBounded: failures come from a finite set of causes (parse error, timeout, missing field), not open-ended misinterpretation\nRepeatable: same input, same failure: you can reproduce and fix it\nNon-semantic: a crashed process doesn’t convince the next step that “actually the user meant X”\n\n\n\n\n\n\n\nNote\n\n\n\nThis doesn’t mean deterministic = reliable. It means when things break, they break in less subtle ways and there’s a lot of software engineering history behind their robustness."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "The design pattern",
+    "text": "The design pattern\nLLMs do many hard parts (interpreting intent, choosing tools, dealing with syntax, reasoning through results, deciding what comes next).\nIn a simplified flow, the model might:\n\nReceive user intent (natural language)\nDecide which tool to call and with what parameters\nReceive structured output from the tool\nDecide: done, or call another tool?\nRepeat until ready to respond\nTranslate the final result back to the user\n\nA lot of reasoning and orchestration happens there and the point isn’t to limit that but to give it good building blocks.\nA human user is more effective with better building blocks (e.g. well designed libraries or cli tools) and so is an LLM.\nWhat you want are building blocks that are:\n\nreusable\ncomposable\nwell tested\neasy to change and maintain\ncost effective\n\nAnd a model that acts as a translation layer, not the tool running all the logic."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Practical recommendations",
+    "text": "Practical recommendations\n\nIdentify the deterministic core\nIf you are writing a Claude skill and a step can be expressed as code, ask yourself why you’re not expressing it as code.\nThe tradeoff is real:\nLeaving logic in prose means:\n\nHigher error rate at runtime\nRelying on evals instead of unit tests (if you don’t know what one or either of these are, then you’re definitely safer in the frozen code world)\nPaying the cost and error on every execution\nYes, it might improve as models improve, but you’re paying for that uncertainty every time\n\nMoving logic to code means:\n\nLower error rate (deterministic execution)\nUnit testable\nCheaper to run\nStill easy to write with LLMs, have the model generate the code once instead of regenerating the logic from prose every time\nYou can still ask LLMs to review or improve the code later if you want\n\nThe second option gives you confidence that things actually work. The first option defers that confidence in exchange for alleged convenience.\nIf the LLM can write code for you, why have it translate markdown to logic on every run? Make the translation once, freeze it as code, and test it properly.\n\n\nForce structure at boundaries\nDon’t pass prose between steps. Use formats that are easy to serialize and deserialize, like JSON/YAML with schemas you can validate against.\nStructure lets you validate, detect errors and attempt course correction or fail fast, diff, log, and evaluate deterministically.\n\n\n\n\n\n\nNote\n\n\n\nThis will even save you money, time and compute resources by not having to use LLM as a Judge for assertion in your evals.\n\n\n\n\nTest the building blocks\nWrite unit tests and integration tests for the core building blocks — same as you would’ve done before LLMs."
+  },
+  {
+    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
+    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
+    "title": "Reducing Error Compounding in GenAI Systems",
+    "section": "Closing",
+    "text": "Closing\nThis isn’t about distrusting models, it’s about giving them good building blocks to use.\nUse GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.\nThat is how automation becomes something you can trust instead of manually testing once and being hopeful."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html",
+    "href": "posts/series/evals/automate-audits.html",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "",
+    "text": "We keep asking questions we should already know the answer to. And we usually ask them when a decision depends on it.\nSometimes we guess. Sometimes we do a one-off investigation. Sometimes we shrug and move on.\nWhat if you could get the value of a high-quality audit all the time?"
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#the-idea",
+    "href": "posts/series/evals/automate-audits.html#the-idea",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The idea",
+    "text": "The idea\nInstead of running audits occasionally, automate the audit itself.\nAn audit is just a set of questions.\nIf you make those questions explicit, and make them answerable repeatedly, the audit stops being a one-off activity and becomes something you can run continuously."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#the-method",
+    "href": "posts/series/evals/automate-audits.html#the-method",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The method",
+    "text": "The method\nStart from pain points you already feel, or decisions you struggle to make.\nFrom each pain point, write the questions that would help you address it.\nThose questions imply dimensions (what you want coverage over) and, over time, a set of entities that describe your world.\nDon’t try to be complete. Just describe enough of your world to support the questions you care about.\nFor example, “we don’t know if we can reproduce the data of our projects” is a pain point that may prompt the questions:\n\nWhich projects have code packages?\nWhich code packages have a README with reproducibility steps?\nWhich README file instructions actually work?\n\nThe first two should be relatively trivial to check (in this GenAI world) and you can decide how much value the third one gets but the important point is that you’ve introduced what you know and surfaced what you currently can answer in case it’s worth it later.\nThe dimensions in our example are Code Packages and Projects.\nThese are actionable and describe different states of knowledge and reproducibility readiness.\n\n\n\n\n\n\nNote\n\n\n\nOther questions will likely arise from these such as “Which projects are ongoing? Which code packages belong to which projects?”"
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#the-entities-in-your-world",
+    "href": "posts/series/evals/automate-audits.html#the-entities-in-your-world",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The entities in your world",
+    "text": "The entities in your world\nAfter writing a few questions, you can jump to a whiteboard and try to describe a lot of the entities in your world to brainstorm about what you own, what you interact with and how things cluster together. The entities are the targets of the questions, and dimensions allow you to define the coverage. Example: “We have a total of 12 projects: 5 have READMEs with reproducibility steps, 2 don’t have READMEs, 5 have no packages.”\nIt’s up to you whether you want to immediately define actions to take or treat it as a helpful data point for others to decide. The point is you stop spending time re-answering ad hoc questions."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#the-forcing-function",
+    "href": "posts/series/evals/automate-audits.html#the-forcing-function",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "The forcing function",
+    "text": "The forcing function\nOnce you have questions, you write evals, checks that verify you can answer them. (See promptfoo’s documentation for one way to implement them.)\nAn eval is simply:\n\nIf I ask this question, I expect to get this kind of answer.\n\nWriting the eval is where the value appears.\nThe moment you write it, you’re forced to confront whether you can actually answer the question at all.\n\nIf you can, the eval is straightforward.\nIf you can’t, you’ve discovered something you thought you knew but didn’t.\nIf the answer is subjective, that gap becomes explicit.\n\nYou don’t need perfect answers. You need to know which evals pass and which ones reveal that you never had a real answer.\nThat alone is valuable.\n\n\n\n\n\n\nNote\n\n\n\nWhile writing evals in a form that doesn’t break as things change requires some practice, it’s not your primary concern when starting. It’s fine to be explicit and baseline."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#what-you-get",
+    "href": "posts/series/evals/automate-audits.html#what-you-get",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "What you get",
+    "text": "What you get\nOnce questions have evals, answering them becomes an implementation detail. With MCPs (Model Context Protocol servers), Playwright, etc. Programmatic access is easier than ever, the hard part isn’t answering questions, it’s knowing which ones to ask and systematizing what “good” looks like.\nOver time, you start to see where your questions apply, which are too vague, which are easier than expected, and where your description of the world is still thin.\nYou don’t need to go all in. Start with a few questions and a small report that grows over time.\nAt that point, you’re no longer redoing one-off audits.\nYou’re running a continuous audit whose scope is defined by the questions you care about."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#why-this-is-low-risk",
+    "href": "posts/series/evals/automate-audits.html#why-this-is-low-risk",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "Why this is low-risk",
+    "text": "Why this is low-risk\n\nYou don’t need to know everything upfront.\nYou don’t need to define “good” everywhere.\nYou don’t need a complete model of your world.\n\nYou just need to acknowledge you may not know the answer for questions you’ve not explicitly tried to answer (quite similar to feeling pain when doing unit testing while being unsure of what you want)\nEven unanswered questions are useful. They tell you what’s unclear, subjective, or not worth investing in."
+  },
+  {
+    "objectID": "posts/series/evals/automate-audits.html#closing",
+    "href": "posts/series/evals/automate-audits.html#closing",
+    "title": "Get the Value of a High-Quality Audit, All the Time",
+    "section": "Closing",
+    "text": "Closing\nYou don’t need to audit everything.\nYou just need to stop rediscovering the same answers, and the same unknowns, over and over again.\nStart with a few questions. Let the audit grow.\nIf it doesn’t help, stop.\nThe cost is small. The insight compounds."
+  },
+  {
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "",
+    "text": "I want to offer a mental model and decision tree for building Agent Skills incrementally. It’s meant for anyone experimenting with them - not just for software developers - and focuses on staying in control as complexity grows or you start thinking about sharing or collaborating with others."
+  },
+  {
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#a-note-on-experience",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#a-note-on-experience",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "A note on experience",
+    "text": "A note on experience\nThe levels are illustrative and exist to prevent overwhelming yourself and avoid paralysis - either from fear of breaking things or from too many choices at the start.\nAfter you build a few skills, recognizing patterns becomes easier and you can decide where to invest based on your own pain points. You may start thinking about intent, determinism, stability, and safety from the beginning.\nThat does not mean implementing everything at once. It means being aware of more tradeoffs earlier.\nBuild only what you need, and keep it as simple as possible."
+  },
+  {
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#practical-takeaway",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#practical-takeaway",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "Practical Takeaway",
+    "text": "Practical Takeaway\nUse skills to clarify intent. When a step stabilizes, move it into code or tools. Not because the model can’t do it, but because you don’t want to rediscover the same approach on every run. That lowers cost, reduces drift risk, and keeps room for directed experiments.\nYou can build skills with your agent CLI of choice (Claude/Codex/OpenCode), or use frameworks that support the pattern, like Doug Trajano’s Agent Skills implementation for PydanticAI (docs)."
+  },
+  {
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#call-to-action",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#call-to-action",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "Call to action",
+    "text": "Call to action\nIf you have a skill you want to take beyond Markdown with determinism or AI Evals, share it. We can discuss which steps are missing to move from one level to the next. It may be simpler than it looks, and we could use it as a public-facing example to help others see specific ways to improve."
+  },
+  {
+    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#footnotes",
+    "href": "posts/series/evals/building-agent-skills-incrementally.html#footnotes",
+    "title": "Building Agent Skills: Intent, Determinism, and Stability",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nTurning a sequence of steps you’d otherwise repeat manually into a single, reusable instruction an agent can follow.↩︎\nProgressive disclosure means your agent doesn’t need every instruction in context at once. It can load what’s relevant when needed. See Doug Trajano’s PydanticAI Agent Skills implementation and docs.↩︎"
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html",
+    "href": "posts/series/zeroops/no-news-is-good-news.html",
+    "title": "No News Is Good News",
+    "section": "",
+    "text": "Do not check whether things are fine."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
+    "title": "No News Is Good News",
+    "section": "",
+    "text": "Do not check whether things are fine."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
+    "title": "No News Is Good News",
+    "section": "Pain Point",
+    "text": "Pain Point\nManually checking systems to confirm they are “okay” creates unnecessary cognitive load.\nDashboards and queues become reassurance rituals: they consume time and attention without changing outcomes.\nIf something is broken, you should be told."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#do",
+    "title": "No News Is Good News",
+    "section": "Do",
+    "text": "Do\nFor anything that might require action, ensure there is an automated signal.\n\nThe signal should reach the people who can meaningfully act on it.\nIt does not need to prescribe the action.\nOver time, actions may be formalised (runbooks, automation), but that is secondary.\n\nIf something requires attention, it should create noise. If it does not, it should remain silent."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do-not",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#do-not",
+    "title": "No News Is Good News",
+    "section": "Do Not",
+    "text": "Do Not\n\nCreate mechanisms to confirm system health.\nRegularly inspect dashboards “just to be sure”.\nRely on manual checks for reassurance.\n\nSilence is expected when coverage is adequate."
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#scope",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#scope",
+    "title": "No News Is Good News",
+    "section": "Scope",
+    "text": "Scope\nThis applies to operational, actionable failures: things that are broken now and require attention.\nThis does not cover:\n\nslow degradation\ntrend monitoring\npreemptive or exploratory analysis"
+  },
+  {
+    "objectID": "posts/series/zeroops/no-news-is-good-news.html#analogy",
+    "href": "posts/series/zeroops/no-news-is-good-news.html#analogy",
+    "title": "No News Is Good News",
+    "section": "Analogy",
+    "text": "Analogy\nThink of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine."
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "",
+    "text": "Slack only pastes rich formatting when the clipboard advertises text/html, otherwise it treats everything as plain text.\nIf my file sample.md looks like this:\n:robot_face: Tech updates :robot_face:\n\n# Some Title\n\n- **Project**: Did x in [google](https://google.com).\n  - aaa\n  - bbb\n      - ccc \n  - ddd\n\n# Another title\n\n- Another launch\n  - details\nCompare pasting directly on the left and what we want on the right.\n\n\n\nSide by Side comparison between markdown in plain text and the slack rich formatted version"
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "How to build latest xclip from source in Ubuntu",
+    "text": "How to build latest xclip from source in Ubuntu\nsudo apt install autoconf automake libtool libxmu-dev\ngit clone https://github.com/astrand/xclip\ncd xclip\nautoreconf -fi\n./configure --prefix=/usr/local\nmake\nsudo make install"
+  },
+  {
+    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
+    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
+    "title": "Stop Reformatting Markdown When Pasting into Slack",
+    "section": "WSL and powershell are different beasts",
+    "text": "WSL and powershell are different beasts\nThis won’t work on WSL and slack as-is. You likely need to do it from powershell using a third-party program\nWSL cannot directly populate the Windows clipboard with rich HTML in a way Slack accepts; an intermediate Windows application re-copies the content with additional clipboard formats.\n\nPowershell 5\n\nGet-Content out.html -Raw | Set-Clipboard -AsHtml\n\nOpen LibreOffice Writer or any GUI and paste.\nSelect that and copy\nPaste into slack\n\n\nFormat HTML won’t be added to Powershell 7\nPeople are not happy"
+  },
+  {
+    "objectID": "posts/solving-the-right-problem.html",
+    "href": "posts/solving-the-right-problem.html",
+    "title": "Solving The Right Problem",
+    "section": "",
+    "text": "Paul MacCready won the Kremer Prize for human-powered flight in 1977, after the prize had been open for 18 years. Other teams spent years building aircraft, tested them once, crashed, and started over, meaning they had at most one learning cycle per year.\nMacCready reframed the problem. Instead of “how do I build a human-powered aircraft,” he asked “how do I build something I can crash and rebuild in hours.” His Gossamer Condor was built from aluminium tubes, mylar, and piano wire, and it crashed constantly, but he’d rebuild it the same afternoon and fly again.\nHis competitors were solving the airplane problem, while he chose to solve the iteration problem.\nWhen I first read this story1, I realized how useful of a framework it was. Identifying and solving the real problem demanded that one take a step back and think, resisting the urge to immediately chase the appearance of productivity or “bias for action”, and often facing the challenging task of convincing others to go against established norms.\nDespite the challenges, the rewards were worthwhile: greatly increased chances of success, reduced cost of failure by making it fast, and sometimes the signal that the task wasn’t even worth embarking on in the first place.\nSpeed of iteration, like in MacCready’s case, can be the right problem2 because it allows you to stay nimble, react fast and adapt to your needs, business or otherwise. When working across groups of people, it can often mean removing yourself from being a bottleneck so you can tackle bigger and better things.\nStop and find the real problem. Often it’s speed. The time you spend making iteration cheap pays back faster than jumping straight into the work."
+  },
+  {
+    "objectID": "posts/solving-the-right-problem.html#footnotes",
+    "href": "posts/solving-the-right-problem.html#footnotes",
+    "title": "Solving The Right Problem",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nI read this in 2011 from Aza Raskin, who was Head of UX at Mozilla at the time. It’s influenced my thinking since.↩︎\nThis applies directly to AI and coding agents. See Solving the Right Problem: Economist Edition, Part 1.↩︎"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html",
+    "href": "posts/accept-self-signed-cert-git-https.html",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
+    "href": "posts/accept-self-signed-cert-git-https.html#intro",
+    "title": "Accept a self-signed certificate with git",
+    "section": "",
+    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Problem",
+    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
+  },
+  {
+    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
+    "title": "Accept a self-signed certificate with git",
+    "section": "The Solution",
+    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
+  },
+  {
     "objectID": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#pain-points",
     "href": "talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html#pain-points",
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
@@ -89,523 +754,5 @@
     "title": "Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
     "section": "Thank you!",
     "text": "Thank you!\n\n[05:19] - Whoever it is. Thanks."
-  },
-  {
-    "objectID": "projects.html",
-    "href": "projects.html",
-    "title": "Projects",
-    "section": "",
-    "text": "AI-Evals.io is a community site about AI evals. It focuses on practical comparisons, shared language and design with intent across roles. Part of the goal is to make evaluation ideas easier to understand through concrete, runnable examples.\n\n\nEval-Ception is one such example: a hands-on companion project for testing whether an agent can speak on behalf of a site, product or organization."
-  },
-  {
-    "objectID": "projects.html#ai-evals.io",
-    "href": "projects.html#ai-evals.io",
-    "title": "Projects",
-    "section": "",
-    "text": "AI-Evals.io is a community site about AI evals. It focuses on practical comparisons, shared language and design with intent across roles. Part of the goal is to make evaluation ideas easier to understand through concrete, runnable examples.\n\n\nEval-Ception is one such example: a hands-on companion project for testing whether an agent can speak on behalf of a site, product or organization."
-  },
-  {
-    "objectID": "projects.html#blog-samples",
-    "href": "projects.html#blog-samples",
-    "title": "Projects",
-    "section": "Blog Samples",
-    "text": "Blog Samples\nBlog Samples collects code and examples that support posts on this site.\nMore projects will land here over time."
-  },
-  {
-    "objectID": "posts/meeting-budget.html",
-    "href": "posts/meeting-budget.html",
-    "title": "Set a Meeting Budget",
-    "section": "",
-    "text": "Pain Point\n\nToo many recurring meetings drain your week’s productivity.\n\n\nThe Rule\n\nSet a hard budget for fixed meetings.\nExample: 40 h week, 6 h meeting budget.\n\nTotal - Budget = Free -&gt; 40 - 6 = 34\n\nIf you go over budget, cut or shrink the least important meetings.\nYou can adjust the budget, but do so rarely, otherwise it loses meaning.\nAd-hoc syncs are fine. It’s the recurring ones that eat up your time.\n\nConsider doing a similar thing for ad-hoc meetings, if they become a problem.\n\nLike code, less is better. Always look for ways to reduce, even if you’re under budget.\n\n\n\nAnalogy\nThis is similar to the U.S. Senate’s PAYGO rule:\n\nif Congress wants to add $N to a program, they must “find room” by reducing $N somewhere else or by increasing taxes to cover it."
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html",
-    "href": "posts/aider-with-open-router.html",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "",
-    "text": "Many people use LLM (Large Language Models) services to code at work but don’t necessarily see a path to use them at home on a budget.\nHere are two quick recipes: one for a fully local, privacy-focused setup, and another using OpenRouter."
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html#local-llms",
-    "href": "posts/aider-with-open-router.html#local-llms",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "Local LLMs",
-    "text": "Local LLMs\n\nMake sure you have ollama installed and running.\nNote down a wich model(s) you have installed and plan to use. We’ll use deepseek-r1 and qwen2.5-coder as example models. Deepseek is general purpose and a good candidate for reasoning while qwen2.5-coder is specialized for coding tasks.\n\n$ ollama list\n\nNAME                                        ID              SIZE      MODIFIED\ndeepseek-r1:14b                             ea35dfe18182    9.0 GB    2 hours ago\nqwen2.5-coder:14b                           9ec8897f747e    9.0 GB    2 hours ago\nI’m using the 14-B distilled models based on my hardware. You can experiment with different ones and find what speed vs quality tradeoff you’re comfortable with. The Ollama models site is very handy to get information about models and their distilled versions.\n\nfollow the guide which tells you to run:\n\naider --model ollama_chat/&lt;model&gt;\nSo in our case, that becomes:\naider --model \"ollama_chat/deepseek-r1:14b\" --editor-model \"ollama_chat/qwen2.5-coder:14b\"\nWe could simply use one model for everything but this “plan vs execution” pattern works really well both locally and remotely.\nUse aider --help or visit the options page on aider’s site to understand the differences between --model (main model), --editor-model (editor tasks), and --weak-model (commit messages and history summarization)."
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html#cheaply-with-openrouter",
-    "href": "posts/aider-with-open-router.html#cheaply-with-openrouter",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "Cheaply with OpenRouter",
-    "text": "Cheaply with OpenRouter\nIf you’re not satisfied with using your hardware for everything and are ok with sending data to an LLM in the cloud, you can use OpenRouter.\nThe advantage of using OpenRouter over a specific LLM service like Claude, ChatGPT API or others is that you can have a cloud independent approach and mix and match APIs paying in only one place, while also setting specific budgets that you can’t go over.\nuser u/Baldur-Norddahl Reddit LocalLLama shared a snippet of what it looks like. You’ll notice it’s very similar to our local example with the addition of the OpenRouter API Key as an environment variable and that we use Claude 3.7 and the full version of Deepseek r1:\nexport OPENROUTER_API_KEY=sk-or-v1-xxxx\naider --architect --model openrouter/deepseek/deepseek-r1 --editor-model openrouter/anthropic/claude-3.7-sonnet --watch-files\nYou can easily monitor your activity an estimate what your coding sessions are actually like. This may lead you to switch from Claude 3.7 to something cheaper. Again, it’s all about personal experience and quality tradeoffs."
-  },
-  {
-    "objectID": "posts/aider-with-open-router.html#in-closing",
-    "href": "posts/aider-with-open-router.html#in-closing",
-    "title": "Use aider for free with your local LLMs or cheaply with OpenRouter",
-    "section": "In Closing",
-    "text": "In Closing\nBoth patterns are very useful and allow you a great degree of flexibility. There’s a lot of power in customization and avoiding vendor lock-in. You’ll be able to experiement with cline/aider or whatever the next tool is. As hardware becomes more powerful, you could have a very productive experience on a plane, even without internet access.\nShoutout to Georgi Gerganov’s llama.cpp which is the core that allows ollama to work."
-  },
-  {
-    "objectID": "posts/accept-self-signed-cert-git-https.html",
-    "href": "posts/accept-self-signed-cert-git-https.html",
-    "title": "Accept a self-signed certificate with git",
-    "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
-  },
-  {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#intro",
-    "href": "posts/accept-self-signed-cert-git-https.html#intro",
-    "title": "Accept a self-signed certificate with git",
-    "section": "",
-    "text": "Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.\nEveryone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?"
-  },
-  {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-problem",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Problem",
-    "text": "The Problem\nIt turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.\nuser@user-linux:git$ git clone https://user@dev-server-01/git/repo_name.git \nCloning into 'repo_name'...\nfatal: unable to access 'https://user@dev-server-01/git/repo_name.git/': server certificate verification failed. \nCAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none"
-  },
-  {
-    "objectID": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "href": "posts/accept-self-signed-cert-git-https.html#the-solution",
-    "title": "Accept a self-signed certificate with git",
-    "section": "The Solution",
-    "text": "The Solution\nAfter some googling I came across suggestions to disable SSL verification with git config http.sslVerify \"false\" but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.\nThat’s when Stack Overflow came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.\nSteps:\n1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs\n/etc/ssl/certs/ssl-cert-dev-01.pem\n/etc/ssl/certs/ssl-cert-dev-02.pem\n2- Modify your git config (globally or per-repository) to associate hosts with certs:\n(From git config --help)\n\nhttp.sslCAInfo\n    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. \n    Can be overridden by the GIT_SSL_CAINFO environment variable.\nIn this case we’re going to do it globally by modifying ~/.gitconfig\n[http \"https://dev-server-01:/\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem\n\n[http \"https://dev-server-02\"]\n    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem\nOr you can do it with the command line:\n$ git config --global http.\"https://dev-server-01/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem\n$ git config --global http.\"https://dev-server-02/\".sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem\nOf course, this breaks the flow of those who were using HTTP and the IP address directly since you need the same name that appears in the certificate. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
-  },
-  {
-    "objectID": "posts/series/evals/sketch-to-text-skill.html",
-    "href": "posts/series/evals/sketch-to-text-skill.html",
-    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
-    "section": "",
-    "text": "I like sketching on an Onyx Boox. Diagrams, flowcharts and rough system designs can go here as freehand ink.\nWhat I do not like is transcribing or re-drawing in a diagramming tool. It’s wasteful and, as I often say, if something is annoying and you do it often, there’s probably a better way.\nText is something agents and humans can both read, and is easy to store in source control. So I built an Agent Skill to do the conversion."
-  },
-  {
-    "objectID": "posts/series/evals/sketch-to-text-skill.html#rubber-duck-first",
-    "href": "posts/series/evals/sketch-to-text-skill.html#rubber-duck-first",
-    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
-    "section": "Rubber duck first",
-    "text": "Rubber duck first\nI didn’t start by building anything, I started by complaining about what was annoying to an LLM and thinking through what a good solution would look like.1\nI went through the Boox sync options: BOOXDrop, WebDAV, Obsidian, the various export formats (vector PDF, bitmap PDF, .note) that appear in the UI. Most had friction or lock-in I didn’t want. Then, as a test, I drew a quick diagram and asked the LLM to convert it to Mermaid.\nIt worked well enough to make the skill idea feel viable. I decided Quarto as a destination and any agent CLI as a runner were both fine, and that my only real work would be building good enough ground truth to test against.2"
-  },
-  {
-    "objectID": "posts/series/evals/sketch-to-text-skill.html#talk-then-build",
-    "href": "posts/series/evals/sketch-to-text-skill.html#talk-then-build",
-    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
-    "section": "Talk, then build",
-    "text": "Talk, then build\nOnce I knew what I wanted, I described it to my agent and let it write the skill. The skill’s flow is: read → classify → extract structure → generate Mermaid → self-check → write. I didn’t have to think about it that much. I was already drawing a few more diagrams to build the ground truth."
-  },
-  {
-    "objectID": "posts/series/evals/sketch-to-text-skill.html#polish-with-evals",
-    "href": "posts/series/evals/sketch-to-text-skill.html#polish-with-evals",
-    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
-    "section": "Polish with evals",
-    "text": "Polish with evals\nAfter I had 6 diagrams (with rushed handwritten that proved hard to read, even for myself) I converted them into the baseline quarto files and manually compared actual vs expected respectively.\nThis exposed issues fast and forced me to decide details that were hard to foresee upfront. Cloud shapes, for example, aren’t implemented in Quarto’s bundled Mermaid renderer. When I hit that in diagram 4, I had to decide what to do with @{ shape: cloud } which is newer Mermaid and unsupported, and opted for (((\"text\"))) since it’s supported, and the double circle is visually impactful and also represents a “Stop Point”.\n\n\n\n\n\nflowchart TD\n    bus((\"Bus data\"))\n    tram((\"Tram data\"))\n    prices((\"Prices\"))\n    pt[\"Public Transport\"]\n    sim[\"Simulation\"]\n    qt[\"Quality Table\"]\n    dash(((\"exposure: Dashboard\")))\n    result(((\"exposure: result_table\")))\n\n    bus --&gt; pt\n    tram --&gt; pt\n    prices --&gt; sim\n    pt --&gt; sim\n    sim --&gt; qt\n    sim --&gt; dash\n    sim --&gt; result\n\n\n\n\n\n\nFor each issue I found, I iterated with the agent and it updated the skill. The loop is simple: try on real input, see what breaks, make the decision explicit, validate.\n\n\n\n\n\n\nNote\n\n\n\nWhen building ground truth you’re allowed to change the data, the expected output, and/or the skill logic. Whatever works to get a baseline that’s honest and easy to iterate against.\n\n\nWith ground truth in place, I ran promptfoo3 evals: each diagram PDF went through the skill, the output was checked against the reference via deterministic checks whenever I could (icontains assertions) and LLM as a Judge with local deepseek-r1:14b elsewhere. The exact tool used is really not the important part.\nOne run I got 5/6 since Diagram 5 had failed. The skill dropped the edge labels on the three branches.\n\n\n\n\n\nflowchart TD\n    banner[\"Design, De-Risk & Jumpstart\"]\n    intent[\"Intent\"]\n    goals[\"`Reduce effort\n      Increase ROI\n      Fail fast`\"]\n    guardrails[\"Guardrails\"]\n\n    banner -- Design --&gt; intent\n    banner -- De-Risk --&gt; goals\n    banner -- Jumpstart --&gt; guardrails\n\n\n\n\n\n\nThe fix was one line in SKILL.md to preserve every label written on or beside an arrow; a labelled arrow must use -- label --&gt; not bare --&gt;. I re run for a 6/6 outcome. I didn’t edit the skill manually. It was all conversation.\nA failing eval tells you exactly what the skill missed. One quick instruction to the agent, a re-run, and you know it holds."
-  },
-  {
-    "objectID": "posts/series/evals/sketch-to-text-skill.html#footnotes",
-    "href": "posts/series/evals/sketch-to-text-skill.html#footnotes",
-    "title": "From scribble to searchable: building a sketch-to-text Agent Skill",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nRubber duck debugging is the practice of explaining a problem out loud (originally to a rubber duck) to clarify your own thinking before asking for help. Popularised by Hunt and Thomas in The Pragmatic Programmer.↩︎\nGround truth is a manually verified reference output used to measure whether a system is working correctly. In evals, it’s the answer you’d accept if a human did the task well.↩︎\nPromptfoo is one of several open-source eval frameworks. See ai-evals.io/tools/compare for a comparison of the main options.↩︎"
-  },
-  {
-    "objectID": "posts/series/evals/building-agent-skills-incrementally.html",
-    "href": "posts/series/evals/building-agent-skills-incrementally.html",
-    "title": "Building Agent Skills: Intent, Determinism, and Stability",
-    "section": "",
-    "text": "I want to offer a mental model and decision tree for building Agent Skills incrementally. It’s meant for anyone experimenting with them - not just for software developers - and focuses on staying in control as complexity grows or you start thinking about sharing or collaborating with others."
-  },
-  {
-    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#a-note-on-experience",
-    "href": "posts/series/evals/building-agent-skills-incrementally.html#a-note-on-experience",
-    "title": "Building Agent Skills: Intent, Determinism, and Stability",
-    "section": "A note on experience",
-    "text": "A note on experience\nThe levels are illustrative and exist to prevent overwhelming yourself and avoid paralysis - either from fear of breaking things or from too many choices at the start.\nAfter you build a few skills, recognizing patterns becomes easier and you can decide where to invest based on your own pain points. You may start thinking about intent, determinism, stability, and safety from the beginning.\nThat does not mean implementing everything at once. It means being aware of more tradeoffs earlier.\nBuild only what you need, and keep it as simple as possible."
-  },
-  {
-    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#practical-takeaway",
-    "href": "posts/series/evals/building-agent-skills-incrementally.html#practical-takeaway",
-    "title": "Building Agent Skills: Intent, Determinism, and Stability",
-    "section": "Practical Takeaway",
-    "text": "Practical Takeaway\nUse skills to clarify intent. When a step stabilizes, move it into code or tools. Not because the model can’t do it, but because you don’t want to rediscover the same approach on every run. That lowers cost, reduces drift risk, and keeps room for directed experiments.\nYou can build skills with your agent CLI of choice (Claude/Codex/OpenCode), or use frameworks that support the pattern, like Doug Trajano’s Agent Skills implementation for PydanticAI (docs)."
-  },
-  {
-    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#call-to-action",
-    "href": "posts/series/evals/building-agent-skills-incrementally.html#call-to-action",
-    "title": "Building Agent Skills: Intent, Determinism, and Stability",
-    "section": "Call to action",
-    "text": "Call to action\nIf you have a skill you want to take beyond Markdown with determinism or AI Evals, share it. We can discuss which steps are missing to move from one level to the next. It may be simpler than it looks, and we could use it as a public-facing example to help others see specific ways to improve."
-  },
-  {
-    "objectID": "posts/series/evals/building-agent-skills-incrementally.html#footnotes",
-    "href": "posts/series/evals/building-agent-skills-incrementally.html#footnotes",
-    "title": "Building Agent Skills: Intent, Determinism, and Stability",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nTurning a sequence of steps you’d otherwise repeat manually into a single, reusable instruction an agent can follow.↩︎\nProgressive disclosure means your agent doesn’t need every instruction in context at once. It can load what’s relevant when needed. See Doug Trajano’s PydanticAI Agent Skills implementation and docs.↩︎"
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html",
-    "href": "posts/series/zeroops/merge-and-forget.html",
-    "title": "Merge and Forget",
-    "section": "",
-    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#the-rule",
-    "href": "posts/series/zeroops/merge-and-forget.html#the-rule",
-    "title": "Merge and Forget",
-    "section": "",
-    "text": "After your change is approved and enters the delivery pipeline, you should be able to forget it.\nNo following it through pipelines. No watching for when it lands. No manual checking for failure states."
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#pain-point",
-    "href": "posts/series/zeroops/merge-and-forget.html#pain-point",
-    "title": "Merge and Forget",
-    "section": "Pain Point",
-    "text": "Pain Point\nTracking deployments “just in case” creates unnecessary cognitive load.\nIt turns delivery into a background worry: tabs left open, dashboards checked, attention fragmented.\nIf something requires attention, you should be told."
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#do",
-    "href": "posts/series/zeroops/merge-and-forget.html#do",
-    "title": "Merge and Forget",
-    "section": "Do",
-    "text": "Do\nTreat delivery as a system property:\n\nPush “surprises” left: run fast, automated cross-system checks (e.g. integration tests) before merge, at code-review time, to minimise post-merge failures.\nYou should get a signal if something is blocked or broken.\nYou should not need manual reassurance.\nWhen the system is healthy, silence is expected.\n\n(see No News Is Good News)."
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#do-not",
-    "href": "posts/series/zeroops/merge-and-forget.html#do-not",
-    "title": "Merge and Forget",
-    "section": "Do Not",
-    "text": "Do Not\n\nFollow a deploy through the pipeline to feel safe.\nKeep checking “did it land yet?”\nWatch logs/dashboards after merge for reassurance."
-  },
-  {
-    "objectID": "posts/series/zeroops/merge-and-forget.html#scope",
-    "href": "posts/series/zeroops/merge-and-forget.html#scope",
-    "title": "Merge and Forget",
-    "section": "Scope",
-    "text": "Scope\nThis is for routine, continuous delivery of typical changes.\nThis does not cover:\n\nmajor migrations\none-way / high-blast-radius changes\ncommunicating expected delivery times (ETAs)"
-  },
-  {
-    "objectID": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
-    "href": "posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
-    "title": "Talks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem",
-    "section": "",
-    "text": "Abstract\nAs LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations and across versions of the same solution. This lightning talk highlights the need of an agreed-upon evaluation mechanism that enables us to measure, compare, and reproduce results when working with GenAI solutions in relation to Airflow. I’ll share what such mechanism could look like in practice. If you care about building trustworthy, testable GenAI systems (that could eventually fit into CI/CD workflows) and want to able to have grounded discussions when developing in this space, let’s lay the groundwork to test and compare our tools meaningfully.\n\n\nSlides and Transcript\n\nToward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\nTranscript (WebVTT)"
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html",
-    "href": "posts/wsl-pip-hangs-ipv6.html",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "",
-    "text": "pip install hangs in WSL with no useful error, often after it starts fetching from files.pythonhosted.org."
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html#pain-point",
-    "href": "posts/wsl-pip-hangs-ipv6.html#pain-point",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "",
-    "text": "pip install hangs in WSL with no useful error, often after it starts fetching from files.pythonhosted.org."
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html#the-rule",
-    "href": "posts/wsl-pip-hangs-ipv6.html#the-rule",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "The Rule",
-    "text": "The Rule\nIf DNS/connection to files.pythonhosted.org hangs but pypi.org works, suspect IPv6 preference + broken IPv6 routing."
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html#minimal-diagnosis",
-    "href": "posts/wsl-pip-hangs-ipv6.html#minimal-diagnosis",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "Minimal Diagnosis",
-    "text": "Minimal Diagnosis\npython -c \"import urllib.request; print(urllib.request.urlopen('https://pypi.org/simple/').status)\"\n# expected: 200\ngetent hosts pypi.org\n# returns quickly\ngetent hosts files.pythonhosted.org\n# may hang\nIf files.pythonhosted.org hangs, pip will hang. That host is where wheels and sdists are served from."
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html#fix",
-    "href": "posts/wsl-pip-hangs-ipv6.html#fix",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "Fix",
-    "text": "Fix\nPrefer IPv4 for address selection using gai.conf:\nsudo tee /etc/gai.conf &gt;/dev/null &lt;&lt;'EOF'\nprecedence ::ffff:0:0/96  100\nEOF\nThis does not disable IPv6. It changes the precedence so IPv4 is tried first."
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html#verify",
-    "href": "posts/wsl-pip-hangs-ipv6.html#verify",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "Verify",
-    "text": "Verify\ngetent hosts files.pythonhosted.org\n# should return immediately\nThen retry:\npip install ipython"
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html#revert",
-    "href": "posts/wsl-pip-hangs-ipv6.html#revert",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "Revert",
-    "text": "Revert\nsudo tee /etc/gai.conf &gt;/dev/null &lt;&lt;'EOF'\n# empty override: use glibc defaults\nEOF"
-  },
-  {
-    "objectID": "posts/wsl-pip-hangs-ipv6.html#notes",
-    "href": "posts/wsl-pip-hangs-ipv6.html#notes",
-    "title": "Fix: pip hangs in WSL (IPv6 / gai.conf)",
-    "section": "Notes",
-    "text": "Notes\nIf you see multiple stuck installs, clear them before retrying:\npkill -f \"python -u -m pip install\" || true"
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html",
-    "href": "posts/notifications-for-command-line-tasks.html",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "",
-    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html#intro",
-    "href": "posts/notifications-for-command-line-tasks.html#intro",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "",
-    "text": "Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.\nSo you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…\nSo what you want is a notification. One that lets you carry on merrily until the original command is actually finished.\nIt turns out that many .bashrc files come with an alias called alert and, some SO answers even improve upon it."
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
-    "href": "posts/notifications-for-command-line-tasks.html#desktop-notifications-with-notify-send",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "Desktop notifications with notify-send",
-    "text": "Desktop notifications with notify-send\nHere’s the one I’m using lately and has served me well:\n# Add an \"alert\" alias for long running commands.  Use like so:\n#   sleep 10; alert\nalias alert='notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\"  \n\"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"'\nAs the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias alert (Remember that semi-colon ; means execute after the previous command is finished, no matter the return code, unlike && which only executes the next command if return code is 0 (success).\nSo if you’re compiling and running tests in a project you could just do:\nmake test; alert\nand you’ll get notified whenever make test ends.\nBut what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?"
-  },
-  {
-    "objectID": "posts/notifications-for-command-line-tasks.html#email-notifications",
-    "href": "posts/notifications-for-command-line-tasks.html#email-notifications",
-    "title": "Get notifications in ubuntu when command line tasks end",
-    "section": "Email notifications",
-    "text": "Email notifications\nThat’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.\n$ sudo apt install mailutils\nThe logic is the same as before, once the command is done, execute the “alert”.\nIf you want to do it in python, here’s a simple way to go about it.\nJust make sure it doesn’t go to SPAM.\nCheers\n\nWas this helpful? Do you do it another way? All comments are welcome!"
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html",
-    "href": "posts/using-dbt-to-accelerate-science.html",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "",
-    "text": "This post is part of a series: “Factory of Domain Experts”:"
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
-    "href": "posts/using-dbt-to-accelerate-science.html#what-problem-are-we-solving",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "What problem are we solving?",
-    "text": "What problem are we solving?\n“When can we launch this?” is a recurring question in cross-functional teams, and the answer is often “ask the engineers”. But is that really necessary? Do scientists need to build and then hand off to engineers to rewrite code for scalability or reliability?\nI challenged this pattern since I wanted to scale without having to grow engineering headcount, and empower our scientists to deliver more impact independently. The original handover approach introduced delays, estimation misses, integration surprises, and iteration overhead.\n\nWhat we wanted to achieve:\n\nScale our team: Grow scientific output independent of engineering capacity.\nIterate in parallel, not sequentially: Team members collaborate building and integrating simultaneously, without waiting periods or handovers.\nShare easily reproducible code: Produce reproducible code and data that makes cross-team collaboration easy and transparent.\n\nInstead of building custom solutions, we used a small set of industry-standard tools, dbt (Data Build Tool) with SQL, Apache Airflow (using astronomer-cosmos), and Git, to create a simple system. Scientists now develop close to the domain, and their work is automatically orchestrated and deployed without engineers needing to rewrite or manage the code. There’s no custom Graphical User Interface (GUI) or platform, just clear conventions, smart defaults, and infrastructure-as-code. Engineers focus on building reusable capabilities while scientists focus on science and business logic."
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
-    "href": "posts/using-dbt-to-accelerate-science.html#how-dbt-solves-these-problems",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "How dbt solves these problems",
-    "text": "How dbt solves these problems\nData Build Tool (dbt) enables engineers and scientists alike to transform data using software engineering best practices. Crucially, there are no tradeoffs between scrappy exploration and production-ready code, the same code serves both purposes:\n\nProduction-ready from day one: The code scientists write IS the production code. No handovers, no rewrites, no “let me translate this for production.” Your development SQL becomes the scheduled pipeline automatically.\nCollaboration and early integration: Since both engineers and scientists can run the same dbt code, collaboration happens naturally from day one, fostering cross-domain learning and surfacing integration or reproducibility issues early, reducing project risk.\nSimple workflows that scale: A simple dbt run -s \"model_name+\" runs your model and all dependencies. The same code that works for individual data exploration works for production scheduling.\nModularity without orchestration headaches: dbt forces you to break apart monolithic SQL into focused models, but handles all the dependency management automatically, so you get the benefits of clean, debuggable code without the cognitive overhead of managing execution order.\nAutomatic lineage and documentation: dbt generates interactive dependency graphs showing how your models connect. Schema documentation automatically appears in the warehouse tables.\nBuilt-in quality controls: Define data tests that run automatically.\nBuilt for integration and extensibility: dbt integrates seamlessly with our existing AWS stack (Athena, Glue, Iceberg), internal services and datalakes and industry standard tools.\nCompliance and governance: Data policies can be built into packages, ensuring compliance and empowering your users to make the right tradeoffs around data handling."
-  },
-  {
-    "objectID": "posts/using-dbt-to-accelerate-science.html#impact",
-    "href": "posts/using-dbt-to-accelerate-science.html#impact",
-    "title": "Using Data Build Tool (dbt) to Accelerate & Scale Science",
-    "section": "Impact",
-    "text": "Impact\nOur approach enabled delivery of multiple high-impact scientist-led projects that would have otherwise been delayed or blocked due to engineering constraints. Peer teams adopted or expressed desires to adopt it, when they had a chance to work with us and experiment the productivity speed ups, in different dimensions."
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "",
-    "text": "Slack only pastes rich formatting when the clipboard advertises text/html, otherwise it treats everything as plain text.\nIf my file sample.md looks like this:\n:robot_face: Tech updates :robot_face:\n\n# Some Title\n\n- **Project**: Did x in [google](https://google.com).\n  - aaa\n  - bbb\n      - ccc \n  - ddd\n\n# Another title\n\n- Another launch\n  - details\nCompare pasting directly on the left and what we want on the right.\n\n\n\nSide by Side comparison between markdown in plain text and the slack rich formatted version"
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#how-to-build-latest-xclip-from-source-in-ubuntu",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "How to build latest xclip from source in Ubuntu",
-    "text": "How to build latest xclip from source in Ubuntu\nsudo apt install autoconf automake libtool libxmu-dev\ngit clone https://github.com/astrand/xclip\ncd xclip\nautoreconf -fi\n./configure --prefix=/usr/local\nmake\nsudo make install"
-  },
-  {
-    "objectID": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
-    "href": "posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html#wsl-and-powershell-are-different-beasts",
-    "title": "Stop Reformatting Markdown When Pasting into Slack",
-    "section": "WSL and powershell are different beasts",
-    "text": "WSL and powershell are different beasts\nThis won’t work on WSL and slack as-is. You likely need to do it from powershell using a third-party program\nWSL cannot directly populate the Windows clipboard with rich HTML in a way Slack accepts; an intermediate Windows application re-copies the content with additional clipboard formats.\n\nPowershell 5\n\nGet-Content out.html -Raw | Set-Clipboard -AsHtml\n\nOpen LibreOffice Writer or any GUI and paste.\nSelect that and copy\nPaste into slack\n\n\nFormat HTML won’t be added to Powershell 7\nPeople are not happy"
-  },
-  {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html",
-    "href": "posts/series/zeroops/no-news-is-good-news.html",
-    "title": "No News Is Good News",
-    "section": "",
-    "text": "Do not check whether things are fine."
-  },
-  {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#the-rule",
-    "title": "No News Is Good News",
-    "section": "",
-    "text": "Do not check whether things are fine."
-  },
-  {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#pain-point",
-    "title": "No News Is Good News",
-    "section": "Pain Point",
-    "text": "Pain Point\nManually checking systems to confirm they are “okay” creates unnecessary cognitive load.\nDashboards and queues become reassurance rituals: they consume time and attention without changing outcomes.\nIf something is broken, you should be told."
-  },
-  {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#do",
-    "title": "No News Is Good News",
-    "section": "Do",
-    "text": "Do\nFor anything that might require action, ensure there is an automated signal.\n\nThe signal should reach the people who can meaningfully act on it.\nIt does not need to prescribe the action.\nOver time, actions may be formalised (runbooks, automation), but that is secondary.\n\nIf something requires attention, it should create noise. If it does not, it should remain silent."
-  },
-  {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#do-not",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#do-not",
-    "title": "No News Is Good News",
-    "section": "Do Not",
-    "text": "Do Not\n\nCreate mechanisms to confirm system health.\nRegularly inspect dashboards “just to be sure”.\nRely on manual checks for reassurance.\n\nSilence is expected when coverage is adequate."
-  },
-  {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#scope",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#scope",
-    "title": "No News Is Good News",
-    "section": "Scope",
-    "text": "Scope\nThis applies to operational, actionable failures: things that are broken now and require attention.\nThis does not cover:\n\nslow degradation\ntrend monitoring\npreemptive or exploratory analysis"
-  },
-  {
-    "objectID": "posts/series/zeroops/no-news-is-good-news.html#analogy",
-    "href": "posts/series/zeroops/no-news-is-good-news.html#analogy",
-    "title": "No News Is Good News",
-    "section": "Analogy",
-    "text": "Analogy\nThink of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine."
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html",
-    "href": "posts/series/evals/automate-audits.html",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "",
-    "text": "We keep asking questions we should already know the answer to. And we usually ask them when a decision depends on it.\nSometimes we guess. Sometimes we do a one-off investigation. Sometimes we shrug and move on.\nWhat if you could get the value of a high-quality audit all the time?"
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html#the-idea",
-    "href": "posts/series/evals/automate-audits.html#the-idea",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "The idea",
-    "text": "The idea\nInstead of running audits occasionally, automate the audit itself.\nAn audit is just a set of questions.\nIf you make those questions explicit, and make them answerable repeatedly, the audit stops being a one-off activity and becomes something you can run continuously."
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html#the-method",
-    "href": "posts/series/evals/automate-audits.html#the-method",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "The method",
-    "text": "The method\nStart from pain points you already feel, or decisions you struggle to make.\nFrom each pain point, write the questions that would help you address it.\nThose questions imply dimensions (what you want coverage over) and, over time, a set of entities that describe your world.\nDon’t try to be complete. Just describe enough of your world to support the questions you care about.\nFor example, “we don’t know if we can reproduce the data of our projects” is a pain point that may prompt the questions:\n\nWhich projects have code packages?\nWhich code packages have a README with reproducibility steps?\nWhich README file instructions actually work?\n\nThe first two should be relatively trivial to check (in this GenAI world) and you can decide how much value the third one gets but the important point is that you’ve introduced what you know and surfaced what you currently can answer in case it’s worth it later.\nThe dimensions in our example are Code Packages and Projects.\nThese are actionable and describe different states of knowledge and reproducibility readiness.\n\n\n\n\n\n\nNote\n\n\n\nOther questions will likely arise from these such as “Which projects are ongoing? Which code packages belong to which projects?”"
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html#the-entities-in-your-world",
-    "href": "posts/series/evals/automate-audits.html#the-entities-in-your-world",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "The entities in your world",
-    "text": "The entities in your world\nAfter writing a few questions, you can jump to a whiteboard and try to describe a lot of the entities in your world to brainstorm about what you own, what you interact with and how things cluster together. The entities are the targets of the questions, and dimensions allow you to define the coverage. Example: “We have a total of 12 projects: 5 have READMEs with reproducibility steps, 2 don’t have READMEs, 5 have no packages.”\nIt’s up to you whether you want to immediately define actions to take or treat it as a helpful data point for others to decide. The point is you stop spending time re-answering ad hoc questions."
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html#the-forcing-function",
-    "href": "posts/series/evals/automate-audits.html#the-forcing-function",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "The forcing function",
-    "text": "The forcing function\nOnce you have questions, you write evals, checks that verify you can answer them. (See promptfoo’s documentation for one way to implement them.)\nAn eval is simply:\n\nIf I ask this question, I expect to get this kind of answer.\n\nWriting the eval is where the value appears.\nThe moment you write it, you’re forced to confront whether you can actually answer the question at all.\n\nIf you can, the eval is straightforward.\nIf you can’t, you’ve discovered something you thought you knew but didn’t.\nIf the answer is subjective, that gap becomes explicit.\n\nYou don’t need perfect answers. You need to know which evals pass and which ones reveal that you never had a real answer.\nThat alone is valuable.\n\n\n\n\n\n\nNote\n\n\n\nWhile writing evals in a form that doesn’t break as things change requires some practice, it’s not your primary concern when starting. It’s fine to be explicit and baseline."
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html#what-you-get",
-    "href": "posts/series/evals/automate-audits.html#what-you-get",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "What you get",
-    "text": "What you get\nOnce questions have evals, answering them becomes an implementation detail. With MCPs (Model Context Protocol servers), Playwright, etc. Programmatic access is easier than ever, the hard part isn’t answering questions, it’s knowing which ones to ask and systematizing what “good” looks like.\nOver time, you start to see where your questions apply, which are too vague, which are easier than expected, and where your description of the world is still thin.\nYou don’t need to go all in. Start with a few questions and a small report that grows over time.\nAt that point, you’re no longer redoing one-off audits.\nYou’re running a continuous audit whose scope is defined by the questions you care about."
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html#why-this-is-low-risk",
-    "href": "posts/series/evals/automate-audits.html#why-this-is-low-risk",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "Why this is low-risk",
-    "text": "Why this is low-risk\n\nYou don’t need to know everything upfront.\nYou don’t need to define “good” everywhere.\nYou don’t need a complete model of your world.\n\nYou just need to acknowledge you may not know the answer for questions you’ve not explicitly tried to answer (quite similar to feeling pain when doing unit testing while being unsure of what you want)\nEven unanswered questions are useful. They tell you what’s unclear, subjective, or not worth investing in."
-  },
-  {
-    "objectID": "posts/series/evals/automate-audits.html#closing",
-    "href": "posts/series/evals/automate-audits.html#closing",
-    "title": "Get the Value of a High-Quality Audit, All the Time",
-    "section": "Closing",
-    "text": "Closing\nYou don’t need to audit everything.\nYou just need to stop rediscovering the same answers, and the same unknowns, over and over again.\nStart with a few questions. Let the audit grow.\nIf it doesn’t help, stop.\nThe cost is small. The insight compounds."
-  },
-  {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "",
-    "text": "GenAI is non-deterministic and can fail or produce different results for the same input.\nA typical prompt-to-action flow involves many LLM calls. Each call is a chance for the model to misinterpret, hallucinate, or produce an unusable output.\nThe question isn’t if errors happen. It’s what happens when they do, and how many opportunities you give them to cascade."
-  },
-  {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#how-bad-does-it-get",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "How bad does it get?",
-    "text": "How bad does it get?\nConsider a simple case with just 4 steps (note: this is illustrative, consider how your system might have 10, 20, or more LLM calls):\n\nStep 1: 95% chance of correct\nStep 2: 95% chance of correct\n\nStep 3: 95% chance of correct\nStep 4: 95% chance of correct\n\nEnd-to-end: ~81% chance everything is correct.\nNow compare:\n\nStep 1 (LLM): user intent → structured call (95%)\nStep 2 (deterministic tool): execute (98%)\nStep 3 (deterministic validation): parse + check (97%)\nStep 4 (LLM): result → response (96%)\n\nEnd-to-end: ~87%\n\nSame model. Different architecture. 6+ point improvement."
-  },
-  {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#two-high-leverage-approaches",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "Two high-leverage approaches",
-    "text": "Two high-leverage approaches\n\nRemove 1 or many GenAI steps entirely, fewer chances to fail\nReplace GenAI steps with deterministic ones, lower error rate per step\n\n\n\n\n\n\n\nNote\n\n\n\nThese aren’t the only ways to reduce error (e.g. consensus systems, retries, etc) but the fundamentals expressed would apply everywhere, no matter whether it’s one agent or a swarm."
-  },
-  {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#what-makes-deterministic-steps-different",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "What makes deterministic steps different",
-    "text": "What makes deterministic steps different\nDeterministic steps still fail, but the failure characteristics differ from LLM failures:\n\nBounded: failures come from a finite set of causes (parse error, timeout, missing field), not open-ended misinterpretation\nRepeatable: same input, same failure: you can reproduce and fix it\nNon-semantic: a crashed process doesn’t convince the next step that “actually the user meant X”\n\n\n\n\n\n\n\nNote\n\n\n\nThis doesn’t mean deterministic = reliable. It means when things break, they break in less subtle ways and there’s a lot of software engineering history behind their robustness."
-  },
-  {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#the-design-pattern",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "The design pattern",
-    "text": "The design pattern\nLLMs do many hard parts (interpreting intent, choosing tools, dealing with syntax, reasoning through results, deciding what comes next).\nIn a simplified flow, the model might:\n\nReceive user intent (natural language)\nDecide which tool to call and with what parameters\nReceive structured output from the tool\nDecide: done, or call another tool?\nRepeat until ready to respond\nTranslate the final result back to the user\n\nA lot of reasoning and orchestration happens there and the point isn’t to limit that but to give it good building blocks.\nA human user is more effective with better building blocks (e.g. well designed libraries or cli tools) and so is an LLM.\nWhat you want are building blocks that are:\n\nreusable\ncomposable\nwell tested\neasy to change and maintain\ncost effective\n\nAnd a model that acts as a translation layer, not the tool running all the logic."
-  },
-  {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#practical-recommendations",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "Practical recommendations",
-    "text": "Practical recommendations\n\nIdentify the deterministic core\nIf you are writing a Claude skill and a step can be expressed as code, ask yourself why you’re not expressing it as code.\nThe tradeoff is real:\nLeaving logic in prose means:\n\nHigher error rate at runtime\nRelying on evals instead of unit tests (if you don’t know what one or either of these are, then you’re definitely safer in the frozen code world)\nPaying the cost and error on every execution\nYes, it might improve as models improve, but you’re paying for that uncertainty every time\n\nMoving logic to code means:\n\nLower error rate (deterministic execution)\nUnit testable\nCheaper to run\nStill easy to write with LLMs, have the model generate the code once instead of regenerating the logic from prose every time\nYou can still ask LLMs to review or improve the code later if you want\n\nThe second option gives you confidence that things actually work. The first option defers that confidence in exchange for alleged convenience.\nIf the LLM can write code for you, why have it translate markdown to logic on every run? Make the translation once, freeze it as code, and test it properly.\n\n\nForce structure at boundaries\nDon’t pass prose between steps. Use formats that are easy to serialize and deserialize, like JSON/YAML with schemas you can validate against.\nStructure lets you validate, detect errors and attempt course correction or fail fast, diff, log, and evaluate deterministically.\n\n\n\n\n\n\nNote\n\n\n\nThis will even save you money, time and compute resources by not having to use LLM as a Judge for assertion in your evals.\n\n\n\n\nTest the building blocks\nWrite unit tests and integration tests for the core building blocks — same as you would’ve done before LLMs."
-  },
-  {
-    "objectID": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
-    "href": "posts/series/evals/error-compounding-genai-systems-approach.html#closing",
-    "title": "Reducing Error Compounding in GenAI Systems",
-    "section": "Closing",
-    "text": "Closing\nThis isn’t about distrusting models, it’s about giving them good building blocks to use.\nUse GenAI to translate intent. Use the building blocks to execute. Keep errors where you can measure them.\nThat is how automation becomes something you can trust instead of manually testing once and being hopeful."
-  },
-  {
-    "objectID": "posts/series/evals/measure-first-optimize-last.html",
-    "href": "posts/series/evals/measure-first-optimize-last.html",
-    "title": "Measure First, Optimize Last: My Approach to AI Evals",
-    "section": "",
-    "text": "If you can’t measure it, you’re guessing. Here’s how I think about evals, practical examples at ai-evals.io."
-  },
-  {
-    "objectID": "posts/series/evals/measure-first-optimize-last.html#footnotes",
-    "href": "posts/series/evals/measure-first-optimize-last.html#footnotes",
-    "title": "Measure First, Optimize Last: My Approach to AI Evals",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nBlast Radius: refers to the extent of system, data, or user impact caused by a component failure, security breach, or faulty code deployment. See an extreme example in the Falcon Sensor 2024 crash.↩︎\nTDD: Test Driven Development: The act of driving your code thinking intentionally about testability and what tests expose the behaviour you want. Dogmatically it can seem slow and unhelpful but thinking about testability and adding tests to catch prevent bugs from recurring are very useful practices to have. Otherwise, overbuilding is very easy.↩︎"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "I’ve been developing software professionally from 2008 so I’ve seen a thing or two, writing roguelikes with GCC 4.2, dealing with Visual C++ 6.0’s non standard quirks, writing triangles in OpenGL’s “Red Book”, writing fiscal printer firmware, creating multi country products, working in truly big data in Big Company (TM) and realizing that more often than not, the problem is not technical in nature.\nI’ve always found myself repeating insights, whether learned from others or my own experiences and realized I don’t always put them into text in the companies I work for and definitely not expose them in written form to the outside world.\nI should do that more. This is me getting into the habit of doing that more."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "The Living Deadline",
-    "section": "",
-    "text": "From scribble to searchable: building a sketch-to-text Agent Skill\n\n\n\n\n\n\ngenai\n\nproductivity\n\nworkflows\n\n\n\nWhy evals matter more than the skill itself, illustrated with a small personal workflow.\n\n\n\n\n\nMar 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nBuilding Agent Skills: Intent, Determinism, and Stability\n\n\n\n\n\n\ngenai\n\nworkflows\n\nreliability\n\n\n\nA mental model and decision tree for building agent skills incrementally: start with intent, add deterministic tools, then use tests and AI evals to reduce drift and risk.\n\n\n\n\n\nFeb 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMeasure First, Optimize Last: My Approach to AI Evals\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nA pain-driven approach to AI evals: measure first, constrain risk, iterate fast, optimize last.\n\n\n\n\n\nFeb 10, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet the Value of a High-Quality Audit, All the Time\n\n\n\n\n\n\nengineering\n\nproductivity\n\ngenai\n\nops\n\n\n\nTurn pain points into repeatable questions and build a lightweight taxonomy of your world.\n\n\n\n\n\nJan 29, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nReducing Error Compounding in GenAI Systems\n\n\n\n\n\n\nengineering\n\ngenai\n\nevals\n\n\n\nHow chaining LLM calls compounds errors, and why replacing probabilistic steps with deterministic ones improves reliability.\n\n\n\n\n\nJan 28, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nStop Reformatting Markdown When Pasting into Slack\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nJan 16, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nFix: pip hangs in WSL (IPv6 / gai.conf)\n\n\n\n\n\n\ntroubleshooting\n\n\n\n\n\n\n\n\n\nJan 13, 2026\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nTalks: Toward a Shared Vision for LLM Evaluation in the Airflow Ecosystem\n\n\nAirflow Summit 2025 - Lightning Talk (5 min)\n\n\n\nairflow\n\ntalks\n\n\n\n\n\n\n\n\n\nSep 9, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Data Build Tool (dbt) to Accelerate & Scale Science\n\n\n\n\n\n\ndata-science\n\nengineering\n\n\n\n\n\n\n\n\n\nSep 1, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nUse aider for free with your local LLMs or cheaply with OpenRouter\n\n\n\n\n\n\ngenai\n\ncode\n\n\n\n\n\n\n\n\n\nJul 6, 2025\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nMerge and Forget\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 18, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nNo News Is Good News\n\n\n\n\n\n\nengineering\n\n\n\n\n\n\n\n\n\nMay 17, 2024\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nSet a Meeting Budget\n\n\n\n\n\n\nproductivity\n\n\n\n\n\n\n\n\n\nMar 1, 2023\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nGet notifications in ubuntu when command line tasks end\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nApr 16, 2019\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\n\n\n\n\n\n\n\nAccept a self-signed certificate with git\n\n\n\n\n\n\ndevops\n\n\n\n\n\n\n\n\n\nFeb 11, 2018\n\n\nAlex Guglielmone Nemi\n\n\n\n\n\nNo matching items"
   }
 ]

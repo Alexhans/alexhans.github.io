@@ -2,13 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Alex Guglielmone Nemi">
+<meta name="dcterms.date" content="2026-07-18">
+<meta name="description" content="Using a cloud LLM agent to benchmark and tune a local LLM setup.">
 
-<title>Projects – The Living Deadline</title>
+<title>Find The Loop – The Living Deadline</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -20,31 +26,65 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-e7ab87af057c297da0378775f9f838e3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-a87d830125dba96ce9f7d55a1014f349.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-df94dce802a191227f0d387258890394.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-df2ed675b0c743ae6b32056cdd985e38.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-df94dce802a191227f0d387258890394.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -251,11 +291,11 @@ ul.task-list li input[type="checkbox"] {
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">The Living Deadline</span>
     </a>
   </div>
@@ -266,11 +306,12 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./projects.html" aria-current="page"> 
-<span class="menu-text">Projects</span></a>
+    <span class="nav-link">
+<span class="menu-text">projects.qmd</span>
+    </span>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -287,50 +328,200 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Find The Loop</h1>
+                  <div>
+        <div class="description">
+          Using a cloud LLM agent to benchmark and tune a local LLM setup.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">engineering</div>
+                <div class="quarto-category">genai</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Guglielmone Nemi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 18, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Projects</h1>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
 
-
-<section id="ai-evals.io" class="level2">
-<h2 class="anchored" data-anchor-id="ai-evals.io">AI-Evals.io</h2>
-<p><a href="https://ai-evals.io/">AI-Evals.io</a> is a community site about AI evals. It focuses on practical comparisons, shared language and design with intent across roles. Part of the goal is to make evaluation ideas easier to understand through concrete, runnable examples.</p>
-<section id="eval-ception" class="level3">
-<h3 class="anchored" data-anchor-id="eval-ception">Eval-Ception</h3>
-<p><a href="https://github.com/Alexhans/eval-ception">Eval-Ception</a> is one such example: a hands-on companion project for testing whether an agent can speak on behalf of a site, product or organization.</p>
+<section id="pain-point-finding-the-right-combination-of-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="pain-point-finding-the-right-combination-of-parameters">Pain Point: Finding The Right Combination Of Parameters</h2>
+<p>This is a story about using a cloud LLM agent to tune a local LLM setup. If you do not care about the story, <a href="#general-pattern">jump to the general pattern</a>.</p>
+<p>I had a local large language model (LLM) setup that worked well enough to use: <a href="https://github.com/ggml-org/llama.cpp"><code>llama.cpp</code></a> running on Windows, <a href="https://github.com/earendil-works/pi"><code>pi</code></a> running from WSL<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and a <a href="https://huggingface.co/Qwen/Qwen3.5-35B-A3B">Qwen3.5 35B</a> model served through <code>llama-server</code>, llama.cpp’s local API server. I had already found a 49k context configuration<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> through trial and error, but long-running loops or sessions would eventually fill the context window. Compaction would then take time and break the flow.</p>
+<p>Researching potential flags and trying different combinations or hypotheses is time consuming, and I probably will not do it unless I can delegate it. In some cases, I am not even guaranteed to find better performance than I currently have. This made it a good candidate for letting an agent try alternatives in a systematic manner, benchmark which combinations met the desired goals, and keep the measurements.</p>
+<p>The important requirement was that the agent had to control every part that could affect the result. One part was the Windows <code>llama-server</code> process. Another was <code>pi</code>’s compaction behaviour in WSL.</p>
 </section>
+<section id="simple-starting-prompt" class="level2">
+<h2 class="anchored" data-anchor-id="simple-starting-prompt">Simple Starting Prompt</h2>
+<p>This was the prompt I gave the Windows Codex App<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Even if it is lazy and inaccurate, it’s good enough to get the agent’s loop going.</p>
+<blockquote class="blockquote">
+<p>I wonder if we can iterate and test on what the best combination of powershell llama-server config is and wsl pi settings is so that a long running task compacts less often and I can use a larger context window without losing much quality/speed. e.g.&nbsp;run on powershell something like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\llama-server<span class="op">.</span><span class="fu">exe</span> `</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">--</span>host <span class="dv">0.0</span><span class="op">.</span><span class="dv">0.0</span> `</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">--</span>port <span class="dv">8080</span> `</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">--</span>models-dir <span class="st">"C:\source\ai\models"</span> `</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">--</span>models-max <span class="dv">1</span> `</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span>c <span class="dv">49152</span> `</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">--</span>jinja `</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span>ngl <span class="dv">99</span> `</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span>fa on `</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span>ctk q8_0 `</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span>ctv q8_0 `</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span>n <span class="dv">4096</span> `</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">--</span>metrics</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and for the wsl run pi with the model Qwen3.5-35B-A3B-GGUF [llamacpp]. You’d have to control both things and hypothesize stuff and confrim. you can run the llama benchmark firstand store the different runs and performance. You should never run more than one pi agent at a time targeting the server.</p>
+</blockquote>
+<p>Things of note here: I gave the current command for the baseline (<code>llama-server</code> and its parameters), the parameters it could modify (WSL + <code>pi</code>, and <code>llama-server</code>), the way to measure (<code>llama-bench</code>, llama.cpp’s benchmark tool), and a small constraint of ensuring <code>pi</code> is run once at a time.</p>
 </section>
-<section id="blog-samples" class="level2">
-<h2 class="anchored" data-anchor-id="blog-samples">Blog Samples</h2>
-<p><a href="https://github.com/Alexhans/blog-samples">Blog Samples</a> collects code and examples that support posts on this site.</p>
-<p>More projects will land here over time.</p>
+<section id="conversation-shape" class="level2">
+<h2 class="anchored" data-anchor-id="conversation-shape">Conversation Shape</h2>
+<dl class="conversation">
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+<p>Started by establishing a baseline. It inspected the machine, found the model and <code>pi</code> configuration, checked the one-agent constraint, and benchmarked the existing setup, including the KV cache<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> precision:</p>
+<pre class="text"><code>llama-server context: 49,152
+KV cache:              Q8/Q8
+pi reserve:            8,192
+effective threshold:   40,960</code></pre>
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+<p>Ran a real <code>pi</code> session and found a failure mode: a long tool-heavy turn could grow past the effective threshold and hit the server limit before compaction protected it.</p>
+Tried a 65k context with a larger <code>pi</code> reserve, which fixed the overflow.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+Also, you should serach in reddit.com/r/locallama for posts about llama-server configs for hardware similar to mine, recent ones, for consideration.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+I’ve already demonstrated that 49k works on my own works, the config I shared was the one I use. I was hoping to see if I could get more than that in terms of context window because it consumes too fast and then it takes too long to compact and all that jazz
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+Tested 96k and 128k. The 96k configuration looked like the better option for regular use; 128k gave more room and measured worse for regular use.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+remember you can and probably should experiment with the ~/.pi/agent/ configs (models.json settings.json) or equivalent flags because those are what govern the behaviour of compaction or some optimizations of how it works, if you have to reserach pi.dev or the github repo do so
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+<p>Found <code>reserveTokens</code> and <code>keepRecentTokens</code>, which control when compaction triggers and how much recent context survives it.</p>
+Identified <code>pi-continue</code> as another possible lever for reducing compaction disruption.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+yes, pi-continue would be great to test, keep annotating your hypothesis and tests so that we have a good data of benchmarks and final deciisons.
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+Tested <code>pi-continue</code>. The successful controlled run compacted 48,863 tokens to an estimated 24,407 while preserving the task, constraints, evidence anchors, open questions, and next actions.
+</dd>
+</dl>
+</section>
+<section id="outcome" class="level2">
+<h2 class="anchored" data-anchor-id="outcome">Outcome</h2>
+<p>The recommended configuration for regular use was:</p>
+<pre class="text"><code>llama-server context: 98,304
+KV cache:              Q4/Q4
+fit target:            512 MiB
+pi reserve:            16,384
+pi threshold:          81,920</code></pre>
+<p>The KV cache setting was <code>Q4/Q4</code>.</p>
+<p>The fit target was 512 MiB.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>The selected setup combined a larger server context, lower KV cache precision, a larger <code>pi</code> reserve, adjusted recent-context retention, and <code>pi-continue</code>. The point of the loop was that I did not need to know upfront which one of those would matter.</p>
+<p>The practical compaction point is <code>context window - reserve tokens</code>, so the threshold roughly doubled:</p>
+<pre class="text"><code>old threshold: 49,152 - 8,192  = 40,960
+new threshold: 98,304 - 16,384 = 81,920</code></pre>
+<p>The short warm API measurement moved from 56.66 tok/s to 53.17 tok/s, or tokens per second.</p>
+<pre class="text"><code>old: 56.66 tok/s
+new: 53.17 tok/s</code></pre>
+<p>The 128k candidate gave more room and measured worse for regular use. The preserved notes in the <a href="https://github.com/Alexhans/blog-samples/tree/main/find-the-loop">sample artifact packet</a> explain that decision, which is more useful than only keeping the final command.</p>
+</section>
+<section id="general-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="general-pattern">General Pattern</h2>
+<ol type="1">
+<li><span class="role-you">You</span> state the pain point.</li>
+<li><span class="role-you">You</span> identify a specific goal to aim for.</li>
+<li><span class="role-you">You</span> identify the parameters the agent can change to try different combinations.</li>
+<li><span class="role-you">You</span> tell the agent to measure the current starting point as the baseline.</li>
+<li><span class="role-agent">The agent</span> tries alternatives systematically.</li>
+<li><span class="role-agent">The agent</span> compares each alternative against the baseline and goal.</li>
+<li><span class="role-you">You</span> steer if the agent optimizes for the wrong thing or misses part of the system.</li>
+<li><span class="role-you">You</span> test-drive the chosen result manually before adopting it.</li>
+<li><span class="role-you">You</span> keep the measurements and final config.</li>
+</ol>
+<p>This applies beyond local LLMs. If you can define the first three points, you can apply it anywhere. Be mindful of step 3 and whether your agent can really reach all the places it needs to. In my case, if the bot could not open a WSL instance and run <code>pi</code>, this would not work.</p>
+<p>A final note is that the config, process, and measurements are reusable. I can apply the same loop to an incoming model, <code>llama-server</code> upgrade, or hypothesis that I have. It’s one of those flows that is good to turn into a personal Agent Skill.</p>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://learn.microsoft.com/windows/wsl/">Windows Subsystem for Linux</a> lets you run a Linux environment directly on Windows.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The context window is the amount of conversation/history the model can work with. In this workflow, compaction means summarizing earlier context so the session can keep going without exceeding that window. The practical threshold is lower than the full context window because <code>pi</code> reserves some tokens before compacting.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>In the prompt, <code>-c 49152</code> was the context size, or how much conversation/history the server can hold. <code>-ctk q8_0</code> and <code>-ctv q8_0</code> controlled KV cache precision, a memory/speed/quality tradeoff for long context. <code>-ngl 99</code> asked llama.cpp to put as much of the model as possible on the GPU. <code>-fa on</code> enabled flash attention, which helps long-context performance. The <code>pi</code> settings mattered because compaction was controlled outside <code>llama-server</code>. The one-agent rule kept tests from overlapping.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The KV cache stores intermediate attention data so the model can continue from previous tokens without recalculating everything. Quantizing it uses fewer bits per value to save memory. <code>Q4/Q4</code> uses less memory than <code>Q8/Q8</code>, which helped fit a larger context window, but I did not compare Q4/Q4 versus Q8/Q8 with my own task-specific evals. The comparison here used <code>llama-server</code>, generic speed measurements, VRAM behaviour, and the observed <code>pi</code> workflow.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><code>fit target</code> refers to llama.cpp’s <a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md"><code>-fitt</code> / <code>--fit-target</code></a>, the target memory margin per device for <code>--fit</code>. In this run, 512 MiB meant asking llama.cpp to leave about that much GPU memory margin while fitting the model and context.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script src="https://giscus.app/client.js" data-repo="Alexhans/alexhans.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnk5MjAwNTAyNw==" data-category="Comments" data-category-id="DIC_kwDOBXvio84CzzNh" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="en" crossorigin="anonymous" async="">
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

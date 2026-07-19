@@ -9,8 +9,215 @@
 <link>https://alexhans.github.io/</link>
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Guglielmone Nemi&#39;s blog</description>
-<generator>quarto-1.8.27</generator>
-<lastBuildDate>Mon, 08 Jun 2026 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.37</generator>
+<lastBuildDate>Fri, 17 Jul 2026 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Find The Loop</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/find-the-loop-story-first.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<section id="pain-point-finding-the-right-combination-of-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="pain-point-finding-the-right-combination-of-parameters">Pain Point: Finding The Right Combination Of Parameters</h2>
+<p>This is a story about using a cloud LLM agent to tune a local LLM setup. If you do not care about the story, jump to the general pattern.</p>
+<p>I had a local large language model (LLM) setup that worked well enough to use: <a href="https://github.com/ggml-org/llama.cpp"><code>llama.cpp</code></a> running on Windows, <a href="https://github.com/earendil-works/pi"><code>pi</code></a> running from WSL<sup>1</sup>, and a <a href="https://huggingface.co/Qwen/Qwen3.5-35B-A3B">Qwen3.5 35B</a> model served through <code>llama-server</code>, llama.cpp’s local API server. I had already found a 49k context configuration<sup>2</sup> through trial and error, but long-running loops or sessions would eventually fill the context window. Compaction would then take time and break the flow.</p>
+<p>Researching potential flags and trying different combinations or hypotheses is time consuming, and I probably will not do it unless I can delegate it. In some cases, I am not even guaranteed to find better performance than I currently have. This made it a good candidate for letting an agent try alternatives in a systematic manner, benchmark which combinations met the desired goals, and keep the measurements.</p>
+<p>The important requirement was that the agent had to control every part that could affect the result. One part was the Windows <code>llama-server</code> process. Another was <code>pi</code>’s compaction behaviour in WSL.</p>
+</section>
+<section id="simple-starting-prompt" class="level2">
+<h2 class="anchored" data-anchor-id="simple-starting-prompt">Simple Starting Prompt</h2>
+<p>This was the prompt I gave the Windows Codex App<sup>3</sup>. Even if it is lazy and inaccurate, it’s good enough to get the agent’s loop going.</p>
+<blockquote class="blockquote">
+<p>I wonder if we can iterate and test on what the best combination of powershell llama-server config is and wsl pi settings is so that a long running task compacts less often and I can use a larger context window without losing much quality/speed. e.g.&nbsp;run on powershell something like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>\llama-server<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exe</span> `</span>
+<span id="cb1-2">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>host <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span> `</span>
+<span id="cb1-3">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>port <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8080</span> `</span>
+<span id="cb1-4">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>models-dir <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C:\source\ai\models"</span> `</span>
+<span id="cb1-5">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>models-max <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> `</span>
+<span id="cb1-6">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>c <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">49152</span> `</span>
+<span id="cb1-7">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>jinja `</span>
+<span id="cb1-8">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>ngl <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">99</span> `</span>
+<span id="cb1-9">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>fa on `</span>
+<span id="cb1-10">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>ctk q8_0 `</span>
+<span id="cb1-11">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>ctv q8_0 `</span>
+<span id="cb1-12">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>n <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4096</span> `</span>
+<span id="cb1-13">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>metrics</span></code></pre></div></div>
+<p>and for the wsl run pi with the model Qwen3.5-35B-A3B-GGUF [llamacpp]. You’d have to control both things and hypothesize stuff and confrim. you can run the llama benchmark firstand store the different runs and performance. You should never run more than one pi agent at a time targeting the server.</p>
+</blockquote>
+<p>Things of note here: I gave the current command for the baseline (<code>llama-server</code> and its parameters), the parameters it could modify (WSL + <code>pi</code>, and <code>llama-server</code>), the way to measure (<code>llama-bench</code>, llama.cpp’s benchmark tool), and a small constraint of ensuring <code>pi</code> is run once at a time.</p>
+</section>
+<section id="conversation-shape" class="level2">
+<h2 class="anchored" data-anchor-id="conversation-shape">Conversation Shape</h2>
+<dl class="conversation">
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+<p>Started by establishing a baseline. It inspected the machine, found the model and <code>pi</code> configuration, checked the one-agent constraint, and benchmarked the existing setup, including the KV cache<sup>4</sup> precision:</p>
+<pre class="text"><code>llama-server context: 49,152
+KV cache:              Q8/Q8
+pi reserve:            8,192
+effective threshold:   40,960</code></pre>
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+<p>Ran a real <code>pi</code> session and found a failure mode: a long tool-heavy turn could grow past the effective threshold and hit the server limit before compaction protected it.</p>
+Tried a 65k context with a larger <code>pi</code> reserve, which fixed the overflow.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+Also, you should serach in reddit.com/r/locallama for posts about llama-server configs for hardware similar to mine, recent ones, for consideration.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+I’ve already demonstrated that 49k works on my own works, the config I shared was the one I use. I was hoping to see if I could get more than that in terms of context window because it consumes too fast and then it takes too long to compact and all that jazz
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+Tested 96k and 128k. The 96k configuration looked like the better option for regular use; 128k gave more room and measured worse for regular use.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+remember you can and probably should experiment with the ~/.pi/agent/ configs (models.json settings.json) or equivalent flags because those are what govern the behaviour of compaction or some optimizations of how it works, if you have to reserach pi.dev or the github repo do so
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+<p>Found <code>reserveTokens</code> and <code>keepRecentTokens</code>, which control when compaction triggers and how much recent context survives it.</p>
+Identified <code>pi-continue</code> as another possible lever for reducing compaction disruption.
+</dd>
+<dt class="alex">
+Alex:
+</dt>
+<dd>
+yes, pi-continue would be great to test, keep annotating your hypothesis and tests so that we have a good data of benchmarks and final deciisons.
+</dd>
+<dt class="codex">
+Codex:
+</dt>
+<dd>
+Tested <code>pi-continue</code>. The successful controlled run compacted 48,863 tokens to an estimated 24,407 while preserving the task, constraints, evidence anchors, open questions, and next actions.
+</dd>
+</dl>
+</section>
+<section id="outcome" class="level2">
+<h2 class="anchored" data-anchor-id="outcome">Outcome</h2>
+<p>The recommended configuration for regular use was:</p>
+<pre class="text"><code>llama-server context: 98,304
+KV cache:              Q4/Q4
+fit target:            512 MiB
+pi reserve:            16,384
+pi threshold:          81,920</code></pre>
+<p>The KV cache setting was <code>Q4/Q4</code>.</p>
+<p>The fit target was 512 MiB.<sup>5</sup></p>
+<p>The selected setup combined a larger server context, lower KV cache precision, a larger <code>pi</code> reserve, adjusted recent-context retention, and <code>pi-continue</code>. The point of the loop was that I did not need to know upfront which one of those would matter.</p>
+<p>The practical compaction point is <code>context window - reserve tokens</code>, so the threshold roughly doubled:</p>
+<pre class="text"><code>old threshold: 49,152 - 8,192  = 40,960
+new threshold: 98,304 - 16,384 = 81,920</code></pre>
+<p>The short warm API measurement moved from 56.66 tok/s to 53.17 tok/s, or tokens per second.</p>
+<pre class="text"><code>old: 56.66 tok/s
+new: 53.17 tok/s</code></pre>
+<p>The 128k candidate gave more room and measured worse for regular use. The preserved notes in the <a href="https://github.com/Alexhans/blog-samples/tree/main/find-the-loop">sample artifact packet</a> explain that decision, which is more useful than only keeping the final command.</p>
+</section>
+<section id="general-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="general-pattern">General Pattern</h2>
+<ol type="1">
+<li><span class="role-you">You</span> state the pain point.</li>
+<li><span class="role-you">You</span> identify a specific goal to aim for.</li>
+<li><span class="role-you">You</span> identify the parameters the agent can change to try different combinations.</li>
+<li><span class="role-you">You</span> tell the agent to measure the current starting point as the baseline.</li>
+<li><span class="role-agent">The agent</span> tries alternatives systematically.</li>
+<li><span class="role-agent">The agent</span> compares each alternative against the baseline and goal.</li>
+<li><span class="role-you">You</span> steer if the agent optimizes for the wrong thing or misses part of the system.</li>
+<li><span class="role-you">You</span> test-drive the chosen result manually before adopting it.</li>
+<li><span class="role-you">You</span> keep the measurements and final config.</li>
+</ol>
+<p>This applies beyond local LLMs. If you can define the first three points, you can apply it anywhere. Be mindful of step 3 and whether your agent can really reach all the places it needs to. In my case, if the bot could not open a WSL instance and run <code>pi</code>, this would not work.</p>
+<p>A final note is that the config, process, and measurements are reusable. I can apply the same loop to an incoming model, <code>llama-server</code> upgrade, or hypothesis that I have. It’s one of those flows that is good to turn into a personal Agent Skill.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://learn.microsoft.com/windows/wsl/">Windows Subsystem for Linux</a> lets you run a Linux environment directly on Windows.↩︎</p></li>
+<li id="fn2"><p>The context window is the amount of conversation/history the model can work with. In this workflow, compaction means summarizing earlier context so the session can keep going without exceeding that window. The practical threshold is lower than the full context window because <code>pi</code> reserves some tokens before compacting.↩︎</p></li>
+<li id="fn3"><p>In the prompt, <code>-c 49152</code> was the context size, or how much conversation/history the server can hold. <code>-ctk q8_0</code> and <code>-ctv q8_0</code> controlled KV cache precision, a memory/speed/quality tradeoff for long context. <code>-ngl 99</code> asked llama.cpp to put as much of the model as possible on the GPU. <code>-fa on</code> enabled flash attention, which helps long-context performance. The <code>pi</code> settings mattered because compaction was controlled outside <code>llama-server</code>. The one-agent rule kept tests from overlapping.↩︎</p></li>
+<li id="fn4"><p>The KV cache stores intermediate attention data so the model can continue from previous tokens without recalculating everything. Quantizing it uses fewer bits per value to save memory. <code>Q4/Q4</code> uses less memory than <code>Q8/Q8</code>, which helped fit a larger context window, but I did not compare Q4/Q4 versus Q8/Q8 with my own task-specific evals. The comparison here used <code>llama-server</code>, generic speed measurements, VRAM behaviour, and the observed <code>pi</code> workflow.↩︎</p></li>
+<li id="fn5"><p><code>fit target</code> refers to llama.cpp’s <a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md"><code>-fitt</code> / <code>--fit-target</code></a>, the target memory margin per device for <code>--fit</code>. In this run, 512 MiB meant asking llama.cpp to leave about that much GPU memory margin while fitting the model and context.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>engineering</category>
+  <category>genai</category>
+  <guid>https://alexhans.github.io/posts/find-the-loop-story-first.html</guid>
+  <pubDate>Fri, 17 Jul 2026 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Solving the Right Problem: Economist Edition, Part 1</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

@@ -8,3 +8,84 @@ pre code {
 body.quarto-dark div.quarto-post a code:not(.sourceCode) {
   background-color: rgba(67, 67, 67, .65);
 }
+
+.conversation {
+  --conversation-agent-color: #b94800;
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: minmax(4.5rem, max-content) 1fr;
+  column-gap: 0.8rem;
+  row-gap: 0.65rem;
+  align-items: start;
+}
+
+.conversation dt {
+  margin: 0;
+  padding: 0.45rem 0;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.conversation dd {
+  margin: 0;
+  border-left: 4px solid var(--bs-border-color);
+  padding: 0.65rem 0.9rem;
+  background: rgba(var(--bs-body-color-rgb), 0.035);
+}
+
+.conversation dd > p:last-child {
+  margin-bottom: 0;
+}
+
+.conversation dt.alex {
+  color: var(--bs-primary);
+}
+
+.conversation dt.alex + dd {
+  border-left-color: var(--bs-primary);
+}
+
+.conversation dt.codex {
+  color: var(--conversation-agent-color);
+}
+
+.conversation dt.codex + dd {
+  border-left-color: var(--conversation-agent-color);
+}
+
+.role-you {
+  color: var(--bs-primary);
+  font-weight: 700;
+}
+
+.role-agent {
+  color: #b94800;
+  font-weight: 700;
+}
+
+.conversation dd pre {
+  margin-bottom: 0;
+}
+
+.conversation dd blockquote {
+  margin: 0 0 0.6rem;
+  padding: 0 0 0 0.75rem;
+  color: inherit;
+  border-left-color: rgba(var(--bs-body-color-rgb), 0.25);
+}
+
+.conversation dd code:not(.sourceCode) {
+  color: var(--bs-body-color);
+  background-color: rgba(var(--bs-body-color-rgb), 0.08);
+}
+
+@media (max-width: 575.98px) {
+  .conversation {
+    grid-template-columns: 1fr;
+    row-gap: 0.2rem;
+  }
+
+  .conversation dt {
+    padding-bottom: 0;
+  }
+}

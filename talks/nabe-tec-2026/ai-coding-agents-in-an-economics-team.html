@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Alex Guglielmone Nemi">
   <meta name="dcterms.date" content="2026-05-29">
@@ -21,10 +21,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -205,7 +208,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Alex Guglielmone Nemi 
+Alex Guglielmone Nemi
 </div>
 </div>
 </div>
@@ -237,71 +240,71 @@ Alex Guglielmone Nemi
 <section id="how-we-leverage-coding-agents" class="slide level2">
 <h2>How we leverage Coding Agents</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="40" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb1-40"><a></a>d3 <span class="op">=</span> <span class="pp">require</span>(<span class="st">"d3@7"</span>)</span>
-<span id="cb1-41"><a></a></span>
-<span id="cb1-42"><a></a>data2 <span class="op">=</span> [</span>
-<span id="cb1-43"><a></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Analysis &amp; research design"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">31</span>}<span class="op">,</span></span>
-<span id="cb1-44"><a></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Data pipelines"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">27</span>}<span class="op">,</span></span>
-<span id="cb1-45"><a></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Operations"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">17</span>}<span class="op">,</span></span>
-<span id="cb1-46"><a></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Writing &amp; comms"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">13</span>}<span class="op">,</span></span>
-<span id="cb1-47"><a></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Troubleshooting"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">12</span>}</span>
-<span id="cb1-48"><a></a>]</span>
-<span id="cb1-49"><a></a></span>
-<span id="cb1-50"><a></a>{</span>
-<span id="cb1-51"><a></a>  <span class="kw">const</span> width <span class="op">=</span> <span class="dv">900</span><span class="op">;</span></span>
-<span id="cb1-52"><a></a>  <span class="kw">const</span> height <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span>
-<span id="cb1-53"><a></a></span>
-<span id="cb1-54"><a></a>  <span class="kw">const</span> color <span class="op">=</span> d3<span class="op">.</span><span class="fu">scaleOrdinal</span>()</span>
-<span id="cb1-55"><a></a>    <span class="op">.</span><span class="fu">domain</span>(data2<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">category</span>))</span>
-<span id="cb1-56"><a></a>    <span class="op">.</span><span class="fu">range</span>([<span class="st">"#f28e2b"</span><span class="op">,</span> <span class="st">"#4e79a7"</span><span class="op">,</span> <span class="st">"#e15759"</span><span class="op">,</span> <span class="st">"#76b7b2"</span><span class="op">,</span> <span class="st">"#59a14f"</span>])<span class="op">;</span></span>
-<span id="cb1-57"><a></a></span>
-<span id="cb1-58"><a></a>  <span class="kw">const</span> <span class="bu">root</span> <span class="op">=</span> d3<span class="op">.</span><span class="fu">hierarchy</span>({<span class="dt">children</span><span class="op">:</span> data2})</span>
-<span id="cb1-59"><a></a>    <span class="op">.</span><span class="fu">sum</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">pct</span>)</span>
-<span id="cb1-60"><a></a>    <span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">value</span> <span class="op">-</span> a<span class="op">.</span><span class="at">value</span>)<span class="op">;</span></span>
-<span id="cb1-61"><a></a></span>
-<span id="cb1-62"><a></a>  d3<span class="op">.</span><span class="fu">treemap</span>()</span>
-<span id="cb1-63"><a></a>    <span class="op">.</span><span class="fu">size</span>([width<span class="op">,</span> height])</span>
-<span id="cb1-64"><a></a>    <span class="op">.</span><span class="fu">padding</span>(<span class="dv">3</span>)</span>
-<span id="cb1-65"><a></a>    <span class="op">.</span><span class="fu">round</span>(<span class="kw">true</span>)(<span class="bu">root</span>)<span class="op">;</span></span>
-<span id="cb1-66"><a></a></span>
-<span id="cb1-67"><a></a>  <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"svg"</span>)</span>
-<span id="cb1-68"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> width)</span>
-<span id="cb1-69"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> height)</span>
-<span id="cb1-70"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> width<span class="op">,</span> height])</span>
-<span id="cb1-71"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"display"</span><span class="op">,</span> <span class="st">"block"</span>)</span>
-<span id="cb1-72"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"margin"</span><span class="op">,</span> <span class="st">"0 auto"</span>)<span class="op">;</span></span>
-<span id="cb1-73"><a></a></span>
-<span id="cb1-74"><a></a>  <span class="kw">const</span> leaf <span class="op">=</span> svg<span class="op">.</span><span class="fu">selectAll</span>(<span class="st">"g"</span>)</span>
-<span id="cb1-75"><a></a>    <span class="op">.</span><span class="fu">data</span>(<span class="bu">root</span><span class="op">.</span><span class="fu">leaves</span>())</span>
-<span id="cb1-76"><a></a>    <span class="op">.</span><span class="fu">join</span>(<span class="st">"g"</span>)</span>
-<span id="cb1-77"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"transform"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="vs">`translate(</span><span class="sc">${</span>d<span class="op">.</span><span class="at">x0</span><span class="sc">}</span><span class="vs">,</span><span class="sc">${</span>d<span class="op">.</span><span class="at">y0</span><span class="sc">}</span><span class="vs">)`</span>)<span class="op">;</span></span>
-<span id="cb1-78"><a></a></span>
-<span id="cb1-79"><a></a>  leaf<span class="op">.</span><span class="fu">append</span>(<span class="st">"rect"</span>)</span>
-<span id="cb1-80"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">x1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">x0</span>)</span>
-<span id="cb1-81"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">y0</span>)</span>
-<span id="cb1-82"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="fu">color</span>(d<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">category</span>))</span>
-<span id="cb1-83"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"rx"</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span>
-<span id="cb1-84"><a></a></span>
-<span id="cb1-85"><a></a>  leaf<span class="op">.</span><span class="fu">append</span>(<span class="st">"foreignObject"</span>)</span>
-<span id="cb1-86"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">x1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">x0</span>)</span>
-<span id="cb1-87"><a></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">y0</span>)</span>
-<span id="cb1-88"><a></a>    <span class="op">.</span><span class="fu">append</span>(<span class="st">"xhtml:div"</span>)</span>
-<span id="cb1-89"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"width"</span><span class="op">,</span> <span class="st">"100%"</span>)</span>
-<span id="cb1-90"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"height"</span><span class="op">,</span> <span class="st">"100%"</span>)</span>
-<span id="cb1-91"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"display"</span><span class="op">,</span> <span class="st">"flex"</span>)</span>
-<span id="cb1-92"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"flex-direction"</span><span class="op">,</span> <span class="st">"column"</span>)</span>
-<span id="cb1-93"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"align-items"</span><span class="op">,</span> <span class="st">"center"</span>)</span>
-<span id="cb1-94"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"justify-content"</span><span class="op">,</span> <span class="st">"center"</span>)</span>
-<span id="cb1-95"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"padding"</span><span class="op">,</span> <span class="st">"6px"</span>)</span>
-<span id="cb1-96"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"box-sizing"</span><span class="op">,</span> <span class="st">"border-box"</span>)</span>
-<span id="cb1-97"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"text-align"</span><span class="op">,</span> <span class="st">"center"</span>)</span>
-<span id="cb1-98"><a></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"overflow"</span><span class="op">,</span> <span class="st">"hidden"</span>)</span>
-<span id="cb1-99"><a></a>    <span class="op">.</span><span class="fu">html</span>(d <span class="kw">=&gt;</span> <span class="vs">`</span></span>
-<span id="cb1-100"><a></a><span class="vs">      &lt;span style="font-size:</span><span class="sc">${</span>(d<span class="op">.</span><span class="at">x1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">x0</span>) <span class="op">&gt;</span> <span class="dv">120</span> <span class="op">?</span> <span class="dv">26</span> <span class="op">:</span> <span class="dv">18</span><span class="sc">}</span><span class="vs">px; font-weight:bold; color:#1a1a1a; line-height:1.2;"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">category</span><span class="sc">}</span><span class="vs">&lt;/span&gt;</span></span>
-<span id="cb1-101"><a></a><span class="vs">    `</span>)<span class="op">;</span></span>
-<span id="cb1-102"><a></a></span>
-<span id="cb1-103"><a></a>  <span class="cf">return</span> svg<span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
-<span id="cb1-104"><a></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="40" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb1-40"><a aria-label="40"></a>d3 <span class="op">=</span> <span class="pp">require</span>(<span class="st">"d3@7"</span>)</span>
+<span id="cb1-41"><a aria-label="41"></a></span>
+<span id="cb1-42"><a aria-label="42"></a>data2 <span class="op">=</span> [</span>
+<span id="cb1-43"><a aria-label="43"></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Analysis &amp; research design"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">31</span>}<span class="op">,</span></span>
+<span id="cb1-44"><a aria-label="44"></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Data pipelines"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">27</span>}<span class="op">,</span></span>
+<span id="cb1-45"><a aria-label="45"></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Operations"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">17</span>}<span class="op">,</span></span>
+<span id="cb1-46"><a aria-label="46"></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Writing &amp; comms"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">13</span>}<span class="op">,</span></span>
+<span id="cb1-47"><a aria-label="47"></a>  {<span class="dt">category</span><span class="op">:</span> <span class="st">"Troubleshooting"</span><span class="op">,</span> <span class="dt">pct</span><span class="op">:</span> <span class="dv">12</span>}</span>
+<span id="cb1-48"><a aria-label="48"></a>]</span>
+<span id="cb1-49"><a aria-label="49"></a></span>
+<span id="cb1-50"><a aria-label="50"></a>{</span>
+<span id="cb1-51"><a aria-label="51"></a>  <span class="kw">const</span> width <span class="op">=</span> <span class="dv">900</span><span class="op">;</span></span>
+<span id="cb1-52"><a aria-label="52"></a>  <span class="kw">const</span> height <span class="op">=</span> <span class="dv">500</span><span class="op">;</span></span>
+<span id="cb1-53"><a aria-label="53"></a></span>
+<span id="cb1-54"><a aria-label="54"></a>  <span class="kw">const</span> color <span class="op">=</span> d3<span class="op">.</span><span class="fu">scaleOrdinal</span>()</span>
+<span id="cb1-55"><a aria-label="55"></a>    <span class="op">.</span><span class="fu">domain</span>(data2<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">category</span>))</span>
+<span id="cb1-56"><a aria-label="56"></a>    <span class="op">.</span><span class="fu">range</span>([<span class="st">"#f28e2b"</span><span class="op">,</span> <span class="st">"#4e79a7"</span><span class="op">,</span> <span class="st">"#e15759"</span><span class="op">,</span> <span class="st">"#76b7b2"</span><span class="op">,</span> <span class="st">"#59a14f"</span>])<span class="op">;</span></span>
+<span id="cb1-57"><a aria-label="57"></a></span>
+<span id="cb1-58"><a aria-label="58"></a>  <span class="kw">const</span> <span class="bu">root</span> <span class="op">=</span> d3<span class="op">.</span><span class="fu">hierarchy</span>({<span class="dt">children</span><span class="op">:</span> data2})</span>
+<span id="cb1-59"><a aria-label="59"></a>    <span class="op">.</span><span class="fu">sum</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">pct</span>)</span>
+<span id="cb1-60"><a aria-label="60"></a>    <span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">value</span> <span class="op">-</span> a<span class="op">.</span><span class="at">value</span>)<span class="op">;</span></span>
+<span id="cb1-61"><a aria-label="61"></a></span>
+<span id="cb1-62"><a aria-label="62"></a>  d3<span class="op">.</span><span class="fu">treemap</span>()</span>
+<span id="cb1-63"><a aria-label="63"></a>    <span class="op">.</span><span class="fu">size</span>([width<span class="op">,</span> height])</span>
+<span id="cb1-64"><a aria-label="64"></a>    <span class="op">.</span><span class="fu">padding</span>(<span class="dv">3</span>)</span>
+<span id="cb1-65"><a aria-label="65"></a>    <span class="op">.</span><span class="fu">round</span>(<span class="kw">true</span>)(<span class="bu">root</span>)<span class="op">;</span></span>
+<span id="cb1-66"><a aria-label="66"></a></span>
+<span id="cb1-67"><a aria-label="67"></a>  <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"svg"</span>)</span>
+<span id="cb1-68"><a aria-label="68"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> width)</span>
+<span id="cb1-69"><a aria-label="69"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> height)</span>
+<span id="cb1-70"><a aria-label="70"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> width<span class="op">,</span> height])</span>
+<span id="cb1-71"><a aria-label="71"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"display"</span><span class="op">,</span> <span class="st">"block"</span>)</span>
+<span id="cb1-72"><a aria-label="72"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"margin"</span><span class="op">,</span> <span class="st">"0 auto"</span>)<span class="op">;</span></span>
+<span id="cb1-73"><a aria-label="73"></a></span>
+<span id="cb1-74"><a aria-label="74"></a>  <span class="kw">const</span> leaf <span class="op">=</span> svg<span class="op">.</span><span class="fu">selectAll</span>(<span class="st">"g"</span>)</span>
+<span id="cb1-75"><a aria-label="75"></a>    <span class="op">.</span><span class="fu">data</span>(<span class="bu">root</span><span class="op">.</span><span class="fu">leaves</span>())</span>
+<span id="cb1-76"><a aria-label="76"></a>    <span class="op">.</span><span class="fu">join</span>(<span class="st">"g"</span>)</span>
+<span id="cb1-77"><a aria-label="77"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"transform"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="vs">`translate(</span><span class="sc">${</span>d<span class="op">.</span><span class="at">x0</span><span class="sc">}</span><span class="vs">,</span><span class="sc">${</span>d<span class="op">.</span><span class="at">y0</span><span class="sc">}</span><span class="vs">)`</span>)<span class="op">;</span></span>
+<span id="cb1-78"><a aria-label="78"></a></span>
+<span id="cb1-79"><a aria-label="79"></a>  leaf<span class="op">.</span><span class="fu">append</span>(<span class="st">"rect"</span>)</span>
+<span id="cb1-80"><a aria-label="80"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">x1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">x0</span>)</span>
+<span id="cb1-81"><a aria-label="81"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">y0</span>)</span>
+<span id="cb1-82"><a aria-label="82"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="fu">color</span>(d<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">category</span>))</span>
+<span id="cb1-83"><a aria-label="83"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"rx"</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb1-84"><a aria-label="84"></a></span>
+<span id="cb1-85"><a aria-label="85"></a>  leaf<span class="op">.</span><span class="fu">append</span>(<span class="st">"foreignObject"</span>)</span>
+<span id="cb1-86"><a aria-label="86"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">x1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">x0</span>)</span>
+<span id="cb1-87"><a aria-label="87"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">y0</span>)</span>
+<span id="cb1-88"><a aria-label="88"></a>    <span class="op">.</span><span class="fu">append</span>(<span class="st">"xhtml:div"</span>)</span>
+<span id="cb1-89"><a aria-label="89"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"width"</span><span class="op">,</span> <span class="st">"100%"</span>)</span>
+<span id="cb1-90"><a aria-label="90"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"height"</span><span class="op">,</span> <span class="st">"100%"</span>)</span>
+<span id="cb1-91"><a aria-label="91"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"display"</span><span class="op">,</span> <span class="st">"flex"</span>)</span>
+<span id="cb1-92"><a aria-label="92"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"flex-direction"</span><span class="op">,</span> <span class="st">"column"</span>)</span>
+<span id="cb1-93"><a aria-label="93"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"align-items"</span><span class="op">,</span> <span class="st">"center"</span>)</span>
+<span id="cb1-94"><a aria-label="94"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"justify-content"</span><span class="op">,</span> <span class="st">"center"</span>)</span>
+<span id="cb1-95"><a aria-label="95"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"padding"</span><span class="op">,</span> <span class="st">"6px"</span>)</span>
+<span id="cb1-96"><a aria-label="96"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"box-sizing"</span><span class="op">,</span> <span class="st">"border-box"</span>)</span>
+<span id="cb1-97"><a aria-label="97"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"text-align"</span><span class="op">,</span> <span class="st">"center"</span>)</span>
+<span id="cb1-98"><a aria-label="98"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"overflow"</span><span class="op">,</span> <span class="st">"hidden"</span>)</span>
+<span id="cb1-99"><a aria-label="99"></a>    <span class="op">.</span><span class="fu">html</span>(d <span class="kw">=&gt;</span> <span class="vs">`</span></span>
+<span id="cb1-100"><a aria-label="100"></a><span class="vs">      &lt;span style="font-size:</span><span class="sc">${</span>(d<span class="op">.</span><span class="at">x1</span> <span class="op">-</span> d<span class="op">.</span><span class="at">x0</span>) <span class="op">&gt;</span> <span class="dv">120</span> <span class="op">?</span> <span class="dv">26</span> <span class="op">:</span> <span class="dv">18</span><span class="sc">}</span><span class="vs">px; font-weight:bold; color:#1a1a1a; line-height:1.2;"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">category</span><span class="sc">}</span><span class="vs">&lt;/span&gt;</span></span>
+<span id="cb1-101"><a aria-label="101"></a><span class="vs">    `</span>)<span class="op">;</span></span>
+<span id="cb1-102"><a aria-label="102"></a></span>
+<span id="cb1-103"><a aria-label="103"></a>  <span class="cf">return</span> svg<span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
+<span id="cb1-104"><a aria-label="104"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -461,25 +464,25 @@ Alex Guglielmone Nemi
 </section>
 <section id="what-an-exam-looks-like" class="slide level2">
 <h2>What an exam looks like</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a></a><span class="fu">name</span><span class="kw">:</span><span class="at"> econ-model-runner</span></span>
-<span id="cb2-2"><a></a><span class="fu">questions</span><span class="kw">:</span></span>
-<span id="cb2-3"><a></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> runs-scenario</span></span>
-<span id="cb2-4"><a></a><span class="at">    </span><span class="fu">input</span><span class="kw">:</span><span class="at"> Run scenario for client ABC, target €100k. Scope: EU5</span></span>
-<span id="cb2-5"><a></a><span class="at">    </span><span class="fu">intention</span><span class="kw">:</span><span class="at"> Agent picks the right skill and executes with correct params</span></span>
-<span id="cb2-6"><a></a><span class="at">    </span><span class="fu">assert</span><span class="kw">:</span></span>
-<span id="cb2-7"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> tool-called</span></span>
-<span id="cb2-8"><a></a><span class="at">        </span><span class="fu">value</span><span class="kw">:</span><span class="at"> run-model --client ABC --ask 100000 --scope EU5</span></span>
-<span id="cb2-9"><a></a></span>
-<span id="cb2-10"><a></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> plans-batch-safely</span></span>
-<span id="cb2-11"><a></a><span class="at">    </span><span class="fu">input</span><span class="kw">:</span><span class="at"> Run all clients under €300k, all markets, 20% above last cycle</span></span>
-<span id="cb2-12"><a></a><span class="at">    </span><span class="fu">intention</span><span class="kw">:</span><span class="at"> Agent should plan before executing a large ambiguous batch</span></span>
-<span id="cb2-13"><a></a><span class="at">    </span><span class="fu">assert</span><span class="kw">:</span></span>
-<span id="cb2-14"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> plan-contains</span></span>
-<span id="cb2-15"><a></a><span class="at">        </span><span class="fu">judge</span><span class="kw">:</span></span>
-<span id="cb2-16"><a></a><span class="at">          </span><span class="kw">-</span><span class="at"> clarifies 'last cycle' time range</span></span>
-<span id="cb2-17"><a></a><span class="at">          </span><span class="kw">-</span><span class="at"> identifies source table</span></span>
-<span id="cb2-18"><a></a><span class="at">          </span><span class="kw">-</span><span class="at"> smoke tests one case before full run</span></span>
-<span id="cb2-19"><a></a><span class="at">          </span><span class="kw">-</span><span class="at"> estimates total effort</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a aria-label="1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> econ-model-runner</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="fu">questions</span><span class="kw">:</span></span>
+<span id="cb2-3"><a aria-label="3"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> runs-scenario</span></span>
+<span id="cb2-4"><a aria-label="4"></a><span class="at">    </span><span class="fu">input</span><span class="kw">:</span><span class="at"> Run scenario for client ABC, target €100k. Scope: EU5</span></span>
+<span id="cb2-5"><a aria-label="5"></a><span class="at">    </span><span class="fu">intention</span><span class="kw">:</span><span class="at"> Agent picks the right skill and executes with correct params</span></span>
+<span id="cb2-6"><a aria-label="6"></a><span class="at">    </span><span class="fu">assert</span><span class="kw">:</span></span>
+<span id="cb2-7"><a aria-label="7"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> tool-called</span></span>
+<span id="cb2-8"><a aria-label="8"></a><span class="at">        </span><span class="fu">value</span><span class="kw">:</span><span class="at"> run-model --client ABC --ask 100000 --scope EU5</span></span>
+<span id="cb2-9"><a aria-label="9"></a></span>
+<span id="cb2-10"><a aria-label="10"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> plans-batch-safely</span></span>
+<span id="cb2-11"><a aria-label="11"></a><span class="at">    </span><span class="fu">input</span><span class="kw">:</span><span class="at"> Run all clients under €300k, all markets, 20% above last cycle</span></span>
+<span id="cb2-12"><a aria-label="12"></a><span class="at">    </span><span class="fu">intention</span><span class="kw">:</span><span class="at"> Agent should plan before executing a large ambiguous batch</span></span>
+<span id="cb2-13"><a aria-label="13"></a><span class="at">    </span><span class="fu">assert</span><span class="kw">:</span></span>
+<span id="cb2-14"><a aria-label="14"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> plan-contains</span></span>
+<span id="cb2-15"><a aria-label="15"></a><span class="at">        </span><span class="fu">judge</span><span class="kw">:</span></span>
+<span id="cb2-16"><a aria-label="16"></a><span class="at">          </span><span class="kw">-</span><span class="at"> clarifies 'last cycle' time range</span></span>
+<span id="cb2-17"><a aria-label="17"></a><span class="at">          </span><span class="kw">-</span><span class="at"> identifies source table</span></span>
+<span id="cb2-18"><a aria-label="18"></a><span class="at">          </span><span class="kw">-</span><span class="at"> smoke tests one case before full run</span></span>
+<span id="cb2-19"><a aria-label="19"></a><span class="at">          </span><span class="kw">-</span><span class="at"> estimates total effort</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="the-feedback-loop" class="slide level2">
 <h2>The feedback loop</h2>

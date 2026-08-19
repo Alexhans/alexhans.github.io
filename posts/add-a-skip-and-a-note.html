@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Guglielmone Nemi">
-<meta name="dcterms.date" content="2024-05-17">
+<meta name="dcterms.date" content="2026-08-19">
+<meta name="description" content="Why every survey question should allow a skip and a free-text note, and how a coding agent makes it cheap to run.">
 
-<title>No News Is Good News – The Living Deadline</title>
+<title>Add a Skip and a Note to Every Question – The Living Deadline</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -31,27 +32,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
-<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-72ca54ab895045c3eb867ae298526b35.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-800575829c84c99793f25f4a0c2b32da.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../site_libs/bootstrap/bootstrap-72ca54ab895045c3eb867ae298526b35.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-72ca54ab895045c3eb867ae298526b35.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-800575829c84c99793f25f4a0c2b32da.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-72ca54ab895045c3eb867ae298526b35.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,9 +80,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -262,7 +266,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">The Living Deadline</span>
     </a>
   </div>
@@ -278,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
     </span>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -298,9 +302,14 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">No News Is Good News</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">engineering</div>
+      <h1 class="title">Add a Skip and a Note to Every Question</h1>
+                  <div>
+        <div class="description">
+          Why every survey question should allow a skip and a free-text note, and how a coding agent makes it cheap to run.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">productivity</div>
               </div>
                   </div>
   </div>
@@ -318,7 +327,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 17, 2024</p>
+        <p class="date">August 19, 2026</p>
       </div>
     </div>
     
@@ -338,48 +347,189 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="the-rule" class="level2">
-<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
-<p>Do <strong>not</strong> check whether things are fine.</p>
-</section>
 <section id="pain-point" class="level2">
 <h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
-<p>Manually checking systems to confirm they are “okay” creates unnecessary <strong>cognitive load</strong>.</p>
-<p>Dashboards and queues become reassurance rituals: they consume time and attention without changing outcomes.</p>
-<p>If something is broken, you should be told.</p>
+<p>It’s easy for surveys to get wrong data or frustrate users by not guessing the right multiple options to offer.</p>
+<blockquote class="blockquote">
+<p>How many hours have you used X tool in the past month?</p>
+</blockquote>
+<p>An unskippable input box with a number. You can’t answer “I don’t know”.</p>
+<blockquote class="blockquote">
+<p>How often do you upgrade?</p>
+<ul>
+<li>whenever there’s a new version</li>
+<li>quarterly</li>
+<li>every 6 months</li>
+<li>every 12 months</li>
+</ul>
+</blockquote>
+<p>No “other” option. When I come across a question like this, maybe my actual answer is:</p>
+<blockquote class="blockquote">
+<p>“I upgrade when 1) if I don’t, things will break, or 2) I really want a specific feature that I’m fine paying the upgrade cost for”.</p>
+</blockquote>
+<p>That answer gives the surveyor my actual intent, and doesn’t frustrate me as a respondent by not providing me with the right option/s. This answer also lets the surveyor realize that a good problem to solve may be advertising new features or showing how easy it is to upgrade versions. Follow up questions may be “What version are you currently using” and “do you recall the last time you upgraded? When and from which version?”. Those may give you more insight on upgrade patterns.</p>
+<p>LLMs make it very easy to parse into buckets anyway, so you’ll still be able to cluster, analyze, show nice graphs and glean insights. But even without LLMs, understanding your real surveyed person’s intent over some non-representative choices is vital for your data quality.</p>
+</section>
+<section id="the-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
+<p>Add a skip and a free text field in EVERY answer. No exceptions. Even if they pick a multiple choice answer, they can expand on it, so that two people who both picked “every 6 months” may end up in different clusters in your final data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Bonus:</strong> Use a coding agent as the survey interface, so users can clarify what a question or concept means, or narrate an answer to help them pick.</p>
+</div>
+</div>
+</section>
+<section id="anecdotal-evidence-applying-this-lightly-with-slack-agents" class="level2">
+<h2 class="anchored" data-anchor-id="anecdotal-evidence-applying-this-lightly-with-slack-agents">Anecdotal Evidence: Applying This Lightly With Slack + Agents</h2>
+<p>Wanting a quick turnaround of answers in a short amount of time, I used an agent skill for both the surveyor and the surveyed (who were already using coding agents).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An anonymized version of that is here <a href="https://github.com/Alexhans/blog-samples/tree/main/skills/survey"><code>skills/survey</code></a></p>
+</div>
+</div>
+<p>The flow goes like this:</p>
+<ol type="1">
+<li><p>I (The surveyor) design the survey by talking to the skill. I paste my rough notes (half-formed questions or some with a 0-5 scale I had been using) and it shapes them into a survey. I keep it small on purpose.</p></li>
+<li><p>The skill writes a plain Slack message: a short intro, the scale, the questions. It posts it to a channel and edits the “answer here” link back in, like so:</p></li>
+</ol>
+<hr>
+<pre><code>Survey: Team Tech Survey (Q2–Q3)
+Results to: @me
+
+To answer, paste this into the bot:
+/survey Answer survey at &lt;link&gt;
+
+The bot walks you through each question. You can answer, say skip if it
+doesn't apply, or say "I don't know", which counts as a real answer here.
+If you're not sure what something means, ask the bot to explain it and draft
+your answer with you.
+
+No access to the bot? Copy this message and DM me your answers directly.
+
+Part 1: Score these tools, 0 to 5. Add a sentence to qualify it if you want,
+like "4, I can write and run models fine but incremental builds still trip me up".
+[scale 0-5] · [list of tools]
+
+Part 2, open questions: what tools are you missing, most annoying thing this
+quarter, best thing, a task that took far longer than expected...</code></pre>
+<hr>
+<ol start="3" type="1">
+<li><p>It DMs the people I’m targeting. For anyone who hasn’t answered, I can send a nudge.</p></li>
+<li><p>Each person answers by pasting the link into their own agent. It walks them through one question at a time. They can skip, say “I don’t know”, or ask what a question means and have the agent draft the answer with them.</p></li>
+<li><p>Their answers come back to my DMs (or wherever I picked).</p></li>
+<li><p>I gather and structure them (scores into a matrix, notes kept beside them) and go from there to the graphs.</p></li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    subgraph author["Surveyor"]
+        write("Write the survey as a plain message")
+        post("Post to a channel")
+        collect("Collect answers and read the notes")
+    end
+
+    subgraph channel["Shared message"]
+        msg[/"Survey + link to answer"/]
+    end
+
+    subgraph respondent["Respondent, guided by the agent"]
+        open("Open the link")
+        read("Agent reads the survey")
+        ask{"Next question?"}
+        answer("Pick an option or type, plus an optional note")
+        clarify("Ask the agent to explain, or align on what to pick")
+        skip("Skip or I don't know")
+        review("Review and edit the summary")
+
+        confirm("Confirm before sending")
+    end
+
+    write --&gt; post --&gt; msg
+    msg --&gt; open --&gt; read --&gt; ask
+    ask -- "has an answer" --&gt; answer --&gt; ask
+    ask -- "no opinion" --&gt; skip --&gt; ask
+    ask -- "unclear?" --&gt; clarify --&gt; ask
+    ask -- "done" --&gt; review --&gt; confirm
+    confirm -- "send to destination" --&gt; collect
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>I’ve run this on a group in the low double digits and gotten 100% adherence in a very short amount of time, in contexts where before I wouldn’t have dreamed of asking complex questions. Since answering was cheap and felt natural for people already working in a chat interface, they used it and even gave positive feedback on the methodology during the survey results presentation. People did skip questions, and that was perfectly fine and a good data point.</p>
 </section>
 <section id="do" class="level2">
 <h2 class="anchored" data-anchor-id="do">Do</h2>
-<p>For anything that might require action, ensure there is an automated <strong>signal</strong>.</p>
 <ul>
-<li>The signal should reach the people who can meaningfully act on it.</li>
-<li>It does not need to prescribe the action.</li>
-<li>Over time, actions may be formalised (runbooks, automation), but that is secondary.</li>
+<li>Attach an optional note to <strong>every</strong> question. Even when they select a specific choice.</li>
+<li>Offer <strong>Skip</strong> and <strong>I don’t know</strong> as real answers, and record them as such.</li>
+<li>Tell your users up front that they can skip most things if they want to. Those who do would otherwise have dropped out or picked any option in frustration. The amount of skipping is data too.</li>
 </ul>
-<p>If something requires attention, it should create noise. If it does not, it should remain silent.</p>
 </section>
 <section id="do-not" class="level2">
 <h2 class="anchored" data-anchor-id="do-not">Do Not</h2>
 <ul>
-<li>Create mechanisms to confirm system health.</li>
-<li>Regularly inspect dashboards “just to be sure”.</li>
-<li>Rely on manual checks for reassurance.</li>
+<li>Do not force a choice. A forced answer is a false answer, and later you won’t be able to tell it apart from a real one.</li>
+<li>Do not invent answers on someone’s behalf. A skip is a skip.</li>
+<li>Do not add a question to capture a nuance a note could hold. Long surveys get abandoned, so mind your users’ tolerance for length.</li>
 </ul>
-<p>Silence is expected when coverage is adequate.</p>
 </section>
-<section id="scope" class="level2">
-<h2 class="anchored" data-anchor-id="scope">Scope</h2>
-<p>This applies to <strong>operational, actionable failures</strong>: things that are broken <em>now</em> and require attention.</p>
-<p>This does <strong>not</strong> cover:</p>
+<section id="be-conscious-of" class="level2">
+<h2 class="anchored" data-anchor-id="be-conscious-of">Be Conscious Of</h2>
 <ul>
-<li>slow degradation</li>
-<li>trend monitoring</li>
-<li>preemptive or exploratory analysis</li>
+<li>The examples and choices you give will still heavily influence answers</li>
 </ul>
 </section>
-<section id="analogy" class="level2">
-<h2 class="anchored" data-anchor-id="analogy">Analogy</h2>
-<p>Think of a perfect assistant: they interrupt you only when there is something you can act on. If they do not interrupt you, you can assume everything is fine.</p>
+<section id="coding-agents" class="level2">
+<h2 class="anchored" data-anchor-id="coding-agents">Coding Agents</h2>
+<p>How you ask changes what you get. When the survey runs through an agent that already knows the person and their work, it can rephrase a confusing question and let them think out loud, so the notes come back richer than a form’s. That only works with an agent as the medium; a static form can’t reinterpret a question or draw someone out.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since a coding agent has access to the person’s computer, it could answer some questions more effectively by actually checking. That’s risky: if the agent is wrong and the person can’t tell, they’re better off saying “I don’t know”.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These principles as an Agent Skill are exemplified here: <a href="https://github.com/Alexhans/blog-samples/tree/main/skills/survey"><code>skills/survey</code></a>.</p>
+<p>This is not meant to be a runnable skill, but you could easily create one in your own secure environment, taking some ideas from it.</p>
+</div>
+</div>
 
 
 </section>

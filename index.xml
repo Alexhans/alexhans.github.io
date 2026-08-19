@@ -9,8 +9,211 @@
 <link>https://alexhans.github.io/</link>
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Guglielmone Nemi&#39;s blog</description>
-<generator>quarto-1.9.37</generator>
-<lastBuildDate>Fri, 17 Jul 2026 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.10.18</generator>
+<lastBuildDate>Tue, 18 Aug 2026 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Add a Skip and a Note to Every Question</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/add-a-skip-and-a-note.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<section id="pain-point" class="level2">
+<h2 class="anchored" data-anchor-id="pain-point">Pain Point</h2>
+<p>It’s easy for surveys to get wrong data or frustrate users by not guessing the right multiple options to offer.</p>
+<blockquote class="blockquote">
+<p>How many hours have you used X tool in the past month?</p>
+</blockquote>
+<p>An unskippable input box with a number. You can’t answer “I don’t know”.</p>
+<blockquote class="blockquote">
+<p>How often do you upgrade?</p>
+<ul>
+<li>whenever there’s a new version</li>
+<li>quarterly</li>
+<li>every 6 months</li>
+<li>every 12 months</li>
+</ul>
+</blockquote>
+<p>No “other” option. When I come across a question like this, maybe my actual answer is:</p>
+<blockquote class="blockquote">
+<p>“I upgrade when 1) if I don’t, things will break, or 2) I really want a specific feature that I’m fine paying the upgrade cost for”.</p>
+</blockquote>
+<p>That answer gives the surveyor my actual intent, and doesn’t frustrate me as a respondent by not providing me with the right option/s. This answer also lets the surveyor realize that a good problem to solve may be advertising new features or showing how easy it is to upgrade versions. Follow up questions may be “What version are you currently using” and “do you recall the last time you upgraded? When and from which version?”. Those may give you more insight on upgrade patterns.</p>
+<p>LLMs make it very easy to parse into buckets anyway, so you’ll still be able to cluster, analyze, show nice graphs and glean insights. But even without LLMs, understanding your real surveyed person’s intent over some non-representative choices is vital for your data quality.</p>
+</section>
+<section id="the-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-rule">The Rule</h2>
+<p>Add a skip and a free text field in EVERY answer. No exceptions. Even if they pick a multiple choice answer, they can expand on it, so that two people who both picked “every 6 months” may end up in different clusters in your final data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Bonus:</strong> Use a coding agent as the survey interface, so users can clarify what a question or concept means, or narrate an answer to help them pick.</p>
+</div>
+</div>
+</section>
+<section id="anecdotal-evidence-applying-this-lightly-with-slack-agents" class="level2">
+<h2 class="anchored" data-anchor-id="anecdotal-evidence-applying-this-lightly-with-slack-agents">Anecdotal Evidence: Applying This Lightly With Slack + Agents</h2>
+<p>Wanting a quick turnaround of answers in a short amount of time, I used an agent skill for both the surveyor and the surveyed (who were already using coding agents).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An anonymized version of that is here <a href="https://github.com/Alexhans/blog-samples/tree/main/skills/survey"><code>skills/survey</code></a></p>
+</div>
+</div>
+<p>The flow goes like this:</p>
+<ol type="1">
+<li><p>I (The surveyor) design the survey by talking to the skill. I paste my rough notes (half-formed questions or some with a 0-5 scale I had been using) and it shapes them into a survey. I keep it small on purpose.</p></li>
+<li><p>The skill writes a plain Slack message: a short intro, the scale, the questions. It posts it to a channel and edits the “answer here” link back in, like so:</p></li>
+</ol>
+<hr>
+<pre><code>Survey: Team Tech Survey (Q2–Q3)
+Results to: @me
+
+To answer, paste this into the bot:
+/survey Answer survey at &lt;link&gt;
+
+The bot walks you through each question. You can answer, say skip if it
+doesn't apply, or say "I don't know", which counts as a real answer here.
+If you're not sure what something means, ask the bot to explain it and draft
+your answer with you.
+
+No access to the bot? Copy this message and DM me your answers directly.
+
+Part 1: Score these tools, 0 to 5. Add a sentence to qualify it if you want,
+like "4, I can write and run models fine but incremental builds still trip me up".
+[scale 0-5] · [list of tools]
+
+Part 2, open questions: what tools are you missing, most annoying thing this
+quarter, best thing, a task that took far longer than expected...</code></pre>
+<hr>
+<ol start="3" type="1">
+<li><p>It DMs the people I’m targeting. For anyone who hasn’t answered, I can send a nudge.</p></li>
+<li><p>Each person answers by pasting the link into their own agent. It walks them through one question at a time. They can skip, say “I don’t know”, or ask what a question means and have the agent draft the answer with them.</p></li>
+<li><p>Their answers come back to my DMs (or wherever I picked).</p></li>
+<li><p>I gather and structure them (scores into a matrix, notes kept beside them) and go from there to the graphs.</p></li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    subgraph author["Surveyor"]
+        write("Write the survey as a plain message")
+        post("Post to a channel")
+        collect("Collect answers and read the notes")
+    end
+
+    subgraph channel["Shared message"]
+        msg[/"Survey + link to answer"/]
+    end
+
+    subgraph respondent["Respondent, guided by the agent"]
+        open("Open the link")
+        read("Agent reads the survey")
+        ask{"Next question?"}
+        answer("Pick an option or type, plus an optional note")
+        clarify("Ask the agent to explain, or align on what to pick")
+        skip("Skip or I don't know")
+        review("Review and edit the summary")
+
+        confirm("Confirm before sending")
+    end
+
+    write --&gt; post --&gt; msg
+    msg --&gt; open --&gt; read --&gt; ask
+    ask -- "has an answer" --&gt; answer --&gt; ask
+    ask -- "no opinion" --&gt; skip --&gt; ask
+    ask -- "unclear?" --&gt; clarify --&gt; ask
+    ask -- "done" --&gt; review --&gt; confirm
+    confirm -- "send to destination" --&gt; collect
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>I’ve run this on a group in the low double digits and gotten 100% adherence in a very short amount of time, in contexts where before I wouldn’t have dreamed of asking complex questions. Since answering was cheap and felt natural for people already working in a chat interface, they used it and even gave positive feedback on the methodology during the survey results presentation. People did skip questions, and that was perfectly fine and a good data point.</p>
+</section>
+<section id="do" class="level2">
+<h2 class="anchored" data-anchor-id="do">Do</h2>
+<ul>
+<li>Attach an optional note to <strong>every</strong> question. Even when they select a specific choice.</li>
+<li>Offer <strong>Skip</strong> and <strong>I don’t know</strong> as real answers, and record them as such.</li>
+<li>Tell your users up front that they can skip most things if they want to. Those who do would otherwise have dropped out or picked any option in frustration. The amount of skipping is data too.</li>
+</ul>
+</section>
+<section id="do-not" class="level2">
+<h2 class="anchored" data-anchor-id="do-not">Do Not</h2>
+<ul>
+<li>Do not force a choice. A forced answer is a false answer, and later you won’t be able to tell it apart from a real one.</li>
+<li>Do not invent answers on someone’s behalf. A skip is a skip.</li>
+<li>Do not add a question to capture a nuance a note could hold. Long surveys get abandoned, so mind your users’ tolerance for length.</li>
+</ul>
+</section>
+<section id="be-conscious-of" class="level2">
+<h2 class="anchored" data-anchor-id="be-conscious-of">Be Conscious Of</h2>
+<ul>
+<li>The examples and choices you give will still heavily influence answers</li>
+</ul>
+</section>
+<section id="coding-agents" class="level2">
+<h2 class="anchored" data-anchor-id="coding-agents">Coding Agents</h2>
+<p>How you ask changes what you get. When the survey runs through an agent that already knows the person and their work, it can rephrase a confusing question and let them think out loud, so the notes come back richer than a form’s. That only works with an agent as the medium; a static form can’t reinterpret a question or draw someone out.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since a coding agent has access to the person’s computer, it could answer some questions more effectively by actually checking. That’s risky: if the agent is wrong and the person can’t tell, they’re better off saying “I don’t know”.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These principles as an Agent Skill are exemplified here: <a href="https://github.com/Alexhans/blog-samples/tree/main/skills/survey"><code>skills/survey</code></a>.</p>
+<p>This is not meant to be a runnable skill, but you could easily create one in your own secure environment, taking some ideas from it.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>productivity</category>
+  <guid>https://alexhans.github.io/posts/add-a-skip-and-a-note.html</guid>
+  <pubDate>Tue, 18 Aug 2026 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Find The Loop</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>

@@ -2,94 +2,98 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://alexhans.github.io/talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html</loc>
-    <lastmod>2026-06-09T07:05:16.520Z</lastmod>
+    <lastmod>2026-06-09T03:10:05.530Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/index.html</loc>
-    <lastmod>2026-01-30T01:42:11.496Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/meeting-budget.html</loc>
-    <lastmod>2026-02-22T23:58:31.931Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/solving-the-right-problem-economist-edition-part-01.html</loc>
-    <lastmod>2026-07-19T00:20:59.934Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</loc>
-    <lastmod>2025-10-19T20:57:54.032Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/series/evals/sketch-to-text-skill.html</loc>
-    <lastmod>2026-03-17T00:30:15.173Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html</loc>
-    <lastmod>2026-02-15T16:06:14.047Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/series/zeroops/merge-and-forget.html</loc>
-    <lastmod>2025-12-17T00:30:45.711Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html</loc>
-    <lastmod>2026-01-19T00:35:53.325Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</loc>
-    <lastmod>2026-01-12T04:15:21.052Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/talk.ai-coding-agents-in-an-economics-team.html</loc>
-    <lastmod>2026-07-19T00:20:59.934Z</lastmod>
+    <lastmod>2026-06-09T02:08:04.097Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/find-the-loop-story-first.html</loc>
-    <lastmod>2026-07-19T00:20:59.948Z</lastmod>
+    <lastmod>2026-08-19T12:30:19.986Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</loc>
-    <lastmod>2025-10-19T20:57:55.036Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</loc>
-    <lastmod>2026-01-13T03:51:55.319Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
-    <lastmod>2026-02-22T23:58:31.919Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</loc>
-    <lastmod>2025-12-17T00:20:48.163Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/series/evals/automate-audits.html</loc>
-    <lastmod>2026-01-30T02:01:15.871Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/series/evals/error-compounding-genai-systems-approach.html</loc>
-    <lastmod>2026-01-28T10:00:30.270Z</lastmod>
-  </url>
-  <url>
-    <loc>https://alexhans.github.io/posts/series/evals/measure-first-optimize-last.html</loc>
-    <lastmod>2026-02-10T23:25:28.980Z</lastmod>
+    <loc>https://alexhans.github.io/posts/meeting-budget.html</loc>
+    <lastmod>2026-06-09T02:08:04.099Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/posts/aider-with-open-router.html</loc>
-    <lastmod>2025-10-19T20:57:54.550Z</lastmod>
+    <lastmod>2026-06-09T02:08:04.097Z</lastmod>
   </url>
   <url>
-    <loc>https://alexhans.github.io/posts/solving-the-right-problem.html</loc>
-    <lastmod>2026-07-19T00:20:59.934Z</lastmod>
+    <loc>https://alexhans.github.io/posts/solving-the-right-problem-economist-edition-part-01.html</loc>
+    <lastmod>2026-06-09T06:57:19.696Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/zeroops/merge-and-forget.html</loc>
+    <lastmod>2026-06-09T02:08:04.104Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/evals/sketch-to-text-skill.html</loc>
+    <lastmod>2026-06-09T02:08:04.103Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/evals/measure-first-optimize-last.html</loc>
+    <lastmod>2026-06-09T02:08:04.103Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/talk.ai-coding-agents-in-an-economics-team.html</loc>
+    <lastmod>2026-06-09T07:14:50.575Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
+    <lastmod>2026-06-09T02:08:04.105Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/wsl-pip-hangs-ipv6.html</loc>
+    <lastmod>2026-06-09T02:08:04.105Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/about.html</loc>
-    <lastmod>2026-03-17T00:02:37.977Z</lastmod>
+    <lastmod>2026-06-09T02:08:04.097Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</loc>
+    <lastmod>2026-06-09T02:08:04.099Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/using-dbt-to-accelerate-science.html</loc>
+    <lastmod>2026-06-09T02:08:04.105Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/evals/error-compounding-genai-systems-approach.html</loc>
+    <lastmod>2026-06-09T02:08:04.100Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/evals/automate-audits.html</loc>
+    <lastmod>2026-06-09T02:08:04.099Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/evals/building-agent-skills-incrementally.html</loc>
+    <lastmod>2026-06-09T02:08:04.100Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/series/zeroops/no-news-is-good-news.html</loc>
+    <lastmod>2026-06-09T02:08:04.104Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html</loc>
+    <lastmod>2026-06-09T02:08:04.105Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/solving-the-right-problem.html</loc>
+    <lastmod>2026-06-09T07:14:13.273Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/add-a-skip-and-a-note.html</loc>
+    <lastmod>2026-08-19T17:33:46.455Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</loc>
+    <lastmod>2026-06-09T02:08:04.097Z</lastmod>
   </url>
   <url>
     <loc>https://alexhans.github.io/talks/airflow-summit/toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html</loc>
-    <lastmod>2026-02-22T23:58:31.919Z</lastmod>
+    <lastmod>2026-06-09T02:08:04.106Z</lastmod>
   </url>
 </urlset>

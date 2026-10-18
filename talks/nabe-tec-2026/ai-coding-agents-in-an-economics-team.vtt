@@ -1,0 +1,248 @@
+WEBVTT
+
+NOTE
+AI Coding Agents in an Economics Team
+Alex Guglielmone Nemi, NABE TEC EU 2026, Amsterdam.
+Edited transcript, made from a machine transcript of the talk
+recording: misheard terms corrected, fillers and false starts removed,
+and other people's names left out. Times are those of the recording.
+[unclear] marks words the transcription garbled. NOTE blocks like this
+one mark passages with no cues: speech the transcription dropped, or
+remarks left out on purpose. The Q&A is not included.
+
+00:00.560 --> 00:13.600
+Okay, this should be simple. Thankfully, it was already asked who is using coding agents, and most of you do, so that's good for me.
+
+00:14.340 --> 00:20.840
+I'm going to talk about AI coding agents in an economics team. My name is Alex.
+
+00:22.540 --> 00:28.560
+I'm the engineering lead of a cross-functional team called Economic Decision Science at Amazon. We're based in London.
+
+00:28.560 --> 00:44.300
+Our target is optimizing how the European stores operate, in any form or shape we can, including convincing others to act on our decisions and our economic models.
+
+00:45.740 --> 01:01.560
+This team is quite new. We didn't have an established place in Europe; there were central teams in the US. Initially, it was all of us. Then the team had a lot of problems: we started seeing bottlenecks in terms of data and scaling.
+
+01:02.040 --> 01:25.140
+When we engineers came in, one of the goals I set was: the scalable workforce here is not tech, it's not engineering. It's making sure that if we hire 40 more economists, we're not blocked, and we don't have to scale engineers at the same ratio.
+
+01:26.520 --> 01:39.260
+So, can economists deliver without engineering bottlenecks of all shapes and forms? That led us to certain decisions, like focusing on minimal infrastructure and fast iteration.
+
+01:40.320 --> 02:01.080
+And a hard thing to convince people of: more often than not, there's no trade-off between exploration and production. You can iterate super fast, the way you normally would, without a stage where you hand things off to people who scale it in six months. It goes straight to production, if things are set up in the right way.
+
+02:01.420 --> 02:21.900
+What does set up in the right way mean? We call it the factory of economics: these are the capabilities you should have, the things you should be able to do. And we create building blocks you can mix and match, that are very easy to use. Good UX.
+
+02:23.220 --> 02:38.720
+So you can tackle all these ambiguous problems. We don't work in one domain, we work across domains, and we have to move faster than the parts of the company that have an established location, an established charter, and can afford multi-year efforts.
+
+02:40.340 --> 02:52.980
+Before going to coding agents, I'm going to show the same chart shown in an earlier talk. There's an important point: we had all these things before AI.
+
+02:54.600 --> 03:10.900
+When we talk about capabilities, those of you who are into this will recognize them as agent skills. It ties in really well: the ways of working we had converged really well with the ways of working AI has.
+
+03:11.240 --> 03:21.040
+So we started adopting coding agents as soon as they were available to us, around the middle of last year.
+
+03:22.180 --> 03:34.040
+People started adopting them. I was doing the advocacy, never mandating, just getting people to see what they could do.
+
+03:34.260 --> 03:58.680
+But when the Opus family of models came in, Opus 4.6, there was a difference in quality. It should be relatable to many of you: you have to do less babysitting, they're better at tool calling, they're better at long tasks and combining things, and, in some situations, at one-shotting things.
+
+03:59.900 --> 04:21.540
+The interesting thing is that these agents work where we work, where the economists work. We have remote computers, and the command line was already the thing we were training people on. So the transition to this interface [unclear].
+
+04:22.940 --> 04:37.580
+So here come the insights. What do our economists, who are meant to be builders, work on? Roughly, these are the buckets, for the cross-functional team as a whole.
+
+04:38.220 --> 04:49.620
+One is the core economic work: analysis and research design, where you're rubber ducking a lot. We said they're builders, so a lot of it is data manipulation: data pipelines.
+
+04:50.180 --> 04:56.340
+There's troubleshooting: libraries are broken, things aren't working. The agent helps you there.
+
+04:56.700 --> 05:11.280
+Operations, which ideally shouldn't be there; we try to be zero ops. But sometimes there are things to keep the live systems running, because we deliver for production, and either we engineers or the economists manage those live systems.
+
+05:11.880 --> 05:15.920
+And the one that might seem obvious: writing and comms.
+
+05:19.420 --> 05:29.640
+I'll go through three examples really fast. These are anonymized, so they might seem generic, but they're real, very representative, and very valuable.
+
+05:30.160 --> 05:47.900
+A typical one: you have some science that's applied in some form. It could be an economic model; let's simplify and say it's SQL. Someone says: hey, explain this SQL to me. It doesn't matter how long it is. The agent explains it to you, step by step.
+
+05:48.140 --> 06:02.400
+You use your judgment and you spot something wrong, like: it's counting the wrong window, there's a problem here. And you conversationally get it to correct it.
+
+06:02.600 --> 06:13.420
+If you're set up in the right way, that can be in production immediately. While seemingly simple, it's very powerful, and you see a lot of it.
+
+06:16.320 --> 06:32.840
+Then you have the more exploratory work. You're starting to explore a specific problem, you have a lot of instincts, and you're basically rubber ducking with the agent: explaining things to externalize your own thoughts.
+
+06:33.560 --> 06:46.920
+And you're thinking: what about this type of methodology? What about these dimensions? Power analysis, clustering. What are my assumptions? And you start creating combinations of these methodologies.
+
+06:46.980 --> 06:55.980
+The nice thing is you're not just chatting and getting some insights. As you go along, you're actually proving and validating a lot of these things.
+
+06:56.420 --> 07:06.620
+Throughout that experience you're producing applied science that immediately gets you where you want to be. In this real case,
+
+07:07.520 --> 07:16.200
+fifteen different methodologies, or the same methodology with different variations, until you get to something you really trust and can move forward with.
+
+07:16.860 --> 07:31.640
+Then we have the writing. As economists, you know it doesn't really matter if your science is right if you don't get to have an effect on the business in some form.
+
+07:32.160 --> 07:53.560
+You may relate to being in meetings where your methodology gets challenged by non-economists. It's very cheap to challenge it, and in the past it might have been very hard for you to produce the right data, come back, and win that battle. For the company, of course.
+
+07:54.120 --> 08:07.620
+Now, maybe you don't open your laptop and prove it right away. But two minutes after, you can open it, and if you're set up the right way, you pull the data, you produce a chart, and you draft an appropriate response.
+
+08:08.860 --> 08:20.180
+I'll briefly acknowledge that we also have AI and ML in more traditional approaches, where we model behavior.
+
+08:23.560 --> 08:36.380
+But coding agents live where you live, and have the broadest space to work in, which really allows you to delegate everything you want to, if you feel safe enough.
+
+08:36.460 --> 08:48.000
+Now we get to an important part. We talked about what we delegate, and we see this across our team, because our team in its entirety uses this.
+
+08:48.860 --> 09:07.000
+What do experts in the matter not delegate? They don't delegate which methodology to select. It's very common that very eager, helpful engineers from non-embedded teams come in and say: hey, I created this awesome AI tool.
+
+09:08.020 --> 09:19.280
+You define a problem, and it picks some methodology and does it all for you. And immediately the comments are: why this methodology? It's wrong. Everything is wrong.
+
+09:19.640 --> 09:23.720
+Because they didn't have a customer in mind [unclear].
+
+09:23.840 --> 09:37.220
+So you're not delegating [unclear], or economic interpretation. You may use code to help you evaluate some things, but at the end, you apply your own judgment.
+
+09:38.160 --> 09:41.460
+Again, institutional knowledge and stakeholder management: you know how the company works.
+
+09:41.860 --> 09:49.240
+And, because I love a catch-all variable, taste: knowing what questions matter, and what you want to learn.
+
+09:50.480 --> 09:57.420
+So this is the good and the bad of our usage. Where are we finding pain points?
+
+NOTE
+Not transcribed: the automatic transcription dropped about 19 seconds of
+speech here. The audio is intact; this passage is still to be recovered.
+
+10:16.260 --> 10:24.280
+It's 90% right, or 99% right. What happens if it's wrong? Will I have to refund all my customers?
+
+NOTE
+Left out: about 8 seconds the transcription garbled beyond recovery.
+
+10:31.920 --> 10:43.540
+It's a way to partner better with others. There are so many things coming in that it's very hard, for you and for others, to define what we should be adopting or not.
+
+10:44.220 --> 10:59.040
+Cost. I was hoping someone would mention cost. Not every company cares about it the same way, but eventually you will care about your spend, and you need a way to tackle it. And speed: let's say you have an opportunity
+
+NOTE
+Not transcribed: the automatic transcription dropped about 20 seconds of
+speech here. The audio is intact; this passage is still to be recovered.
+
+11:18.980 --> 11:27.380
+and intervene, you've lost control. If someone asks you: is my thing good enough? And you say: well, I don't know. You haven't controlled it.
+
+11:27.680 --> 11:42.560
+You want to manage risk by working out which dimensions of control are important to you.
+
+NOTE
+Left out: a brief aside checking the time.
+
+11:47.620 --> 12:00.940
+Here we come to the research assistant analogy. Analogies have limitations, so don't stretch this one too much, but I've seen other economists start to apply it as well, when thinking about fully autonomous agents:
+
+12:02.000 --> 12:10.100
+leaving them to do their thing, and [unclear] a human.
+
+12:10.580 --> 12:20.460
+So the scenario I want you to think about is: I hire a coding agent, as if it were a human. I hire them, and we work on a problem together.
+
+12:20.880 --> 12:37.560
+Our problem has to do with an economic model. There's a financial number, like a 100k budget, cost, whatever. There's an ask, and there's a scope I target. Maybe you're targeting Europe.
+
+12:38.720 --> 12:43.780
+So me and the agent work like you do nowadays: we pair program, you hold its hand a bit.
+
+12:44.360 --> 12:54.500
+And since you already know a few good practices, you'll separate things. I'll codify things in a deterministic layer, so I'll have a Python script at the end of it.
+
+12:55.060 --> 12:59.340
+I'll also have a data gathering and transformation layer.
+
+NOTE
+Not transcribed: the automatic transcription dropped about 48 seconds of
+speech here. The audio is intact; this passage is still to be recovered.
+
+13:47.420 --> 14:05.340
+Things you can encode. And, jumping to the end, you've already encoded a qualification exam. That means you can replace the agent, or any part of the agent, and your user story persists.
+
+14:05.500 --> 14:07.260
+So you have a sort of qualification gate.
+
+14:11.680 --> 14:29.040
+To make it more concrete, because people are like, I don't understand what you're talking about: it could look like this. It doesn't have to, but this is a format called YAML. It's human-readable, computer-readable, and very easy to generate.
+
+14:29.680 --> 14:51.460
+If you followed the earlier talk about long-running tasks: as you have non-deterministic steps, the errors compound and you lose control. But if you bound the non-deterministic aspects, you can cut off that propagation.
+
+14:52.060 --> 15:13.460
+One of the ways is this: I cut off the propagation at the library level. I make my things very easy for the LLM to call. So you can ask: for this natural-language request, can you map it to the right code? It does. Once you get there, you're very safe in at least one aspect.
+
+15:14.160 --> 15:32.700
+Then you could say: I know what this is. It looks like an integration test, or an eval. What about LLM-as-a-judge, where instead of determining correctness deterministically, another foundation model does it for me?
+
+15:34.160 --> 15:42.760
+You should almost resist the urge to go there, because there's cost and other considerations. But you could use it for something like testing reasoning, at least at this stage.
+
+15:42.760 --> 16:04.160
+In this case, it illustrates some of these aspects. It has a more complex ask, and what I'm doing there is trying to fail fast, to avoid going down tangents of work that have no value for me.
+
+16:06.460 --> 16:10.100
+Some of you might recognize these as feedback loops.
+
+16:14.860 --> 16:46.440
+Once you've codified the example, when things fail, you or the agent can modify some aspect, the prompt, the tools, or other things, until you get to the business use case you want. This idea of feedback loops is very important for letting things self-validate, [unclear], even self-mutate, and you control to which degree. A lot of it is instinct and practice: knowing how much leverage you want to give it.
+
+16:47.380 --> 17:02.980
+Solving the right problem is usually about fast iteration. Look up Paul MacCready's story: he did things way faster than others.
+
+17:03.560 --> 17:22.520
+But in terms of the operational realities we have, it's not all beautiful. If you're not set up with fast tools, tools that allow fast iteration even without AI, you're not going to see the benefits, and you're going to say it doesn't work. And context management is still a challenge.
+
+17:23.780 --> 17:38.280
+None of what I've said is security. Security is a different space. Security means it must not happen, so you should have deterministic policies that prevent what shouldn't happen. That's a very important thing to note.
+
+17:38.280 --> 17:52.520
+And you should be a good boss. A good boss can delegate, but owns the outcomes. You have no one to blame when you're working with agents. If you really automate, you don't have an employee you can fire.
+
+17:54.180 --> 18:16.940
+As takeaways, to improve your own work with coding agents, or the work in your team: sketch the workflow early, when you start designing things. Think about the diagram, try the UX, and see how it works. You can slowly fill the fake workflow with real things as you create the exam.
+
+18:17.500 --> 18:39.560
+Break long tasks into testable blocks, and let the agents help you there, coding prototypes that then become the real thing. Use code for the stable steps, and let the LLMs do reasoning or tool calling, but not more. Reduce the number of smart parts.
+
+18:39.940 --> 19:01.300
+So overall, with exam-first iteration, you can keep control. That works for what you're building on your own computer, and it can also be easily handed to engineers and other teams. My hope is that it can be an easy communication bridge between business, software and economics.
+
+19:01.800 --> 19:03.940
+Any questions?

@@ -2,11 +2,14 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/talk.give-your-ai-agent-an-exam.html",
+      "/posts/talk.it-works-now-what.html",
+      "/posts/talk.ai-coding-agents-in-an-economics-team.html",
+      "/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
       "/posts/add-a-skip-and-a-note.html",
       "/posts/find-the-loop-story-first.html",
       "/posts/solving-the-right-problem-economist-edition-part-01.html",
       "/posts/solving-the-right-problem.html",
-      "/posts/talk.ai-coding-agents-in-an-economics-team.html",
       "/posts/series/evals/sketch-to-text-skill.html",
       "/posts/series/evals/building-agent-skills-incrementally.html",
       "/posts/series/evals/measure-first-optimize-last.html",
@@ -14,7 +17,6 @@
       "/posts/series/evals/error-compounding-genai-systems-approach.html",
       "/posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html",
       "/posts/wsl-pip-hangs-ipv6.html",
-      "/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html",
       "/posts/using-dbt-to-accelerate-science.html",
       "/posts/aider-with-open-router.html",
       "/posts/series/zeroops/merge-and-forget.html",
@@ -22,6 +24,15 @@
       "/posts/meeting-budget.html",
       "/posts/notifications-for-command-line-tasks.html",
       "/posts/accept-self-signed-cert-git-https.html"
+    ]
+  },
+  {
+    "listing": "/talks/index.html",
+    "items": [
+      "/posts/talk.give-your-ai-agent-an-exam.html",
+      "/posts/talk.it-works-now-what.html",
+      "/posts/talk.ai-coding-agents-in-an-economics-team.html",
+      "/posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html"
     ]
   }
 ]

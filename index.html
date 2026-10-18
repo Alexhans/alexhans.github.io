@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -44,14 +44,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-72ca54ab895045c3eb867ae298526b35.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-800575829c84c99793f25f4a0c2b32da.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-72ca54ab895045c3eb867ae298526b35.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2e616962a717d61cdf55119b6f29ab43.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-29955d6bd33de3f072e4fd0901b89d18.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2e616962a717d61cdf55119b6f29ab43.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,7 +82,35 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-speaking .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-project','listing-website','listing-format','listing-engines','listing-language','listing-freeze','listing-title-block-banner','listing-title','listing-subtitle','listing-author','listing-description','listing-event','listing-location','listing-talk-format','listing-slides','listing-pdf','listing-transcript','listing-date','listing-image','listing-categories','listing-tags','listing-path','listing-outputHref','listing-date-modified','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-internal','listing-video',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-project","listing-website","listing-format","listing-engines","listing-language","listing-freeze","listing-title-block-banner","listing-title","listing-subtitle","listing-author","listing-description","listing-event","listing-location","listing-talk-format","listing-slides","listing-pdf","listing-transcript","listing-date","listing-image","listing-categories","listing-tags","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-internal","listing-video"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-speaking'] = new List('listing-speaking', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-posts .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
@@ -95,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-posts'] = new List('listing-posts', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -316,7 +344,7 @@ window.Quarto = {
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -331,9 +359,12 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <span class="nav-link">
-<span class="menu-text">projects.qmd</span>
-    </span>
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./talks/index.html"> 
+<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
@@ -353,43 +384,101 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">The Living Deadline</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(20)</span></div><div class="category" data-category="YWlyZmxvdw==">airflow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YS1zY2llbmNl">data-science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGV2b3Bz">devops <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZWNvbm9taWNz">economics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZW5naW5lZXJpbmc=">engineering <span class="quarto-category-count">(8)</span></div><div class="category" data-category="ZXZhbHM=">evals <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Z2VuYWk=">genai <span class="quarto-category-count">(8)</span></div><div class="category" data-category="b3Bz">ops <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvZHVjdGl2aXR5">productivity <span class="quarto-category-count">(5)</span></div><div class="category" data-category="cmVsaWFiaWxpdHk=">reliability <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGFsa3M=">talks <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dHJvdWJsZXNob290aW5n">troubleshooting <span class="quarto-category-count">(1)</span></div><div class="category" data-category="d29ya2Zsb3dz">workflows <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(26)</span></div><div class="category" data-category="YWlyZmxvdw==">airflow <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YS1zY2llbmNl">data-science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGV2b3Bz">devops <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZWNvbm9taWNz">economics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="ZW5naW5lZXJpbmc=">engineering <span class="quarto-category-count">(8)</span></div><div class="category" data-category="ZXZhbHM=">evals <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Z2VuYWk=">genai <span class="quarto-category-count">(8)</span></div><div class="category" data-category="b3Bz">ops <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvZHVjdGl2aXR5">productivity <span class="quarto-category-count">(5)</span></div><div class="category" data-category="cmVsaWFiaWxpdHk=">reliability <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGFsa3M=">talks <span class="quarto-category-count">(8)</span></div><div class="category" data-category="dHJvdWJsZXNob290aW5n">troubleshooting <span class="quarto-category-count">(1)</span></div><div class="category" data-category="d29ya2Zsb3dz">workflows <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
 
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="speaking-strip">
+<p><span class="speaking-topics"><span class="speaking-label"><i class="bi bi-mic"></i> Talks</span> I speak about AI evals, feedback loops, agentic orchestration, cross-functional teams and data.</span> <a href="./talks/index.html" class="speaking-all">All talks →</a></p>
+<div id="listing-speaking" class="quarto-listing quarto-listing-container-custom">
+<div class="speaking-latest">
+Latest talk: <a href="./posts/talk.it-works-now-what.html">It Works! Now What? Fast Iteration for AI Capabilities in Airflow</a> (Airflow Summit 2026)
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+</div>
+<div id="listing-posts" class="quarto-listing quarto-listing-container-default">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="cHJvZHVjdGl2aXR5" data-listing-date-sort="1787094000000" data-listing-file-modified-sort="1787160826455" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1313">
+<div class="quarto-post image-right" data-index="0" data-categories="ZXZhbHMlMkN0YWxrcw==" data-listing-date-sort="1789426800000" data-listing-file-modified-sort="1792361506493" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="207">
+<div class="thumbnail"><a href="./posts/talk.give-your-ai-agent-an-exam.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/talk.give-your-ai-agent-an-exam.html" class="no-external">Talks: Give Your AI Agent an Exam Before You Give It a Job</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/talk.give-your-ai-agent-an-exam.html" class="no-external">Analyticon EMEA 2026 - Amazon - Luxembourg</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZXZhbHM='); return false;">evals</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGFsa3M='); return false;">talks</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/talk.give-your-ai-agent-an-exam.html" class="no-external">
+<p>Before you let an AI agent work unsupervised in a domain, give it an exam: versioned questions with assertions that say what good enough means.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/talk.give-your-ai-agent-an-exam.html" class="no-external">
+<div class="listing-date">
+Sep 15, 2026
+</div>
+<div class="listing-author">
+Alex Guglielmone Nemi
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="YWlyZmxvdyUyQ3RhbGtz" data-listing-date-sort="1788217200000" data-listing-file-modified-sort="1792361574190" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="290">
+<div class="thumbnail"><a href="./posts/talk.it-works-now-what.html" class="no-external">
+
+<img loading="lazy" src="./talks/airflow-summit/2026/it-works-now-what/images/airflow-summit-2026-audience.jpg" class="thumbnail-image">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/talk.it-works-now-what.html" class="no-external">Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/talk.it-works-now-what.html" class="no-external">Airflow Summit 2026 - Austin, TX</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('YWlyZmxvdw=='); return false;">airflow</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGFsa3M='); return false;">talks</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/talk.it-works-now-what.html" class="no-external">
+<p>Getting an agent to do something is easy now. Making it cheap to change takes executable checks, the right box, and sometimes no inference at all.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/talk.it-works-now-what.html" class="no-external">
+<div class="listing-date">
+Sep 1, 2026
+</div>
+<div class="listing-author">
+Alex Guglielmone Nemi
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="cHJvZHVjdGl2aXR5" data-listing-date-sort="1787094000000" data-listing-file-modified-sort="1791542720972" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1313">
 <div class="thumbnail"><a href="./posts/add-a-skip-and-a-note.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -422,7 +511,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="ZW5naW5lZXJpbmclMkNnZW5haQ==" data-listing-date-sort="1784329200000" data-listing-file-modified-sort="1787142619986" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1375">
+<div class="quarto-post image-right" data-index="3" data-categories="ZW5naW5lZXJpbmclMkNnZW5haQ==" data-listing-date-sort="1784329200000" data-listing-file-modified-sort="1784420459948" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1375">
 <div class="thumbnail"><a href="./posts/find-the-loop-story-first.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -457,7 +546,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="ZWNvbm9taWNzJTJDZ2VuYWk=" data-listing-date-sort="1780959600000" data-listing-file-modified-sort="1780988239696" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="748">
+<div class="quarto-post image-right" data-index="4" data-categories="ZWNvbm9taWNzJTJDZ2VuYWk=" data-listing-date-sort="1780959600000" data-listing-file-modified-sort="1784420459934" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="748">
 <div class="thumbnail"><a href="./posts/solving-the-right-problem-economist-edition-part-01.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -492,7 +581,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="ZW5naW5lZXJpbmc=" data-listing-date-sort="1780786800000" data-listing-file-modified-sort="1780989253273" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="342">
+<div class="quarto-post image-right" data-index="5" data-categories="ZW5naW5lZXJpbmc=" data-listing-date-sort="1780786800000" data-listing-file-modified-sort="1784420459934" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="342">
 <div class="thumbnail"><a href="./posts/solving-the-right-problem.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/images/macready.png" alt="Traditional team vs Paul MacCready: one learning cycle per year vs 20+ per day. The breakthrough was shortening the learning loop. Generated with ChatGPT."  class="thumbnail-image card-img"/></p>
@@ -525,10 +614,10 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="ZWNvbm9taWNzJTJDdGFsa3M=" data-listing-date-sort="1780009200000" data-listing-file-modified-sort="1780989290575" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="115">
+<div class="quarto-post image-right" data-index="6" data-categories="ZWNvbm9taWNzJTJDdGFsa3M=" data-listing-date-sort="1780009200000" data-listing-file-modified-sort="1792194619563" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="157">
 <div class="thumbnail"><a href="./posts/talk.ai-coding-agents-in-an-economics-team.html" class="no-external">
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+<img loading="lazy" src="./talks/nabe-tec-2026/images/nabe-tec-2026-audience.jpg" class="thumbnail-image">
 
 </a></div>
 <div class="body">
@@ -546,7 +635,7 @@ Alex Guglielmone Nemi
 
 </div>
 <div class="delink listing-description"><a href="./posts/talk.ai-coding-agents-in-an-economics-team.html" class="no-external">
-Given at NABE TEC EU 2026 (National Association for Business Economics, Technology Economics Conference), Amsterdam.
+<p>What economists delegate to AI coding agents, what they never delegate, and how exam-first iteration keeps them in control.</p>
 </a></div>
 </div>
 <div class="metadata">
@@ -560,7 +649,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="Z2VuYWklMkNwcm9kdWN0aXZpdHklMkN3b3JrZmxvd3M=" data-listing-date-sort="1773619200000" data-listing-file-modified-sort="1780970884103" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171">
+<div class="quarto-post image-right" data-index="7" data-categories="Z2VuYWklMkNwcm9kdWN0aXZpdHklMkN3b3JrZmxvd3M=" data-listing-date-sort="1773619200000" data-listing-file-modified-sort="1773707415173" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1171">
 <div class="thumbnail"><a href="./posts/series/evals/sketch-to-text-skill.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/series/evals/fake-diagram-boox.jpg"  class="thumbnail-image card-img"/></p>
@@ -597,7 +686,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="Z2VuYWklMkN3b3JrZmxvd3MlMkNyZWxpYWJpbGl0eQ==" data-listing-date-sort="1770940800000" data-listing-file-modified-sort="1780970884100" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="854">
+<div class="quarto-post image-right" data-index="8" data-categories="Z2VuYWklMkN3b3JrZmxvd3MlMkNyZWxpYWJpbGl0eQ==" data-listing-date-sort="1770940800000" data-listing-file-modified-sort="1771171574047" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="854">
 <div class="thumbnail"><a href="./posts/series/evals/building-agent-skills-incrementally.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -634,7 +723,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="ZW5naW5lZXJpbmclMkNnZW5haSUyQ2V2YWxz" data-listing-date-sort="1770681600000" data-listing-file-modified-sort="1780970884103" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="328">
+<div class="quarto-post image-right" data-index="9" data-categories="ZW5naW5lZXJpbmclMkNnZW5haSUyQ2V2YWxz" data-listing-date-sort="1770681600000" data-listing-file-modified-sort="1770765928980" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="328">
 <div class="thumbnail"><a href="./posts/series/evals/measure-first-optimize-last.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -671,7 +760,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="ZW5naW5lZXJpbmclMkNwcm9kdWN0aXZpdHklMkNnZW5haSUyQ29wcw==" data-listing-date-sort="1769644800000" data-listing-file-modified-sort="1780970884099" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="771">
+<div class="quarto-post image-right" data-index="10" data-categories="ZW5naW5lZXJpbmclMkNwcm9kdWN0aXZpdHklMkNnZW5haSUyQ29wcw==" data-listing-date-sort="1769644800000" data-listing-file-modified-sort="1769738475871" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="771">
 <div class="thumbnail"><a href="./posts/series/evals/automate-audits.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -710,7 +799,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="ZW5naW5lZXJpbmclMkNnZW5haSUyQ2V2YWxz" data-listing-date-sort="1769558400000" data-listing-file-modified-sort="1780970884100" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="837">
+<div class="quarto-post image-right" data-index="11" data-categories="ZW5naW5lZXJpbmclMkNnZW5haSUyQ2V2YWxz" data-listing-date-sort="1769558400000" data-listing-file-modified-sort="1769594430270" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="837">
 <div class="thumbnail"><a href="./posts/series/evals/error-compounding-genai-systems-approach.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -747,7 +836,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="cHJvZHVjdGl2aXR5" data-listing-date-sort="1768521600000" data-listing-file-modified-sort="1780970884105" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="716">
+<div class="quarto-post image-right" data-index="12" data-categories="cHJvZHVjdGl2aXR5" data-listing-date-sort="1768521600000" data-listing-file-modified-sort="1768782953325" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="716">
 <div class="thumbnail"><a href="./posts/slack/stop-reformatting-markdown-when-pasting-into-slack.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/slack/markdown-vs-slack-rich-paste.png"  class="thumbnail-image card-img"/></p>
@@ -780,7 +869,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="dHJvdWJsZXNob290aW5n" data-listing-date-sort="1768262400000" data-listing-file-modified-sort="1780970884105" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="135">
+<div class="quarto-post image-right" data-index="13" data-categories="dHJvdWJsZXNob290aW5n" data-listing-date-sort="1768262400000" data-listing-file-modified-sort="1768276315319" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="135">
 <div class="thumbnail"><a href="./posts/wsl-pip-hangs-ipv6.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -813,7 +902,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="YWlyZmxvdyUyQ3RhbGtz" data-listing-date-sort="1757372400000" data-listing-file-modified-sort="1780970884105" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="129">
+<div class="quarto-post image-right" data-index="14" data-categories="YWlyZmxvdyUyQ3RhbGtz" data-listing-date-sort="1757372400000" data-listing-file-modified-sort="1792191280012" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="129">
 <div class="thumbnail"><a href="./posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -834,7 +923,7 @@ Alex Guglielmone Nemi
 
 </div>
 <div class="delink listing-description"><a href="./posts/talk.toward-a-shared-vision-of-llm-evals-in-airflow-ecosystem.html" class="no-external">
-As LLM tools and agents emerge in the Airflow community, whether as plugins, MCP servers, or embedded agents, we lack a consistent way to benchmark across implementations…
+<p>Why the Airflow community needs an agreed-upon way to benchmark LLM tools and agents, and what that could look like.</p>
 </a></div>
 </div>
 <div class="metadata">
@@ -848,7 +937,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="ZGF0YS1zY2llbmNlJTJDZW5naW5lZXJpbmc=" data-listing-date-sort="1756681200000" data-listing-file-modified-sort="1780970884105" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="519">
+<div class="quarto-post image-right" data-index="15" data-categories="ZGF0YS1zY2llbmNlJTJDZW5naW5lZXJpbmc=" data-listing-date-sort="1756681200000" data-listing-file-modified-sort="1768191321052" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="519">
 <div class="thumbnail"><a href="./posts/using-dbt-to-accelerate-science.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -883,7 +972,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="Z2VuYWklMkNjb2Rl" data-listing-date-sort="1751756400000" data-listing-file-modified-sort="1780970884097" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="571">
+<div class="quarto-post image-right" data-index="16" data-categories="Z2VuYWklMkNjb2Rl" data-listing-date-sort="1751756400000" data-listing-file-modified-sort="1760907474550" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="571">
 <div class="thumbnail"><a href="./posts/aider-with-open-router.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -918,7 +1007,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="ZW5naW5lZXJpbmc=" data-listing-date-sort="1715986800000" data-listing-file-modified-sort="1780970884104" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="191">
+<div class="quarto-post image-right" data-index="17" data-categories="ZW5naW5lZXJpbmc=" data-listing-date-sort="1715986800000" data-listing-file-modified-sort="1765931445711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="191">
 <div class="thumbnail"><a href="./posts/series/zeroops/merge-and-forget.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -951,7 +1040,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="ZW5naW5lZXJpbmc=" data-listing-date-sort="1715900400000" data-listing-file-modified-sort="1780970884104" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="174">
+<div class="quarto-post image-right" data-index="18" data-categories="ZW5naW5lZXJpbmc=" data-listing-date-sort="1715900400000" data-listing-file-modified-sort="1765930848163" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="174">
 <div class="thumbnail"><a href="./posts/series/zeroops/no-news-is-good-news.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -984,7 +1073,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="cHJvZHVjdGl2aXR5" data-listing-date-sort="1677628800000" data-listing-file-modified-sort="1780970884099" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="156">
+<div class="quarto-post image-right" data-index="19" data-categories="cHJvZHVjdGl2aXR5" data-listing-date-sort="1677628800000" data-listing-file-modified-sort="1771804711931" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="156">
 <div class="thumbnail"><a href="./posts/meeting-budget.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1017,7 +1106,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="ZGV2b3Bz" data-listing-date-sort="1555369200000" data-listing-file-modified-sort="1780970884099" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="400">
+<div class="quarto-post image-right" data-index="20" data-categories="ZGV2b3Bz" data-listing-date-sort="1555369200000" data-listing-file-modified-sort="1760907475036" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="400">
 <div class="thumbnail"><a href="./posts/notifications-for-command-line-tasks.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1050,7 +1139,7 @@ Alex Guglielmone Nemi
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="ZGV2b3Bz" data-listing-date-sort="1518307200000" data-listing-file-modified-sort="1780970884097" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="401">
+<div class="quarto-post image-right" data-index="21" data-categories="ZGV2b3Bz" data-listing-date-sort="1518307200000" data-listing-file-modified-sort="1760907474032" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="401">
 <div class="thumbnail"><a href="./posts/accept-self-signed-cert-git-https.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1085,7 +1174,12 @@ Alex Guglielmone Nemi
 </div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</div>
+
+
+
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

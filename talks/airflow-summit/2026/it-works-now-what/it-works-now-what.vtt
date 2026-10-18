@@ -1,0 +1,472 @@
+WEBVTT
+
+NOTE
+It Works! Now What? Fast Iteration for AI Capabilities in Airflow
+Alex Guglielmone Nemi, Airflow Summit 2026.
+Video: https://www.youtube.com/watch?v=L5SLtEN7lcA
+Edited transcript, made from the speaker's own recording and the
+video's automatic captions, checked against the slides: fillers and
+false starts removed, some sentences tidied. [unclear] marks words
+neither transcription caught.
+
+NOTE
+Times follow the video above, to within a few seconds.
+
+00:07.000 --> 00:15.000
+Hi, my name is Alex, and I'm going to give you a talk about fast iteration for AI capabilities in Airflow.
+
+00:15.000 --> 00:26.000
+You could sort me into two worlds. In the corporate world, I'm a software engineering lead at Amazon, for a team called Economic Decision Science.
+
+00:26.000 --> 00:30.000
+This team optimizes the way the Amazon marketplace operates using economic models.
+
+00:30.000 --> 00:37.000
+My goal is to get economists to production without engineering or tech bottlenecks.
+
+00:37.000 --> 00:48.000
+In the other world, I'm an Airflow user. I run Linux, I run local models, I run Airflow on my home server.
+
+00:48.000 --> 00:51.000
+I'm very into open source and privacy.
+
+00:51.000 --> 01:02.000
+You may think these two worlds have nothing in common, but there's a very important component in both of them.
+
+01:02.000 --> 01:07.000
+I want to delegate heavily, and so do the economists in my team.
+
+01:07.000 --> 01:14.000
+We do that through coding agents, not because we've been mandated to, but because they've been very effective for us.
+
+01:14.000 --> 01:28.000
+Our corporate Dags can look quite convoluted. We use dbt and Astronomer Cosmos to author them, with models depending on models and all that jazz.
+
+01:28.000 --> 01:33.000
+But if you really think about it, they all share a common pattern.
+
+01:33.000 --> 01:42.000
+Something triggers them, there's a question we need to answer, we interpret that answer, and we decide an outcome.
+
+01:42.000 --> 01:47.000
+And if you look at the image below, in Airflow, I'm going to talk about a real problem that I have.
+
+01:47.000 --> 01:55.000
+I live in London. In my neighborhood, the bins get collected every week.
+
+01:55.000 --> 02:02.000
+It alternates: recycling, rubbish, recycling, rubbish, and so on. The food caddy thankfully gets collected every week.
+
+02:02.000 --> 02:14.000
+If I put out the wrong bin, or I forget, I end up holding a month of rubbish, because it's the two weeks I already had plus two more.
+
+02:14.000 --> 02:18.000
+I don't want that to happen, so I delegate.
+
+02:18.000 --> 02:23.000
+Let's say I delegate to a very friendly friend, and I give them these instructions:
+
+02:23.000 --> 02:33.000
+go to the council website, type my postcode, pick the right address from the dropdown, read the date and the bin, and take out the right one on the right date.
+
+02:33.000 --> 02:44.000
+But I don't want to burden my friend, so I burden Claude Opus 5, or whatever agent you want to pick.
+
+02:44.000 --> 02:50.000
+I just tell the agent: write the skill for this particular problem. And the agent is good enough. It figures it out.
+
+02:50.000 --> 02:59.000
+If you're curious: it finds no dropdown, reads the JavaScript, finds the endpoints behind the form, calls those, and gets the answer.
+
+02:59.000 --> 03:07.000
+I know it's the right answer because I had already checked it. I have my ground truth.
+
+03:07.000 --> 03:19.000
+You may look at the numbers, 85 cents, two minutes, a million tokens, and think that seems like too much. That's what I measured with my Claude Code setup.
+
+03:19.000 --> 03:30.000
+That would run me $4 a month if I called it every week, and I still have to trigger the skill myself. But it works.
+
+03:30.000 --> 03:39.000
+If I have no problem with that, I'm fine, and the talk ends. But I do have a problem: I said I didn't want to forget,
+
+03:39.000 --> 03:46.000
+and if I have to trigger the skill, I still have to remember. So I want to change this. Also, the price is kind of ridiculous.
+
+03:46.000 --> 03:53.000
+How do I go about changing it? I find a cheap loop to do so.
+
+03:53.000 --> 03:59.000
+People might start conjecturing about what needs to change: the prompts, the tools, the models.
+
+03:59.000 --> 04:04.000
+But the most important part is having a loop that looks a lot like a refactoring loop:
+
+04:04.000 --> 04:19.000
+a loop that lets you change a system, or parts of it, without changing its externally observable behavior. It's safe to change because we have tests.
+
+04:19.000 --> 04:30.000
+So the rule would be: before we delegate, we build a check that tells us whether something is right or wrong.
+
+04:30.000 --> 04:40.000
+We can call that executable intent. So let's write that check.
+
+04:40.000 --> 04:51.000
+This is a Pydantic model for the payload. I'm calling ask_agent, running LLM inference against a specific recorded date I know about,
+
+04:51.000 --> 04:59.000
+and asserting that the actual result matches the expectation. I use a set, so the order doesn't matter.
+
+04:59.000 --> 05:07.000
+You may say this looks like a unit test, or more likely an integration test, because we're calling outside things. And you'd be right.
+
+05:07.000 --> 05:15.000
+I'd say the correct term is an AI eval, because we're asserting on the output of LLM inference.
+
+05:15.000 --> 05:24.000
+But this is what lets us change parts of our system safely, and change its shape.
+
+05:24.000 --> 05:35.000
+So we take this agent skill, which only runs when a human runs it, and put it into Airflow, which is a great orchestrator.
+
+05:35.000 --> 05:44.000
+It looks like this. And it's important for me to say: I made this change agentically. I delegated this change as well.
+
+05:44.000 --> 05:49.000
+Now it runs on a daily basis.
+
+05:49.000 --> 06:00.000
+The ask_agent part keeps doing the same thing it did before, and then a later part, in Airflow, decides whether to alert or not.
+
+06:00.000 --> 06:07.000
+I don't want an alert every time the collection is checked. I only need to know the day before, the night before.
+
+06:07.000 --> 06:18.000
+So I use the Telegram provider that comes with Airflow, and it alerts me: hey, you have to take out the rubbish, or the recycling.
+
+06:18.000 --> 06:25.000
+This is very interesting, because I didn't have to give the agent skill Telegram permissions.
+
+06:25.000 --> 06:32.000
+Just by using Airflow, I already bounded the responsibilities of the different parts.
+
+06:32.000 --> 06:40.000
+I have to admit I didn't refactor, though. I actually changed the behavior. It's not the same.
+
+06:40.000 --> 06:46.000
+So for the new parts, I had to write new checks based on the behavior I expected.
+
+06:46.000 --> 06:56.000
+I wrote unit tests: in this case I want it to send, and in this case I want to log why it didn't send anything, for auditability.
+
+06:56.000 --> 07:04.000
+I also want to make sure it doesn't double send, so I don't get told about the rubbish three times.
+
+07:04.000 --> 07:14.000
+Your eyes may also go to the price. The model is the same, so don't judge too much what Claude Code did in the test,
+
+07:14.000 --> 07:24.000
+but at least we measure things, and we can decide and optimize based on them. These are the numbers I got using the same model.
+
+07:24.000 --> 07:32.000
+The Dag looks a bit like this. At the top is the actual call to the agent skill.
+
+07:32.000 --> 07:44.000
+On purpose, I'm using the exact skill file I used before. I use Pydantic AI abstractions, load the agent skill, and call it in a bounded task.
+
+07:44.000 --> 07:54.000
+Then it's just a typical Dag, with some tools that are unit tested, and in this case the AWS Bedrock provider, because I use AWS.
+
+07:54.000 --> 08:00.000
+It's quite simple. You can do your own thing with better abstractions, with the common AI providers we have available.
+
+08:00.000 --> 08:09.000
+This is what it looks like in Airflow. And we solved the problem of me having to remember.
+
+08:09.000 --> 08:12.000
+Can we improve on the price? Yes, because we have the check.
+
+08:12.000 --> 08:22.000
+We can swap the frontier model for a cheaper frontier model, a mid-tier model, an open-weight model,
+
+08:22.000 --> 08:31.000
+or even better, a local open-weight model, so that no one knows when I have to take out the trash.
+
+08:31.000 --> 08:36.000
+The important thing is that the check is what lets us benchmark these things, and the check survives the models.
+
+08:36.000 --> 08:43.000
+The models will come and go. The check stays until we decide it's no longer valid.
+
+08:43.000 --> 08:52.000
+Here's a quick test I did with many open-weight models, and it turns out gpt-oss, 20 billion parameters, was good enough.
+
+08:52.000 --> 09:00.000
+That's compared to the baseline of the Pydantic AI and Opus 5 setup in the Dag. And great, I can use this.
+
+09:00.000 --> 09:09.000
+If I wanted speed over price, I could use Mistral Large, because the circles tell me how long each one took. Cheaper, faster. Awesome.
+
+09:09.000 --> 09:17.000
+How long did this take? Not long at all. Again, I'm delegating all of this.
+
+09:17.000 --> 09:21.000
+How do I do that? I make fast loops.
+
+09:21.000 --> 09:32.000
+Some tricks for fast loops. First, I don't use LLM-as-a-judge by default, because it takes more time and adds stochasticity.
+
+09:32.000 --> 09:36.000
+In this case I had structured output, so I could just assert on it.
+
+09:36.000 --> 09:46.000
+Second, I made the runs independent, with no shared state that would interfere between them.
+
+09:46.000 --> 09:53.000
+If I'm saving state and have to lock it, it becomes 40 sequential runs, which I don't want. That alone made it faster.
+
+09:53.000 --> 10:01.000
+In some cases you might want isolation or containers, depending on your problem.
+
+10:01.000 --> 10:07.000
+Those have overhead, so make sure you optimize for that overhead in your setup, and tier them.
+
+10:07.000 --> 10:17.000
+So, the path so far: we had an agent skill, and the agent solved a lot at inference time.
+
+10:17.000 --> 10:23.000
+Then we moved to an Airflow Dag, and suddenly a lot of the behavior was encoded explicitly.
+
+10:23.000 --> 10:32.000
+The agent remained as a web scraper of sorts, while the orchestration happened in Airflow.
+
+10:32.000 --> 10:42.000
+The question is: can we go further? Can we move more? The title spoils it, but the truth is yes.
+
+10:42.000 --> 10:52.000
+This is what I run at home. I don't use AI. I use AI to mutate this thing, but I don't end up using AI to run it.
+
+10:52.000 --> 10:56.000
+It's a Python web scraper that does the same thing, against the same checks.
+
+10:56.000 --> 11:03.000
+You may ask: what happens when the website changes? And you'd be right. It's going to break.
+
+11:03.000 --> 11:16.000
+But first, it hasn't happened, so it's not necessarily frequent. Am I willing to pay, just in case, for a long time? Maybe not.
+
+11:16.000 --> 11:20.000
+Maybe I'm fine with alerting a human as soon as it breaks, and going to fix it.
+
+11:20.000 --> 11:30.000
+But if you're starting to get the idea of feedback loops, I can use the failure, or the alert, to run another feedback loop,
+
+11:30.000 --> 11:41.000
+where an external agent goes and mutates the code until it succeeds. If this sounds weird, I promise you there are companies doing this at a much larger scale.
+
+11:41.000 --> 11:47.000
+So what do we need to create, or find, one of these loops?
+
+11:47.000 --> 12:04.000
+We need a goal worth pursuing. If it's not important to you, you won't spend the human time to think about the problem in the first place, or the tokens for the agent to go about it its way.
+
+12:04.000 --> 12:08.000
+You need somewhere to experiment, where you can actually affect the outcomes you need.
+
+12:08.000 --> 12:15.000
+You need a way to compare: the checks we've talked about, or a baseline you want to improve.
+
+12:15.000 --> 12:24.000
+And, very importantly, you need to define which levers you allow the agent to change.
+
+12:24.000 --> 12:30.000
+If you were doing pure prompt optimization, you'd say: it's the prompt. If you want to benchmark, you might add the model.
+
+12:30.000 --> 12:33.000
+If you want to do what I did, you might change the tools or the workflow.
+
+12:33.000 --> 12:42.000
+So identifying the levers is key for this loop, or for the delegation you want to do.
+
+12:42.000 --> 12:52.000
+On the topic of levers, some of you might say: this is all great, but it's very simple. You're just modifying a Dag.
+
+12:52.000 --> 13:02.000
+My problems are complex, large, distributed in nature. Awesome, nice demo, but I don't care that much.
+
+13:02.000 --> 13:05.000
+And I say: yes, this is a small box. So why don't you enlarge that box?
+
+13:05.000 --> 13:17.000
+You want to alter and mutate Airflow? Expand the box to cover Airflow. You could modify the scheduler, the triggerer, the workers.
+
+13:17.000 --> 13:23.000
+In this case I also put in AWS Glue, a managed service by AWS for running Spark jobs.
+
+13:23.000 --> 13:35.000
+Why did I do this? Because it's a true story of me testing a specific feature called durable executors. We'll talk about this in the next talk.
+
+13:35.000 --> 13:43.000
+In simple terms: I have a long-running Spark job driven by a worker.
+
+13:43.000 --> 13:53.000
+If, for whatever reason, this worker dies, then as soon as the scheduler or triggerer decides the task needs to run, it spawns a new worker,
+
+13:53.000 --> 14:03.000
+which decides it needs a new Glue job. Suddenly I have bad crash recovery and inefficient compute, because I have two Glue jobs. Durable executors fix that.
+
+14:03.000 --> 14:14.000
+As the PR came in, I was very interested in incorporating this feature, and I talked to Amogh Desai and said: hey, I can test this for you.
+
+14:14.000 --> 14:19.000
+And how do I test it when I have no time for it? Again, I delegate.
+
+14:19.000 --> 14:33.000
+Here the delegation is not so much me building something, but me hypothesizing about behaviors I already know should happen, and answering whether they're true or not.
+
+14:33.000 --> 14:39.000
+If there's a bug or something, that's fair. I just need to end up with a true or a false.
+
+14:39.000 --> 14:45.000
+The hypotheses look like this. What if a worker dies while the job is still running?
+
+14:45.000 --> 14:57.000
+In that case, very quickly, the agent kills the worker, and we observe what happens and log everything.
+
+14:57.000 --> 15:07.000
+Then I can say: it actually attached itself to the running job, and didn't spin up a new one. That's me testing one of these behaviors.
+
+15:07.000 --> 15:20.000
+Another one: what if the job already finished? In the success case, it just attaches and says there's nothing to do, carry on. If it failed, it restarts the job.
+
+15:20.000 --> 15:34.000
+There are weirder edge cases, like: what if the state where we store the ID is gone? You can simulate that with the agent too, and actually delete the database.
+
+15:34.000 --> 15:43.000
+How do I do this? In my case, MWAA images. Docker is very easy to spin up with agents. And I've done the same with open-source Airflow,
+
+15:43.000 --> 15:48.000
+so this is not limited to a particular configuration.
+
+15:48.000 --> 16:00.000
+And we also have the control case, so we know what happens when we don't do anything new, when we don't use the feature.
+
+16:00.000 --> 16:15.000
+With all this, letting the agent touch so much of our system, some of you may ask: isn't this dangerous? Aren't you afraid of an unintended consequence with a high blast radius?
+
+16:15.000 --> 16:24.000
+And yes, you're right. It's a rational fear to have. You could lose money, send the wrong message to the wrong people, delete the wrong things.
+
+16:24.000 --> 16:30.000
+So there's a line between the decision and the real world, and you can put something in between.
+
+16:30.000 --> 16:39.000
+You can simulate that effect, so that you're no longer afraid, and can loop fast without fear.
+
+16:39.000 --> 16:43.000
+That can take many forms. If it's a message, it could be a fake notifier.
+
+16:43.000 --> 16:54.000
+If you want to work with production data, you could use read-only credentials, provided it's not risky for you to exfiltrate that data.
+
+16:54.000 --> 17:01.000
+I really like dry runs for tool calls, because agents are very good at tool calling now, and I should probably defer a lot to tool calls.
+
+17:01.000 --> 17:08.000
+With dry runs you can ask: in these circumstances, will my agent call these tools in this way?
+
+17:08.000 --> 17:16.000
+For MCP servers you can do mocks relatively easily. You can use mitmproxy, and many other things.
+
+17:16.000 --> 17:23.000
+On sandboxing: before the talk I was thinking about what I would say, and I ended up not wanting to name-drop tools,
+
+17:23.000 --> 17:32.000
+because one thing I've observed is that it depends a lot on your corporate environment, permissions and hardware.
+
+17:32.000 --> 17:40.000
+Bubblewrap, for instance, requires unprivileged user namespaces, and you might not have that in your corporate environment.
+
+17:40.000 --> 17:49.000
+So think about what you need as a functional environment. Why do you want to sandbox in the first place?
+
+17:49.000 --> 17:57.000
+And then test with actual loops whether your hardware and operating system allow it.
+
+17:57.000 --> 18:08.000
+And very important when you're faking these things: do it for real once, so you know what real looks like, and you're not just mocking fake things.
+
+18:08.000 --> 18:15.000
+And very important, and very simple: evals are not security. If something must never happen, make it impossible.
+
+18:15.000 --> 18:24.000
+So permissions, role-based access control. Everywhere else you can use judgment, but not in this case.
+
+18:24.000 --> 18:32.000
+Going back to Claude Code, and why it was so expensive in this case.
+
+18:32.000 --> 18:44.000
+We clearly had observability. One very important thing in any AI-related matter: persist your traces.
+
+18:44.000 --> 18:50.000
+Whatever result you get, the traces tell you how you got there.
+
+18:50.000 --> 18:56.000
+In this case you can see that limiting the tools it had access to got a lot of refusals, and that took time.
+
+18:56.000 --> 19:09.000
+You may ask why Claude Code is trying things it has no access to in the first place, but that's already information you can use to optimize, if you were to stay on the Claude Code path.
+
+19:09.000 --> 19:21.000
+But traces, which you should persist, have another very interesting aspect. They capture everything else you missed with checks or tests.
+
+19:21.000 --> 19:27.000
+You can never predict what reality will be.
+
+19:27.000 --> 19:37.000
+If you capture traces when you have failures, or find a way to incorporate the unknown paths,
+
+19:37.000 --> 19:48.000
+eventually some of those traces become checks that you add to your expected behaviors. This is a very common pattern in many companies.
+
+19:48.000 --> 19:52.000
+And getting to the end.
+
+19:52.000 --> 20:01.000
+Everything I've talked about, I think you could apply next week. The barrier to entry is very low.
+
+20:01.000 --> 20:10.000
+The one thing that is hard, I think, is the UX of evals. Writing proper evals is hard.
+
+20:10.000 --> 20:20.000
+Think of it as explaining unit tests, or test-driven development, to people who have never done it, who may never have built software in the first place. It's quite complex.
+
+20:20.000 --> 20:26.000
+And when evals are closer to integration tests or system tests, it's a huge unsolved challenge.
+
+20:26.000 --> 20:34.000
+So I think we should take a page from skill builders: they shipped an agent skill you could just talk to, and it would create skills the right way.
+
+20:34.000 --> 20:42.000
+Maybe we can have eval builders: once you know what a good eval looks like, you help your users create theirs that way.
+
+20:42.000 --> 20:50.000
+In particular, I've experimented a lot with creating a qualifying exam for a domain before you let an agent work in it.
+
+20:50.000 --> 21:02.000
+So you could have a Dag Operator, a Dag Code Generator, a Localizer, and if it passes, no matter what it is, even a local LLM, it's good enough to do the work.
+
+21:02.000 --> 21:06.000
+So, takeaways. Build executable checks for your loops, so you can delegate strongly.
+
+21:06.000 --> 21:16.000
+Find the right box, where you can actually affect the outcome and have a good feedback loop. It can be the task, the Dag, the whole Airflow image, or bigger.
+
+21:16.000 --> 21:25.000
+You may not need inference at all. It may be all around your software development cycle, but not in your workflows, in some cases.
+
+21:25.000 --> 21:29.000
+And evals are not security. If something must never happen, prevent it rather than evaluate it.
+
+21:29.000 --> 21:32.000
+Thank you very much.

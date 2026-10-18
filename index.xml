@@ -9,8 +9,118 @@
 <link>https://alexhans.github.io/</link>
 <atom:link href="https://alexhans.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Alex Guglielmone Nemi&#39;s blog</description>
-<generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 18 Aug 2026 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.10.19</generator>
+<lastBuildDate>Mon, 14 Sep 2026 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Talks: Give Your AI Agent an Exam Before You Give It a Job</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/talk.give-your-ai-agent-an-exam.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>Given at Analyticon EMEA 2026, Amazon’s internal analytics and science conference, at <a href="https://www.lcb.lu/en/partners/21">Kinepolis Kirchberg</a> in Luxembourg.</p>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>Economists on our team use AI coding agents for most of their everyday work, from exploratory analysis to production econometric models. Engineers aren’t a bottleneck and the agents work well, but how do you keep control when the model, the prompt, or the harness can change at any time? It’s like delegating to a research assistant you want to trust without supervision.</p>
+<p>You give them an exam that tells you whether they’re qualified to operate unsupervised in a specific domain. An exam is a set of questions with assertions, versioned in git and living where the economists already work. The exams encode what “good enough” means: SQL conventions, good practices, domain-specific economics workflows. Deterministic checks where possible, LLM-as-judge only where the answer can be phrased many ways. Composable, agent-independent, and easy to rewrite when a new SDK drops next week.</p>
+<p>Any part of the black box can change, whether a model swap, a prompt refactor or a new agent SDK, and we run the exam. You trust what you can test.</p>
+</section>
+<section id="slides" class="level1">
+<h1>Slides</h1>
+<ul>
+<li><a href="../talks/analyticon-emea-2026/give-your-ai-agent-an-exam/">Give Your AI Agent an Exam Before You Give It a Job</a></li>
+</ul>
+</section>
+<section id="related" class="level1">
+<h1>Related</h1>
+<ul>
+<li><a href="../posts/series/evals/measure-first-optimize-last.html">Measure First, Optimize Last: My Approach to AI Evals</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>evals</category>
+  <category>talks</category>
+  <guid>https://alexhans.github.io/posts/talk.give-your-ai-agent-an-exam.html</guid>
+  <pubDate>Mon, 14 Sep 2026 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow</title>
+  <dc:creator>Alex Guglielmone Nemi</dc:creator>
+  <link>https://alexhans.github.io/posts/talk.it-works-now-what.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>Given at <a href="https://airflowsummit.org/sessions/2026/it-works-now-what-fast-iteration-for-ai-capabilities-in-airflow/">Airflow Summit 2026</a>, Austin, TX.</p>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>Building an AI capability in Airflow is the easy part. The hard part is what comes next. You want to swap a model, refactor a prompt, cut token costs, or try a local model instead of paying for cloud. How do you know it still works as expected? Without a fast feedback loop, every change is a gamble. This talk shows practical patterns for building that feedback loop, with real examples using agent skills, MCPs, and local and cloud models. It covers the challenges too: sandboxing, observability, non-determinism, and keeping checks simple enough that people actually use them.</p>
+</section>
+<section id="takeaways" class="level1">
+<h1>Takeaways</h1>
+<ol type="1">
+<li><strong>Build executable checks for your loops</strong>, so you can delegate strongly.</li>
+<li><strong>Find the right box</strong>: a task, a Dag, the whole Airflow image. Or bigger.</li>
+<li><strong>You may not need the inference at all</strong>: AI all around your system, and workflows with none in them.</li>
+</ol>
+<p>Evals are not security. If something must never happen, prevent it rather than evaluating it.</p>
+</section>
+<section id="video-slides-and-transcript" class="level1">
+<h1>Video, Slides and Transcript</h1>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/L5SLtEN7lcA" title="It Works! Now What? Fast Iteration for AI Capabilities in Airflow, Airflow Summit 2026" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA">Video on YouTube</a></li>
+<li><a href="../talks/airflow-summit/2026/it-works-now-what/">It Works! Now What?</a></li>
+<li><a href="../talks/airflow-summit/2026/it-works-now-what/it-works-now-what.vtt">Transcript (WebVTT)</a>, an edited transcript timed to the video</li>
+</ul>
+</section>
+<section id="related" class="level1">
+<h1>Related</h1>
+<ul>
+<li><a href="../posts/find-the-loop-story-first.html">Find The Loop</a></li>
+<li><a href="https://www.youtube.com/watch?v=M4kuOP57vTk">Resumable Task Execution for Long Running Tasks such as Spark</a>, <a href="https://www.linkedin.com/in/amogh0510/">Amogh Desai</a>’s Airflow Summit 2026 talk on the feature I tested</li>
+</ul>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/airflow-summit-2026-audience.jpg" class="img-fluid figure-img" alt="A full conference room of attendees with lanyards, watching a session in dim light"></p>
+<figcaption>An Airflow Summit 2026 audience in Austin. Still from the <a href="https://www.youtube.com/watch?v=TUDE9MNofL8&amp;t=6s">Airflow Summit 2026 recap video</a>.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/airflow-summit-2026-stage.jpg" class="img-fluid figure-img" alt="Airflow Summit stage with the banner Orchestrating the AI Revolution and a screen showing Keynote: State of Airflow"></p>
+<figcaption>The main stage at Airflow Summit 2026, before the State of Airflow keynote. Still from the <a href="https://www.youtube.com/watch?v=TUDE9MNofL8&amp;t=6s">Airflow Summit 2026 recap video</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>airflow</category>
+  <category>talks</category>
+  <guid>https://alexhans.github.io/posts/talk.it-works-now-what.html</guid>
+  <pubDate>Mon, 31 Aug 2026 23:00:00 GMT</pubDate>
+  <media:content url="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/airflow-summit-2026-audience.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Add a Skip and a Note to Every Question</title>
   <dc:creator>Alex Guglielmone Nemi</dc:creator>
@@ -538,15 +648,23 @@ new: 53.17 tok/s</code></pre>
 
 
 <p>Given at <a href="https://www.nabe.com/NABE/NABE/Events/TEC26/TEC2026.aspx">NABE TEC EU 2026</a> (National Association for Business Economics, Technology Economics Conference), Amsterdam.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/talks/nabe-tec-2026/images/nabe-tec-2026-audience.jpg" class="img-fluid figure-img" alt="Audience seated in an arched hall facing a projected slide at NABE TEC EU 2026"></p>
+<figcaption>The NABE TEC EU 2026 room in Amsterdam, during one of the conference sessions.</figcaption>
+</figure>
+</div>
+<p>A short recap is on <a href="https://www.linkedin.com/posts/alex-guglielmone-nemi_had-a-great-time-giving-a-talk-on-ai-coding-ugcPost-7470019574911082496-oc-m/">LinkedIn</a>.</p>
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
 <p>How a cross-functional economics team at Amazon uses AI coding agents operationally - across analysis, data pipelines, operations, writing, and troubleshooting. The talk covers what economists delegate (implementation, iteration, exploration) and what they never delegate (methodology selection, causal identification, economic interpretation, stakeholder judgment, research taste). It introduces exam-first iteration as a feedback loop for maintaining control as delegation scales: encode intent, let the agent iterate against it, and use failure as an informative signal.</p>
 </section>
-<section id="slides" class="level1">
-<h1>Slides</h1>
+<section id="slides-and-transcript" class="level1">
+<h1>Slides and Transcript</h1>
 <ul>
 <li><a href="../talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.html">AI Coding Agents in an Economics Team</a></li>
 <li><a href="../talks/nabe-tec-2026/alex-guglielmone-nemi-ai-coding-agents-nabe-tec-2026.pdf">Download PDF</a></li>
+<li><a href="../talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.vtt">Transcript (WebVTT)</a>, an edited transcript of the recording</li>
 </ul>
 </section>
 <section id="related" class="level1">
@@ -563,6 +681,7 @@ new: 53.17 tok/s</code></pre>
   <category>talks</category>
   <guid>https://alexhans.github.io/posts/talk.ai-coding-agents-in-an-economics-team.html</guid>
   <pubDate>Thu, 28 May 2026 23:00:00 GMT</pubDate>
+  <media:content url="https://alexhans.github.io/talks/nabe-tec-2026/images/nabe-tec-2026-audience.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>From scribble to searchable: building a sketch-to-text Agent Skill</title>
@@ -2229,189 +2348,6 @@ font-style: inherit;">--watch-files</span></span></code></pre></div></div>
   <category>productivity</category>
   <guid>https://alexhans.github.io/posts/meeting-budget.html</guid>
   <pubDate>Wed, 01 Mar 2023 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Get notifications in ubuntu when command line tasks end</title>
-  <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<!-- Title: Get notifications in ubuntu when command line tasks end
-Date: 2019-04-16 00:00
-Modified: 2019-04-16 00:00
-Category: Devops
-Tags: notification, producitivity, alert, ubuntu, linux, desktop, mail
-slug: notifications_in_ubuntu_linux
-Authors: Alex Hans
-Summary: Notifications in Ubuntu Linux for command line tasks
-Lang: en -->
-<section id="intro" class="level2">
-<h2 class="anchored" data-anchor-id="intro">Intro</h2>
-<p>Often, when working in the terminal, you’ll find yourself running a command that takes a non-trivial amount of time and you don’t want to just stare at the screen until it finishes.</p>
-<p>So you switch tabs/windows and do something else in the meantime. Problem is, when is the other task finished? You don’t want to waste time checking too often nor too late…</p>
-<p>So what you want is a notification. One that lets you carry on merrily until the original command is actually finished.</p>
-<p>It turns out that many <a href="https://askubuntu.com/questions/17536/how-do-i-create-a-permanent-bash-alias">.bashrc</a> files come with an alias called <code>alert</code> and, some SO answers even improve upon it.</p>
-</section>
-<section id="desktop-notifications-with-notify-send" class="level2">
-<h2 class="anchored" data-anchor-id="desktop-notifications-with-notify-send">Desktop notifications with notify-send</h2>
-<p>Here’s the one I’m using lately and has served me well:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Add an "alert" alias for long running commands.  Use like so:</span></span>
-<span id="cb1-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#   sleep 10; alert</span></span>
-<span id="cb1-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">alias</span> alert=<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'notify-send --urgency=low -i "$([ $? = 0 ] &amp;&amp; echo terminal || echo error)"  </span></span>
-<span id="cb1-4"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"$(history|tail -n1|sed -e '</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\'</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'s/^\s*[0-9]\+\s*//;s/[;&amp;|]\s*alert$//'</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\'</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">')"'</span></span></code></pre></div></div>
-<p>As the comment says, using it is just a matter of writing the command you want, a semi-colon and the alias <code>alert</code> (Remember that semi-colon <code>;</code> means execute after the previous command is finished, no matter the return code, unlike <code>&amp;&amp;</code> which only executes the next command if return code is 0 (success).</p>
-<p>So if you’re compiling and running tests in a project you could just do:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">make</span> test<span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">;</span> <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">alert</span></span></code></pre></div></div>
-<p>and you’ll get notified whenever <code>make test</code> ends.</p>
-<p>But what if you decided running that lengthy task is a good moment to step away from your computer and take a coffee break or talk with a coworker? How will you know when it’s done if you’re not in front of the computer to see the desktop notification?</p>
-</section>
-<section id="email-notifications" class="level2">
-<h2 class="anchored" data-anchor-id="email-notifications">Email notifications</h2>
-<p>That’s when email comes in handy. You just gotta take your phone with you and have access to an SMTP server.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">$</span> sudo apt install mailutils</span></code></pre></div></div>
-<p>The logic is the same as before, once the command is done, execute the “alert”.</p>
-<p>If you want to do it in python, here’s a <a href="https://unix.stackexchange.com/a/55437/7937">simple way</a> to go about it.</p>
-<p>Just make sure it doesn’t go to SPAM.</p>
-<p>Cheers</p>
-<hr>
-<p><strong>Was this helpful? Do you do it another way? All comments are welcome!</strong></p>
-
-
-</section>
-
- ]]></description>
-  <category>devops</category>
-  <guid>https://alexhans.github.io/posts/notifications-for-command-line-tasks.html</guid>
-  <pubDate>Mon, 15 Apr 2019 23:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Accept a self-signed certificate with git</title>
-  <dc:creator>Alex Guglielmone Nemi</dc:creator>
-  <link>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<!-- Title: 
-Date: 2018-02-11 20:54
-Modified: 2018-02-27 00:00
-Category: Devops
-Tags: https, git, networking, sysadmin, svn, devops
-slug: accept_self_signed_cert_git
-Authors: Alex Hans
-Summary: How To accept a self-signed cert in git over HTTPS
-Lang: en -->
-<section id="intro" class="level2">
-<h2 class="anchored" data-anchor-id="intro">Intro</h2>
-<p>Some time ago I came into an issue where people served git repositories in a local network using apache but used a self-signed certificate for the server.</p>
-<p>Everyone was already trained to add the exception in their browsers to access HTML content but what happened when it came to source code control?</p>
-</section>
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The Problem</h2>
-<p>It turns out Subversion (SVN) presented no issue since it prompted the user to accept the new server key just once and then didn’t pester them again but git was another story. Git tried to verify that the cert was signed by a proper authority and couldn’t.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">user@user-linux:git$</span> git clone https://user@dev-server-01/git/repo_name.git </span>
-<span id="cb1-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">Cloning</span> into <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'repo_name'</span>...</span>
-<span id="cb1-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">fatal:</span> unable to access <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'https://user@dev-server-01/git/repo_name.git/'</span>: server certificate verification failed. </span>
-<span id="cb1-4"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">CAfile:</span> /etc/ssl/certs/ca-certificates.crt CRLfile: none</span></code></pre></div></div>
-</section>
-<section id="the-solution" class="level2">
-<h2 class="anchored" data-anchor-id="the-solution">The Solution</h2>
-<p>After some googling I came across suggestions to disable SSL verification with <code>git config http.sslVerify "false"</code> but that looked like it could induce some bad habits and it actually wouldn’t prevent tampering if, for instance, the user was pointed elsewhere instead of the proper original server.</p>
-<p>That’s when <a href="https://stackoverflow.com/questions/11621768/how-can-i-make-git-accept-a-self-signed-certificate/26785963#26785963">Stack</a> <a href="https://stackoverflow.com/questions/23807313/adding-self-signed-ssl-certificate-without-disabling-authority-signed-ones">Overflow</a> came into play and I found about this neat solution where you can associate a hostname with a given certificate that you store locally.</p>
-<p>Steps:</p>
-<p>1- Download the self signed certificate from the server and store it somewhere like /etc/ssl/certs</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/etc/ssl/certs/ssl-cert-dev-01.pem</span></span>
-<span id="cb2-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/etc/ssl/certs/ssl-cert-dev-02.pem</span></span></code></pre></div></div>
-<p>2- Modify your git config (globally or per-repository) to associate hosts with certs:</p>
-<pre><code>(From git config --help)
-
-http.sslCAInfo
-    File containing the certificates to verify the peer with when fetching or pushing over HTTPS. 
-    Can be overridden by the GIT_SSL_CAINFO environment variable.</code></pre>
-<p>In this case we’re going to do it globally by modifying <code>~/.gitconfig</code></p>
-<pre><code>[http "https://dev-server-01:/"]
-    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-01.pem
-
-[http "https://dev-server-02"]
-    sslCAInfo = /etc/ssl/certs/ssl-cert-dev-02.pem</code></pre>
-<p>Or you can do it with the command line:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">$</span> git config <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--global</span> http.<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://dev-server-01/"</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-01.pem</span>
-<span id="cb5-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">$</span> git config <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--global</span> http.<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://dev-server-02/"</span>.sslCAInfo /etc/ssl/certs/ssl-cert-dev-02.pem</span></code></pre></div></div>
-<p>Of course, this breaks the flow of those who were using HTTP and the IP address directly since <a href="https://stackoverflow.com/questions/35604640/why-does-validation-fail-when-connecting-to-a-server-by-ip-address-instead-of-ho">you need the same name that appears in the certificate</a>. That’s the one con I can think of and, if your users where not in the habit of doing so, you’ll better start getting them used to it.</p>
-<p>Cheers</p>
-<hr>
-<p><strong>Was this helpful? Do you do it another way? All comments are welcome!</strong></p>
-
-
-</section>
-
- ]]></description>
-  <category>devops</category>
-  <guid>https://alexhans.github.io/posts/accept-self-signed-cert-git-https.html</guid>
-  <pubDate>Sun, 11 Feb 2018 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

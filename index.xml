@@ -35,10 +35,11 @@
 <p>You give them an exam that tells you whether they’re qualified to operate unsupervised in a specific domain. An exam is a set of questions with assertions, versioned in git and living where the economists already work. The exams encode what “good enough” means: SQL conventions, good practices, domain-specific economics workflows. Deterministic checks where possible, LLM-as-judge only where the answer can be phrased many ways. Composable, agent-independent, and easy to rewrite when a new SDK drops next week.</p>
 <p>Any part of the black box can change, whether a model swap, a prompt refactor or a new agent SDK, and we run the exam. You trust what you can test.</p>
 </section>
-<section id="slides" class="level1">
-<h1>Slides</h1>
+<section id="slides-and-transcript" class="level1">
+<h1>Slides and Transcript</h1>
 <ul>
 <li><a href="../talks/analyticon-emea-2026/give-your-ai-agent-an-exam/">Give Your AI Agent an Exam Before You Give It a Job</a></li>
+<li><a href="../talks/analyticon-emea-2026/give-your-ai-agent-an-exam/give-your-ai-agent-an-exam.vtt">Transcript (WebVTT)</a>, an edited transcript timed to the recording</li>
 </ul>
 </section>
 <section id="related" class="level1">

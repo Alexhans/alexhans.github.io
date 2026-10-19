@@ -1,0 +1,160 @@
+WEBVTT
+
+NOTE
+Give Your AI Agent an Exam Before You Give It a Job
+Alex Guglielmone Nemi, Analyticon EMEA 2026, Luxembourg.
+Edited transcript, made from the machine-generated captions of the talk
+recording: misheard terms corrected, fillers and false starts removed.
+Times are those of the recording; cue boundaries are approximate to
+about a second. NOTE blocks like this one mark remarks left out on
+purpose.
+
+NOTE
+Left out: a microphone check.
+
+00:08.740 --> 00:20.556
+Hi, my name is Alex, and I'm here to talk to you about giving your AI agent an exam before you give it a job.
+
+00:20.556 --> 00:29.193
+Not here with me today is Mayank Hirani, who also worked on this project. Let me tell you a bit about our team.
+
+00:29.193 --> 00:43.871
+Our team is called Economic Decision Science, and we are the central economics team of EU retail, the European marketplace. We work across many domains, and we optimize how the business operates through the development of economic models.
+
+00:43.871 --> 00:52.669
+We are a cross-functional team of economists and engineers, and we heavily skew towards economists.
+
+00:52.669 --> 01:09.793
+The goal of the SDEs, of the tech function, is: can we have the economists deliver without engineering bottlenecks? Can they code? Can the code that they produce and iterate fast on be directly what we push and deploy to production?
+
+01:09.793 --> 01:17.082
+The truth is we can. We don't need to hand over to engineers to scale. How do we do that?
+
+01:17.082 --> 01:35.288
+We have a concept called the factory of economics. We identify the capabilities that economists need to perform their job, and we build small building blocks, guaranteed to be fast and easy to use, that they can mix and match to achieve their tasks.
+
+01:35.288 --> 02:00.056
+This can be things like running SQL models, generating backfills, scheduling runs, creating dashboards, publishing datalake tables, tagging datasets for compliance, all sorts of things. It's important to know that we didn't do this in the AI era. We did it before the AI era, as the AI revolution started to come.
+
+02:00.056 --> 02:24.094
+We naturally adopted coding agents as they appeared. Around July last year we had Kiro, initially, and we never mandated the adoption; it was just the easiest thing to use. We don't use the coding agents as they come: we lightly configure them so they do the jobs the way we want, and use our tools the way we want them to.
+
+02:24.094 --> 02:32.156
+So how do we do that? I want to invite you to think about AI agents in an anthropomorphic way.
+
+02:32.156 --> 02:46.162
+I want you to think of them as hires, as headcount, and we want to delegate heavily to them. As you think "I'm going to delegate to an agent", you immediately run into an issue of trust. How can I trust it?
+
+02:46.162 --> 03:05.169
+How can I know that it is right? That's a correctness problem. You can also think about reliability: it worked today, but will it work tomorrow, will it work next week? There are other concerns, such as cost and, as other talks have mentioned, speed.
+
+03:05.169 --> 03:16.179
+The fact that it goes from A to B correctly doesn't mean that I like how it did it, so I need observability. And when it makes a mistake, what's the blast radius of that mistake?
+
+03:16.179 --> 03:36.370
+As you start discussing this, you'll find that everyone has a recipe. You say "I'm using this and I have these problems", and someone tells you, "you should be using Opus" or "you should be using Fable". Then maybe someone says this skill will solve everything for you, or just use this MCP server, this MCP tool.
+
+03:36.370 --> 03:54.456
+Maybe they don't like the harness you're using: you shouldn't be using Claude, you should be using Kiro or Codex. Or, even worse, they may say "one agent? That's so old news. You should be using a team of agents, a swarm. You should be routing your models." It's all these conversations that you don't want to have internally.
+
+03:54.456 --> 04:15.387
+So how do you avoid discussing it all along? Treat these agent configurations as hypotheses. Based on the work you need done, create a pass/fail exam, so that you can tell whether these configurations are qualified to do the work you need to do.
+
+04:15.387 --> 04:36.137
+Going back to the analogy of the hire: we don't want to hire an agent for its generic ability. We don't go to a website, see a benchmark and say "let's just use this one". We want the one qualified for the work we need.
+
+04:36.137 --> 04:57.970
+So we create this exam for this job. You can look at these three agents on the screen and call them Bob, Alice and Tim. Bob has Kiro plus Sonnet. Alice has Claude plus some context, and Tim has Strands plus MCP.
+
+04:57.970 --> 05:20.921
+The important thing is that I don't care what the implementation of those agents is. What I care about is whether they pass the exam that I have. The logic for the exam does not live in the agent. So I can replace any of those agents, and as long as I have my exam, I know I can bring something in. The exam outlives all these agent configurations.
+
+05:20.921 --> 05:36.562
+Let's now look at something more specific to make it concrete. These are three types of exam questions that we use in EDS, Economic Decision Science. The first one will be very familiar: it's a coding question.
+
+05:36.562 --> 05:46.080
+We have a tool called Data Build Tool, dbt, and it has SQL with a certain flavor, and we want the agent to code it correctly. That's very easy to tell.
+
+05:46.080 --> 06:05.916
+Then we have another one: we build our own tools. In some scenarios, if we ask certain questions in natural language, for my economic model scenario, we expect you to run our tool, not create some Python code that solves the problem. That could be an invocation test.
+
+06:05.916 --> 06:33.069
+For more ambiguous things, we can have planning tests. Maybe, in a similar fashion to the tool example, we're running an ambiguous question about potential multi-tool use. We want it to clarify first and ask the user, to dispel some of the ambiguity. We may also want a smoke test, so it fails fast instead of doing a very long run.
+
+06:33.069 --> 06:52.983
+You may look at that, especially the planning example, and say, "Opus or Fable already does this." Awesome: if you can prove it, go and use it. But it may also be that you want to use something smaller, something faster that achieves the job, maybe an open-weight model.
+
+06:52.983 --> 07:12.957
+With these exam questions you're encoding your intent in a way that is executable, in a way that is provable. So you could call it executable intent. For those familiar with the term, you can also call it an AI eval, because it's the assertion of the output of LLM inference.
+
+07:12.957 --> 07:25.829
+Or even behavior-driven development, because you're thinking end to end about some user story and saying, "this is how I expect things to be."
+
+07:25.829 --> 07:38.702
+Let's look at a specific exam question, for a problem we've had in the past. I don't know how well it'll look, but I'll try to explain it.
+
+07:38.702 --> 07:56.124
+When we give our economists the tool to create SQL models, they don't necessarily know a lot about partitioning, but we want them to partition things in a specific way that allows them to run many marketplaces at the same time, or many days at the same time, for backfilling purposes.
+
+07:56.124 --> 08:11.950
+In dbt that requires a specific syntax: pass some parameter, and have a Jinja template variable that converts my {{ marketplace_id }} into a 3. When it compiles, it's a literal 3.
+
+08:11.950 --> 08:30.963
+What that means is that it's correct, and we'll have concurrency validity. If you just do SELECT marketplace_id, what you get instead is this: all competing runs try to write to the same place, and you overwrite your own data. It's wrong.
+
+08:30.963 --> 08:47.517
+So one agent did the right thing, one agent did the wrong thing. It's very subtle, but it's the kind of work we do, and it's very us. You won't necessarily have the same opinions of how things should work: we use Hive, and maybe you're using Iceberg, for instance.
+
+08:47.517 --> 09:11.287
+This has been mentioned in other talks, but it's not about the model. It's about the whole setup that makes the agent behavior happen. Here's a graph from a stage we were at in the past, where we had 27 exam questions and the model was the same: Sonnet.
+
+09:11.287 --> 09:31.151
+In one we had no context and no MCPs; in the other we did, and that one performed way better at the things we needed to do. In particular, of these two, one was using Kiro CLI and the other a Strands harness, but that doesn't matter, because then we tested different combinations.
+
+09:31.151 --> 09:42.117
+We also tested Kiro. In our case, the harness wasn't the issue. It was the lack of context, or of certain MCP tools, that kept the right behavior from happening.
+
+09:42.117 --> 09:54.904
+Right now we have a 100% pass on everything that we ship to our economists, and we use it as a regression test of sorts.
+
+09:54.904 --> 10:11.084
+With this idea of the agent setup and what it contains, we can think of the things that govern its behavior. One is the coding harness, the way it's coded. Another is the tools it has access to:
+
+10:11.084 --> 10:24.310
+any CLI tool I have access to, MCPs, skills, the prompt and always-on context, and things in the environment. All those things can modify the behavior.
+
+10:24.310 --> 10:47.081
+But once you have your exam, it can be an impressive tool for a development feedback loop that closely resembles test-driven development. You have some behaviors you encode and expect; they are red, and you mutate parts of your system, of your agent setup, until you pass and get to green.
+
+10:47.081 --> 11:05.803
+It can be very automatic. The nice thing is it's not necessarily the agent that you modify. Maybe you'll discover that the tools you had access to were not fast enough, so you modify those, or the partitioned tables you had access to weren't good enough, so you modify those.
+
+NOTE
+Left out: about 10 seconds switching slides, and a remark about the time.
+
+11:15.426 --> 11:39.963
+On the issue of agency and agent stochasticity: we've mentioned that LLMs can have a great degree of agency. You don't know exactly what you're going to get, and initially you may start with most of the behavior encoded in LLM inference, just a markdown file maybe.
+
+11:39.963 --> 11:56.538
+As you work more on your problem, you may build a small deterministic layer where you have a tool and the agent starts calling that tool. You've reduced the amount of inference and encoded some behavior in a more testable way, maybe with unit tests or other things.
+
+11:56.538 --> 12:09.589
+Then you may go further right and have a thinner agent layer, and maybe workflows: different tools that serve each other, with the agent either orchestrating them or being part of them.
+
+12:09.589 --> 12:32.230
+You may even go to an extreme where you remove inference completely. That last case is what we do most: we have AI all around it, but maybe we end up with a very well-known problem, and that removes inference. Use inference where it matters, and engineer it away where it doesn't.
+
+12:32.230 --> 12:51.259
+The takeaways, which we've already had spoilers for: Qualify the capabilities that you need, not the model. It doesn't matter how an agent is implemented; it only matters whether it's good enough for you. And on the subject of good enough: make that good enough executable.
+
+12:51.259 --> 13:06.057
+A little goes a long way towards being able to trust the AI systems you use. Finally, use these exams to build, not just to score.
+
+13:06.057 --> 13:25.974
+You can use it as test-driven development of sorts, or eval-driven development, and an important point is around the word evals. Don't just think, "I'll run something and get 66% accuracy." It's a fuzzy number. It means nothing. No one knows what to do with it.
+
+13:25.974 --> 13:36.192
+Make it pass/fail, make it yes/no, and own that gating. Then you'll be able to delegate heavily to these agents.
+
+13:36.192 --> 13:51.820
+If I have to give you advice: start with one behavior your AI must get right, turn it into an exam, and make any implementation pass it. Thank you very much.

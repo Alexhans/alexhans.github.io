@@ -23,6 +23,12 @@
 
 
 <p>Given at Analyticon EMEA 2026, Amazon’s internal analytics and science conference, at <a href="https://www.lcb.lu/en/partners/21">Kinepolis Kirchberg</a> in Luxembourg.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/talks/analyticon-emea-2026/images/kinepolis-kirchberg-salle-10.jpg" class="img-fluid figure-img" alt="An empty cinema auditorium with tiered grey seating facing a large curved screen"></p>
+<figcaption>Salle 10, the largest room at Kinepolis Kirchberg, where Analyticon EMEA 2026 was held. Photo: <a href="https://www.lcb.lu/en/partners/21">Luxembourg Convention Bureau</a>.</figcaption>
+</figure>
+</div>
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
 <p>Economists on our team use AI coding agents for most of their everyday work, from exploratory analysis to production econometric models. Engineers aren’t a bottleneck and the agents work well, but how do you keep control when the model, the prompt, or the harness can change at any time? It’s like delegating to a research assistant you want to trust without supervision.</p>
@@ -49,6 +55,7 @@
   <category>talks</category>
   <guid>https://alexhans.github.io/posts/talk.give-your-ai-agent-an-exam.html</guid>
   <pubDate>Mon, 14 Sep 2026 23:00:00 GMT</pubDate>
+  <media:content url="https://alexhans.github.io/talks/analyticon-emea-2026/images/kinepolis-kirchberg-salle-10.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow</title>

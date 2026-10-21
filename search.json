@@ -235,14 +235,196 @@
     "href": "posts/talk.it-works-now-what.html",
     "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
     "section": "",
-    "text": "Given at Airflow Summit 2026, Austin, TX.\n\nAbstract\nBuilding an AI capability in Airflow is the easy part. The hard part is what comes next. You want to swap a model, refactor a prompt, cut token costs, or try a local model instead of paying for cloud. How do you know it still works as expected? Without a fast feedback loop, every change is a gamble. This talk shows practical patterns for building that feedback loop, with real examples using agent skills, MCPs, and local and cloud models. It covers the challenges too: sandboxing, observability, non-determinism, and keeping checks simple enough that people actually use them.\n\n\nTakeaways\n\nBuild executable checks for your loops, so you can delegate strongly.\nFind the right box: a task, a Dag, the whole Airflow image. Or bigger.\nYou may not need the inference at all: AI all around your system, and workflows with none in them.\n\nEvals are not security. If something must never happen, prevent it rather than evaluating it.\n\n\nVideo, Slides and Transcript\n\n\nVideo on YouTube\nIt Works! Now What?\nTranscript (WebVTT), an edited transcript timed to the video\n\n\n\nRelated\n\nFind The Loop\nResumable Task Execution for Long Running Tasks such as Spark, Amogh Desai’s Airflow Summit 2026 talk on the feature I tested\n\n\n\n\n\n\n\nAn Airflow Summit 2026 audience in Austin. Still from the Airflow Summit 2026 recap video.\n\n\n\n\n\n\n\nThe main stage at Airflow Summit 2026, before the State of Airflow keynote. Still from the Airflow Summit 2026 recap video."
+    "text": "Given at Airflow Summit 2026, Austin, TX."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#two-worlds",
+    "href": "posts/talk.it-works-now-what.html#two-worlds",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Two worlds",
+    "text": "Two worlds\n▶ 0:15 in the video\nYou could sort me into two worlds. In the corporate world, I’m a software engineering lead at Amazon, for a team called Economic Decision Science, which optimizes the way the Amazon marketplace operates using economic models. My goal is to get economists to production without engineering or tech bottlenecks. In the other world, I’m an Airflow user. I run Linux, I run local models, and I run Airflow on my home server.\n\nThese two worlds may seem to have nothing in common, but there’s one very important thing they share. I want to delegate heavily, and so do the economists on my team. We do it through coding agents, not because we’ve been mandated to, but because they’ve been very effective for us."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#a-real-problem",
+    "href": "posts/talk.it-works-now-what.html#a-real-problem",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "A real problem",
+    "text": "A real problem\n▶ 1:14 in the video\nOur corporate Dags can look quite convoluted. We use dbt and Astronomer Cosmos to author them, with models depending on models and all that jazz. But if you really think about it, they all share a common pattern: something triggers them, there’s a question we need to answer, we interpret that answer, and we decide an outcome.\n\nSo I’m going to talk about a real problem that I have. I live in London, and in my neighborhood the bins get collected every week. It alternates between recycling and rubbish, and the food caddy thankfully gets collected every week. If I put out the wrong bin, or I forget, I end up holding a month of rubbish, because it’s the two weeks I already had plus two more. I don’t want that to happen, so I delegate."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#the-agent-figures-it-out",
+    "href": "posts/talk.it-works-now-what.html#the-agent-figures-it-out",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "The agent figures it out",
+    "text": "The agent figures it out\n▶ 2:18 in the video\nIf I delegated to a friend, I’d give them instructions: go to the council website, type my postcode, pick the right address from the dropdown, read the date and the bin, and take out the right one on the right date. But I don’t want to burden my friend, so I burden Claude Opus 5, or whatever agent you want to pick. I just tell it to write a skill for this problem, and it’s good enough to figure it out. If you’re curious, it finds no dropdown, reads the JavaScript, finds the endpoints behind the form, and calls those to get the answer.\n\nI know it’s the right answer because I had already checked it, so I have my ground truth. But look at the numbers: 85 cents, two minutes and about a million tokens per question. That would run me $4 a month, and I still have to trigger the skill myself, which means I still have to remember. The whole point was not having to remember. Also, the price is kind of ridiculous."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#fast-iteration-needs-a-cheap-loop",
+    "href": "posts/talk.it-works-now-what.html#fast-iteration-needs-a-cheap-loop",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Fast iteration needs a cheap loop",
+    "text": "Fast iteration needs a cheap loop\n▶ 3:46 in the video\nSo how do I go about changing it? People might start guessing at what needs to change: the prompts, the tools, the models. But the most important part is having a loop that looks a lot like a refactoring loop, one that lets you change a system, or parts of it, without changing its externally observable behavior. It’s safe to change because we have tests.\n\n\nSo the rule is: before we delegate, we build a check that tells us whether something is right or wrong. We can call that executable intent."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#the-smallest-check",
+    "href": "posts/talk.it-works-now-what.html#the-smallest-check",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "The smallest check",
+    "text": "The smallest check\n▶ 4:40 in the video\nHere’s the check. A Pydantic model for the payload, a call to the agent against a specific recorded date I know about, and an assertion that the result matches what I expect. I use a set, so the order doesn’t matter.\n\nYou may say this looks like a unit test, or more likely an integration test, because we’re calling outside things, and you’d be right. I’d say the correct term is an AI eval, because we’re asserting on the output of LLM inference. Whatever we call it, it’s what lets us change parts of our system safely."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#from-agent-skill-to-airflow-dag",
+    "href": "posts/talk.it-works-now-what.html#from-agent-skill-to-airflow-dag",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "From agent skill to Airflow Dag",
+    "text": "From agent skill to Airflow Dag\n▶ 5:24 in the video\nSo we take the agent skill, which only runs when a human runs it, and put it into Airflow, which is a great orchestrator. I made this change agentically too; I delegated it as well. Now it runs every day. The part that asks the agent keeps doing what it did before, and then Airflow decides whether to alert me. I only need to know the night before, so I use the Telegram provider that comes with Airflow.\n\nWhat I find interesting is that I didn’t have to give the agent Telegram permissions. Just by using Airflow, I bounded the responsibilities of the different parts. I didn’t actually refactor, though, because the behavior changed, so I wrote new checks for the new parts: send when it’s due, log why when it isn’t, and don’t send twice.\n\n\n\nThe Dag in Airflow."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#change-the-model",
+    "href": "posts/talk.it-works-now-what.html#change-the-model",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Change the model",
+    "text": "Change the model\n▶ 8:09 in the video\nWe solved the problem of me having to remember. Can we improve on the price? Yes, because we have the check. We can swap the frontier model for a cheaper one, a mid-tier model, an open-weight model, or even better, a local open-weight model, so that no one knows when I have to take out the trash.\n\nThe check is what lets us benchmark these things, and the check survives the models. The models will come and go, and the check stays until we decide it’s no longer valid. I tested many open-weight models, and it turns out gpt-oss with 20 billion parameters was good enough. If I wanted speed over price, I could use Mistral Large."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#making-the-loop-faster",
+    "href": "posts/talk.it-works-now-what.html#making-the-loop-faster",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Making the loop faster",
+    "text": "Making the loop faster\n▶ 9:21 in the video\nHow long did this take? Not long at all, because I’m delegating all of it, and I make the loops fast. I don’t use an LLM as a judge by default, because it takes more time and adds stochasticity; here I had structured output, so I could assert on it directly. I made the runs independent, with no shared state, because if I had to lock state, it would become 40 sequential runs. And if you need isolation or containers, they have overhead, so tier them."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#move-more-out-of-inference",
+    "href": "posts/talk.it-works-now-what.html#move-more-out-of-inference",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Move more out of inference",
+    "text": "Move more out of inference\n▶ 10:07 in the video\nLook at the path so far. We had an agent skill, and the agent solved a lot at inference time. Then we moved to an Airflow Dag, and suddenly a lot of the behavior was encoded explicitly, with the agent left as a web scraper of sorts. Can we go further? The title spoils it, but yes: what I run at home doesn’t use AI at all. I use AI to change it, but it runs as a Python web scraper against the same checks.\n\nWhat happens when the website changes? It’s going to break. But it hasn’t happened yet, and I’m not sure I want to pay for inference for a long time just in case. And if you’re getting the idea of feedback loops, the failure itself can start another loop, where an agent goes and changes the code until the checks pass again."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#find-the-loop-and-define-the-box",
+    "href": "posts/talk.it-works-now-what.html#find-the-loop-and-define-the-box",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Find the loop, and define the box",
+    "text": "Find the loop, and define the box\n▶ 11:41 in the video\nSo what do you need to find one of these loops? A goal worth pursuing, otherwise nobody spends the time or the tokens on it. Somewhere to experiment, where you can actually affect the outcome. A way to compare, like the checks or a baseline. And, very importantly, the levers you allow the agent to change: the prompt for prompt optimization, the model for benchmarking, or the tools and the workflow, like I did.\n\nSome of you might say this is all great, but it’s a small demo, and your problems are large and distributed. Then make the box bigger. If you want to change Airflow itself, expand the box to cover Airflow: the scheduler, the triggerer, the workers. In my case I added AWS Glue too, because I was testing a real feature, durable executors.\n\n  \n  every lever so far\n  make the box bigger\n  \n    \n    the Dag\n  \n  \n    \n    the whole of Airflow\n    scheduler · triggerer · workers\n    \n    real AWS Glue"
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#hypothesize-and-prove",
+    "href": "posts/talk.it-works-now-what.html#hypothesize-and-prove",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Hypothesize and prove",
+    "text": "Hypothesize and prove\n▶ 14:19 in the video\nHere the delegation isn’t about building something. It’s about hypothesizing behaviors I already know should happen, and finding out whether they’re true. What if a worker dies while the job is still running? The agent kills the worker, we observe and log everything, and I can see that it attached itself to the running job instead of starting a new one. What if the job already finished, or the ID we stored is gone? And the control case: the same kill with the feature off."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#simulate-the-effect",
+    "href": "posts/talk.it-works-now-what.html#simulate-the-effect",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Simulate the effect",
+    "text": "Simulate the effect\n▶ 16:00 in the video\nWith the agent touching this much of the system, some of you may ask whether this is dangerous, and you’re right to. You could lose money, send the wrong message to the wrong people, or delete the wrong things. There’s a line between the decision and the real world, and you can put something in between: a fake notifier, read-only credentials, dry runs for tool calls, mock MCP servers, a proxy. Then you can loop fast without fear. Just do it for real once, so you know what real looks like.\n\n  \n    \n    the decision\n    made by the agent\n    \n      \n      \n      what I am afraid of\n      and how far it spreads\n    \n    \n      \n      \n      \n      something in between\n      a fake notifier\n      a read-only credential\n      a dry run, a mock, a sandbox\n      \n    \n    \n      \n      the real world\n      money, messages, deletes\n    \n  \n\nAnd very important, and very simple: evals are not security. If something must never happen, make it impossible, with permissions and role-based access control. Everywhere else you can use judgment, but not there."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#traces",
+    "href": "posts/talk.it-works-now-what.html#traces",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Traces",
+    "text": "Traces\n▶ 18:24 in the video\nGoing back to why the first version was so expensive: we had observability. In any AI work, persist your traces, because whatever result you get, the traces tell you how you got there. Here you can see the agent trying tools it had no access to, getting refused, and losing time on it.\n\nTraces also capture what your checks and tests missed. You can never predict everything reality will throw at you, and some of those traces become the next checks you add."
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#make-good-checks-easy-to-write",
+    "href": "posts/talk.it-works-now-what.html#make-good-checks-easy-to-write",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Make good checks easy to write",
+    "text": "Make good checks easy to write\n▶ 20:01 in the video\nThe one hard thing, I think, is the UX of evals. Writing proper evals is hard, a bit like explaining test-driven development to people who have never built software. We could take a page from skill builders, which ship an agent skill you talk to and it creates skills the right way, and have eval builders. In particular, I’ve experimented a lot with a qualifying exam for a domain, before you let an agent work in it.\n\n  \n    unit tests\n    test-driven, undogmatically\n    integration tests\n    system tests\n    \n    evals\n  \n  \n    \n      /SkillBuilder\n      shipped alongside Agent Skills. You just talk to it.\n    \n    →\n    \n      /EvalBuilder\n      Encode good eval patterns once you know what \"good\" looks like\n    \n  \n  A qualifying exam for a domain, before we let an agent work in it.\n  \n    Dag Operator\n    Dag Code Generator\n    Localizer\n    … yours"
+  },
+  {
+    "objectID": "posts/talk.it-works-now-what.html#takeaways-1",
+    "href": "posts/talk.it-works-now-what.html#takeaways-1",
+    "title": "Talks: It Works! Now What? Fast Iteration for AI Capabilities in Airflow",
+    "section": "Takeaways",
+    "text": "Takeaways\n▶ 21:02 in the video\n\nBuild executable checks for your loops, so you can delegate strongly.\nFind the right box: a task, a Dag, the whole Airflow image, or bigger.\nYou may not need the inference at all: AI can be all around your system, with workflows that have none in them.\n\nEvals are not security. If something must never happen, prevent it rather than evaluating it."
   },
   {
     "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html",
     "href": "posts/talk.ai-coding-agents-in-an-economics-team.html",
     "title": "Talks: AI Coding Agents in an Economics Team",
     "section": "",
-    "text": "Given at NABE TEC EU 2026 (National Association for Business Economics, Technology Economics Conference), Amsterdam.\n\n\n\nThe NABE TEC EU 2026 room in Amsterdam, during one of the conference sessions.\n\n\nA short recap is on LinkedIn.\n\nAbstract\nHow a cross-functional economics team at Amazon uses AI coding agents operationally - across analysis, data pipelines, operations, writing, and troubleshooting. The talk covers what economists delegate (implementation, iteration, exploration) and what they never delegate (methodology selection, causal identification, economic interpretation, stakeholder judgment, research taste). It introduces exam-first iteration as a feedback loop for maintaining control as delegation scales: encode intent, let the agent iterate against it, and use failure as an informative signal.\n\n\nSlides and Transcript\n\nAI Coding Agents in an Economics Team\nDownload PDF\nTranscript (WebVTT), an edited transcript of the recording\n\n\n\nRelated\n\nSolving the Right Problem: Economist Edition, Part 1 — blog post expanding on the core idea"
+    "text": "Given at NABE TEC EU 2026 (National Association for Business Economics, Technology Economics Conference), Amsterdam.\nA short recap is on LinkedIn."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#the-team",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#the-team",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "The team",
+    "text": "The team\nI’m the engineering lead of a cross-functional team called Economic Decision Science at Amazon, based in London. Our target is optimizing how the European stores operate, in any form or shape we can, including convincing others to act on our decisions and our economic models.\nThe team is quite new. At first it was just economists, and we started seeing bottlenecks in data and scaling. When we engineers came in, one of the goals I set was that the scalable workforce here is not engineering. If we hire 40 more economists, we shouldn’t be blocked, and we shouldn’t have to scale engineers at the same ratio. So: can economists deliver without engineering bottlenecks of all shapes and forms?\nThat led us to focus on minimal infrastructure and fast iteration. It also led to something that’s hard to convince people of: more often than not, there’s no trade-off between exploration and production. You can iterate as fast as you normally would, without a stage where you hand things off to people who scale it in six months. If things are set up in the right way, it goes straight to production.\nWe call that setup the factory of economics: the capabilities you should have, built as blocks you can mix and match, with good UX, so you can tackle ambiguous problems across domains and move faster than the parts of the company that can afford multi-year efforts."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#coding-agents-arrived",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#coding-agents-arrived",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "Coding agents arrived",
+    "text": "Coding agents arrived\n\n\n\nSource: METR Time Horizons.\n\n\nWe had all of this before AI. The capabilities we’d built are what many of you will recognize as agent skills, so the ways of working we had converged really well with the ways of working AI has.\nWe adopted coding agents as soon as they were available to us, around the middle of last year. I did the advocacy, never mandating, just getting people to see what they could do. When the Opus family of models came in, with Opus 4.6, there was a difference in quality: less babysitting, better tool calling, better at long tasks and combining things, and sometimes able to one-shot things.\nThese agents also work where the economists work. We have remote computers, and the command line was already what we were training people on."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#what-economists-use-them-for",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#what-economists-use-them-for",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "What economists use them for",
+    "text": "What economists use them for\n\nRoughly, the work falls into these buckets, across the team as a whole:\n\nAnalysis and research design, the core economic work, where you’re rubber ducking a lot.\nData pipelines. Our economists are builders, so a lot of it is data manipulation.\nOperations, which ideally shouldn’t be there, since we try to be zero ops. But we deliver for production, and sometimes things need to be done to keep live systems running.\nWriting and comms, the one that might seem obvious.\nTroubleshooting: libraries are broken, things aren’t working, and the agent helps you there."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#three-examples",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#three-examples",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "Three examples",
+    "text": "Three examples\nThese are anonymized, so they might seem generic, but they’re real and very representative.\n“Explain this model to me.” You have some applied science; let’s simplify and say it’s SQL. It doesn’t matter how long it is: the agent explains it to you step by step. You use your judgment and spot something wrong, like counting the wrong window, and you conversationally get it to correct it. If you’re set up in the right way, that can be in production immediately. It seems simple, but it’s very powerful, and you see a lot of it.\n“Help me analyze this policy.” You’re starting to explore a problem and you have a lot of instincts, so you rubber duck with the agent to externalize your own thoughts. What about this methodology? These dimensions? Power analysis, clustering? What are my assumptions? You’re not just chatting and getting insights: as you go along, you’re proving and validating them. In this real case, it took fifteen different methodologies, or variations of one, to get to something we really trusted and could move forward with.\n“Help me respond to this challenge.” It doesn’t really matter if your science is right if it doesn’t have an effect on the business. You may relate to being in meetings where your methodology gets challenged by non-economists. Challenging it is cheap, and in the past it might have been very hard to come back with the right data and win that battle. Now, two minutes after the meeting, you open your laptop, pull the data, produce a chart, and draft an appropriate response.\nWe also use AI and ML in more traditional ways, where we model behavior. But coding agents live where you live and have the broadest space to work in, which lets you delegate everything you want to, if you feel safe enough."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#what-economists-never-delegate",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#what-economists-never-delegate",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "What economists never delegate",
+    "text": "What economists never delegate\n\nExperts don’t delegate which methodology to select. It’s very common for eager, helpful engineers from non-embedded teams to come in with an AI tool where you define a problem and it picks a methodology and does it all for you. Immediately the comments are: why this methodology? It’s wrong.\nThey don’t delegate causal identification or economic interpretation either. You may use code to help you evaluate things, but at the end you apply your own judgment. The same goes for institutional knowledge and stakeholder management: you know how the company works. And, because I love a catch-all variable, taste: knowing what questions matter and what you want to learn."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#where-it-hurts",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#where-it-hurts",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "Where it hurts",
+    "text": "Where it hurts\nThe pain points come down to a handful of questions:\n\nTrust: how do we know it’s right? It’s 90% right, or 99% right. What happens if it’s wrong? Will I have to refund all my customers?\nReliability: it worked yesterday, not today.\nBlast radius: what happens if it goes rogue?\nObservability: can’t explain what happened.\nTool churn: so many things are coming in that it’s very hard, for you and for others, to decide what to adopt.\nCost: not every company cares about it the same way, but eventually you will care about your spend, and you need a way to tackle it.\nSpeed: too slow to explore effectively.\n\nThey all come down to control. If someone asks you whether their thing is good enough and you say you don’t know, you haven’t controlled it. You want to manage risk by working out which dimensions of control are important to you."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#the-research-assistant-analogy",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#the-research-assistant-analogy",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "The research assistant analogy",
+    "text": "The research assistant analogy\n\nAnalogies have limitations, so don’t stretch this one too much, but think of hiring a coding agent as if it were a human. We work on a problem together: an economic model with a financial number, like a 100k budget, an ask, and a scope, maybe Europe. We pair program and you hold its hand a bit. And since you already know a few good practices, you separate things: a deterministic layer, like a Python script, and a data gathering and transformation layer.\nAlong the way you encode what the work should look like, and by the end you’ve encoded a qualification exam. That means you can replace the agent, or any part of it, and your user story persists. Same qualification, different agent."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#what-an-exam-looks-like",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#what-an-exam-looks-like",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "What an exam looks like",
+    "text": "What an exam looks like\nIt doesn’t have to look like this, but here’s one in YAML, which is human-readable, computer-readable and very easy to generate:\nname: econ-model-runner\nquestions:\n  - name: runs-scenario\n    input: Run scenario for client ABC, target €100k. Scope: EU5\n    intention: Agent picks the right skill and executes with correct params\n    assert:\n      - type: tool-called\n        value: run-model --client ABC --ask 100000 --scope EU5\n\n  - name: plans-batch-safely\n    input: Run all clients under €300k, all markets, 20% above last cycle\n    intention: Agent should plan before executing a large ambiguous batch\n    assert:\n      - type: plan-contains\n        judge:\n          - clarifies 'last cycle' time range\n          - identifies source table\n          - smoke tests one case before full run\n          - estimates total effort\nWith non-deterministic steps, errors compound and you lose control. If you bound the non-deterministic parts, you cut off that propagation. The first question does it at the library level: I make my things very easy for the LLM to call, and check that a natural-language request maps to the right code. Once you get there, you’re very safe in at least one aspect. It looks like an integration test, or an eval.\nThe second question uses an LLM as a judge, where another model decides whether the answer is right. You should almost resist the urge to go there, because of cost and other considerations, but it can work for testing reasoning. Here it checks that, for a more complex ask, the agent plans and fails fast instead of going down tangents of work that have no value."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#the-feedback-loop",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#the-feedback-loop",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "The feedback loop",
+    "text": "The feedback loop\n\nOnce you’ve codified the examples, when things fail, you or the agent can change the prompt, the tools or other things until you get to the business use case you want. This is what lets things self-validate, even self-mutate, and you control to which degree. A lot of it is instinct and practice: knowing how much leverage you want to give it.\nSolving the right problem is usually about fast iteration. Look up Paul MacCready’s story: he did things way faster than others."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#operational-realities",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#operational-realities",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "Operational realities",
+    "text": "Operational realities\nIt’s not all beautiful.\n\nSlow tools kill fast iteration. If your tools don’t allow fast iteration even without AI, you won’t see the benefits, and you’ll say it doesn’t work.\nContext management is still a challenge.\nNone of this is security. Security means it must not happen, so you should have deterministic policies that prevent what shouldn’t happen.\nBe a good boss. A good boss can delegate, but owns the outcomes. If you really automate, you don’t have an employee you can fire."
+  },
+  {
+    "objectID": "posts/talk.ai-coding-agents-in-an-economics-team.html#takeaways",
+    "href": "posts/talk.ai-coding-agents-in-an-economics-team.html#takeaways",
+    "title": "Talks: AI Coding Agents in an Economics Team",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nSketch the workflow early. Think about the diagram, try the UX and see how it works. You can slowly fill the fake workflow with real things as you create the exam.\nBreak long tasks into testable blocks, and let the agents help you there, coding prototypes that become the real thing.\nUse code for the stable steps, and let LLMs do reasoning and tool calling, but not more. Reduce the number of smart parts.\nUse exam-first iteration to keep control. It works for what you build on your own computer, and it can easily be handed to engineers and other teams. My hope is that it becomes an easy communication bridge between business, software and economics."
   },
   {
     "objectID": "posts/solving-the-right-problem-economist-edition-part-01.html",

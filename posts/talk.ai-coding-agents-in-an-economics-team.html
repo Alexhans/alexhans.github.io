@@ -29,6 +29,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -368,6 +403,125 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../talks/nabe-tec-2026/alex-guglielmone-nemi-ai-coding-agents-nabe-tec-2026.pdf">Download PDF</a></li>
 <li><a href="../talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.vtt">Transcript (WebVTT)</a>, an edited transcript of the recording</li>
 </ul>
+</section>
+<section id="the-talk-in-article-form" class="level1">
+<h1>The Talk in Article Form</h1>
+<p>If you’d rather read than click through slides, here’s the talk as an article.</p>
+<section id="the-team" class="level2">
+<h2 class="anchored" data-anchor-id="the-team">The team</h2>
+<p>I’m the engineering lead of a cross-functional team called Economic Decision Science at Amazon, based in London. Our target is optimizing how the European stores operate, in any form or shape we can, including convincing others to act on our decisions and our economic models.</p>
+<p>The team is quite new. At first it was just economists, and we started seeing bottlenecks in data and scaling. When we engineers came in, one of the goals I set was that the scalable workforce here is not engineering. If we hire 40 more economists, we shouldn’t be blocked, and we shouldn’t have to scale engineers at the same ratio. So: can economists deliver without engineering bottlenecks of all shapes and forms?</p>
+<p>That led us to focus on minimal infrastructure and fast iteration. It also led to something that’s hard to convince people of: more often than not, there’s no trade-off between exploration and production. You can iterate as fast as you normally would, without a stage where you hand things off to people who scale it in six months. If things are set up in the right way, it goes straight to production.</p>
+<p>We call that setup the factory of economics: the capabilities you should have, built as blocks you can mix and match, with good UX, so you can tackle ambiguous problems across domains and move faster than the parts of the company that can afford multi-year efforts.</p>
+</section>
+<section id="coding-agents-arrived" class="level2">
+<h2 class="anchored" data-anchor-id="coding-agents-arrived">Coding agents arrived</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../talks/nabe-tec-2026/images/metr-time-horizons.png" class="img-fluid figure-img" alt="METR chart of the length of software tasks different LLMs can complete 50% of the time, rising steeply in 2025 and 2026, with Claude Opus 4.6 near the top."></p>
+<figcaption>Source: <a href="https://metr.org/time-horizons">METR Time Horizons</a>.</figcaption>
+</figure>
+</div>
+<p>We had all of this before AI. The capabilities we’d built are what many of you will recognize as agent skills, so the ways of working we had converged really well with the ways of working AI has.</p>
+<p>We adopted coding agents as soon as they were available to us, around the middle of last year. I did the advocacy, never mandating, just getting people to see what they could do. When the Opus family of models came in, with Opus 4.6, there was a difference in quality: less babysitting, better tool calling, better at long tasks and combining things, and sometimes able to one-shot things.</p>
+<p>These agents also work where the economists work. We have remote computers, and the command line was already what we were training people on.</p>
+</section>
+<section id="what-economists-use-them-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-economists-use-them-for">What economists use them for</h2>
+<p><img src="../talks/nabe-tec-2026/images/article/what-we-delegate.png" class="img-fluid" alt="Treemap of what the team uses coding agents for: analysis and research design, data pipelines, operations, writing and comms, troubleshooting."></p>
+<p>Roughly, the work falls into these buckets, across the team as a whole:</p>
+<ul>
+<li><strong>Analysis and research design</strong>, the core economic work, where you’re rubber ducking a lot.</li>
+<li><strong>Data pipelines.</strong> Our economists are builders, so a lot of it is data manipulation.</li>
+<li><strong>Operations</strong>, which ideally shouldn’t be there, since we try to be zero ops. But we deliver for production, and sometimes things need to be done to keep live systems running.</li>
+<li><strong>Writing and comms</strong>, the one that might seem obvious.</li>
+<li><strong>Troubleshooting</strong>: libraries are broken, things aren’t working, and the agent helps you there.</li>
+</ul>
+</section>
+<section id="three-examples" class="level2">
+<h2 class="anchored" data-anchor-id="three-examples">Three examples</h2>
+<p>These are anonymized, so they might seem generic, but they’re real and very representative.</p>
+<p><strong>“Explain this model to me.”</strong> You have some applied science; let’s simplify and say it’s SQL. It doesn’t matter how long it is: the agent explains it to you step by step. You use your judgment and spot something wrong, like counting the wrong window, and you conversationally get it to correct it. If you’re set up in the right way, that can be in production immediately. It seems simple, but it’s very powerful, and you see a lot of it.</p>
+<p><strong>“Help me analyze this policy.”</strong> You’re starting to explore a problem and you have a lot of instincts, so you rubber duck with the agent to externalize your own thoughts. What about this methodology? These dimensions? Power analysis, clustering? What are my assumptions? You’re not just chatting and getting insights: as you go along, you’re proving and validating them. In this real case, it took fifteen different methodologies, or variations of one, to get to something we really trusted and could move forward with.</p>
+<p><strong>“Help me respond to this challenge.”</strong> It doesn’t really matter if your science is right if it doesn’t have an effect on the business. You may relate to being in meetings where your methodology gets challenged by non-economists. Challenging it is cheap, and in the past it might have been very hard to come back with the right data and win that battle. Now, two minutes after the meeting, you open your laptop, pull the data, produce a chart, and draft an appropriate response.</p>
+<p>We also use AI and ML in more traditional ways, where we model behavior. But coding agents live where you live and have the broadest space to work in, which lets you delegate everything you want to, if you feel safe enough.</p>
+</section>
+<section id="what-economists-never-delegate" class="level2">
+<h2 class="anchored" data-anchor-id="what-economists-never-delegate">What economists never delegate</h2>
+<p><img src="../talks/nabe-tec-2026/images/article/never-delegate.png" class="img-fluid" alt="What economists never delegate: methodology selection, causal identification, economic interpretation, stakeholder judgment, research taste."></p>
+<p>Experts don’t delegate which methodology to select. It’s very common for eager, helpful engineers from non-embedded teams to come in with an AI tool where you define a problem and it picks a methodology and does it all for you. Immediately the comments are: why this methodology? It’s wrong.</p>
+<p>They don’t delegate causal identification or economic interpretation either. You may use code to help you evaluate things, but at the end you apply your own judgment. The same goes for institutional knowledge and stakeholder management: you know how the company works. And, because I love a catch-all variable, taste: knowing what questions matter and what you want to learn.</p>
+</section>
+<section id="where-it-hurts" class="level2">
+<h2 class="anchored" data-anchor-id="where-it-hurts">Where it hurts</h2>
+<p>The pain points come down to a handful of questions:</p>
+<ul>
+<li><strong>Trust:</strong> how do we know it’s right? It’s 90% right, or 99% right. What happens if it’s wrong? Will I have to refund all my customers?</li>
+<li><strong>Reliability:</strong> it worked yesterday, not today.</li>
+<li><strong>Blast radius:</strong> what happens if it goes rogue?</li>
+<li><strong>Observability:</strong> can’t explain what happened.</li>
+<li><strong>Tool churn:</strong> so many things are coming in that it’s very hard, for you and for others, to decide what to adopt.</li>
+<li><strong>Cost:</strong> not every company cares about it the same way, but eventually you will care about your spend, and you need a way to tackle it.</li>
+<li><strong>Speed:</strong> too slow to explore effectively.</li>
+</ul>
+<p>They all come down to control. If someone asks you whether their thing is good enough and you say you don’t know, you haven’t controlled it. You want to manage risk by working out which dimensions of control are important to you.</p>
+</section>
+<section id="the-research-assistant-analogy" class="level2">
+<h2 class="anchored" data-anchor-id="the-research-assistant-analogy">The research assistant analogy</h2>
+<p><img src="../talks/nabe-tec-2026/images/article/ra-analogy.png" class="img-fluid" alt="Three research assistants replace each other over 30 days, while one qualification exam persists across all replacements."></p>
+<p>Analogies have limitations, so don’t stretch this one too much, but think of hiring a coding agent as if it were a human. We work on a problem together: an economic model with a financial number, like a 100k budget, an ask, and a scope, maybe Europe. We pair program and you hold its hand a bit. And since you already know a few good practices, you separate things: a deterministic layer, like a Python script, and a data gathering and transformation layer.</p>
+<p>Along the way you encode what the work should look like, and by the end you’ve encoded a qualification exam. That means you can replace the agent, or any part of it, and your user story persists. Same qualification, different agent.</p>
+</section>
+<section id="what-an-exam-looks-like" class="level2">
+<h2 class="anchored" data-anchor-id="what-an-exam-looks-like">What an exam looks like</h2>
+<p>It doesn’t have to look like this, but here’s one in YAML, which is human-readable, computer-readable and very easy to generate:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> econ-model-runner</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">questions</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> runs-scenario</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">input</span><span class="kw">:</span><span class="at"> Run scenario for client ABC, target €100k. Scope: EU5</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">intention</span><span class="kw">:</span><span class="at"> Agent picks the right skill and executes with correct params</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">assert</span><span class="kw">:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> tool-called</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">value</span><span class="kw">:</span><span class="at"> run-model --client ABC --ask 100000 --scope EU5</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> plans-batch-safely</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">input</span><span class="kw">:</span><span class="at"> Run all clients under €300k, all markets, 20% above last cycle</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">intention</span><span class="kw">:</span><span class="at"> Agent should plan before executing a large ambiguous batch</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">assert</span><span class="kw">:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> plan-contains</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">judge</span><span class="kw">:</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> clarifies 'last cycle' time range</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> identifies source table</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> smoke tests one case before full run</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> estimates total effort</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>With non-deterministic steps, errors compound and you lose control. If you bound the non-deterministic parts, you cut off that propagation. The first question does it at the library level: I make my things very easy for the LLM to call, and check that a natural-language request maps to the right code. Once you get there, you’re very safe in at least one aspect. It looks like an integration test, or an eval.</p>
+<p>The second question uses an LLM as a judge, where another model decides whether the answer is right. You should almost resist the urge to go there, because of cost and other considerations, but it can work for testing reasoning. Here it checks that, for a more complex ask, the agent plans and fails fast instead of going down tangents of work that have no value.</p>
+</section>
+<section id="the-feedback-loop" class="level2">
+<h2 class="anchored" data-anchor-id="the-feedback-loop">The feedback loop</h2>
+<p><img src="../talks/nabe-tec-2026/images/article/feedback-loop.png" class="img-fluid" alt="Your exam fails; the levers beneath it are the prompt, skill, tool or MCP, code and environment; changing them loops back until the exam passes. Human or agent iterates against the same exam."></p>
+<p>Once you’ve codified the examples, when things fail, you or the agent can change the prompt, the tools or other things until you get to the business use case you want. This is what lets things self-validate, even self-mutate, and you control to which degree. A lot of it is instinct and practice: knowing how much leverage you want to give it.</p>
+<p>Solving the right problem is usually about fast iteration. Look up Paul MacCready’s story: he did things way faster than others.</p>
+</section>
+<section id="operational-realities" class="level2">
+<h2 class="anchored" data-anchor-id="operational-realities">Operational realities</h2>
+<p>It’s not all beautiful.</p>
+<ul>
+<li><strong>Slow tools kill fast iteration.</strong> If your tools don’t allow fast iteration even without AI, you won’t see the benefits, and you’ll say it doesn’t work.</li>
+<li><strong>Context management</strong> is still a challenge.</li>
+<li><strong>None of this is security.</strong> Security means it must not happen, so you should have deterministic policies that prevent what shouldn’t happen.</li>
+<li><strong>Be a good boss.</strong> A good boss can delegate, but owns the outcomes. If you really automate, you don’t have an employee you can fire.</li>
+</ul>
+</section>
+<section id="takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
+<ol type="1">
+<li><strong>Sketch the workflow early.</strong> Think about the diagram, try the UX and see how it works. You can slowly fill the fake workflow with real things as you create the exam.</li>
+<li><strong>Break long tasks into testable blocks</strong>, and let the agents help you there, coding prototypes that become the real thing.</li>
+<li><strong>Use code for the stable steps</strong>, and let LLMs do reasoning and tool calling, but not more. Reduce the number of smart parts.</li>
+<li><strong>Use exam-first iteration to keep control.</strong> It works for what you build on your own computer, and it can easily be handed to engineers and other teams. My hope is that it becomes an easy communication bridge between business, software and economics.</li>
+</ol>
+</section>
 </section>
 <section id="related" class="level1">
 <h1>Related</h1>

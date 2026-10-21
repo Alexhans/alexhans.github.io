@@ -164,6 +164,324 @@
 <li><a href="../talks/airflow-summit/2026/it-works-now-what/it-works-now-what.vtt">Transcript (WebVTT)</a>, an edited transcript timed to the video</li>
 </ul>
 </section>
+<section id="the-talk-in-article-form" class="level1">
+<h1>The Talk in Article Form</h1>
+<p>If you’d rather read than watch, here’s the talk as an article. Each section links to its moment in the video (▶), and the dark panels are the deck’s own animations: click <strong>Next</strong> (or the diagram) to step through them.</p>
+<style>
+.deck-anim { cursor:pointer; background:#0c0d0f; border-radius:10px; padding:14px 30px 10px 16px; margin:1.2em 0; position:relative; }
+.deck-anim .chart svg, .deck-anim > svg { width:100%; height:auto; display:block; overflow:visible; }
+/* The deck's font isn't on the blog; without this, hand-drawn SVG text falls back to a serif. */
+.deck-anim [font-family="Source Sans Pro"] { font-family: "Source Sans Pro", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+.deck-anim .step { display:none; }
+.deck-anim-bar { display:flex; justify-content:flex-end; gap:.5em; margin-top:4px; }
+.deck-anim-bar button { background:none; border:1px solid #263038; color:#9aa0a6; border-radius:6px; font-size:.75em; padding:2px 10px; cursor:pointer; }
+.deck-anim-bar button:hover { color:#ececf0; border-color:#4a5a63; }
+
+/* The two hand-drawn slides, "Define the Box" and "Simulate the Effect": their
+   states are CSS transitions on data-state, copied from the deck. */
+#k-box .k-b-grow { transition: x 620ms ease, y 620ms ease, width 620ms ease, height 620ms ease, stroke 620ms ease, stroke-width 620ms ease; }
+#k-box .k-dag { transition: transform 620ms ease; }
+#k-box[data-state="wide"] .k-b-grow { x: 18px; width: 1084px; stroke: #ffb020; stroke-width: 2.6px; }
+#k-box[data-state="wide"] .k-dag { transform: translateX(-422px); }
+#k-box .k-far { opacity: 0; transition: opacity 220ms ease; }
+#k-box[data-state="wide"] .k-far { opacity: 1; transition: opacity 300ms ease 620ms; }
+#k-box .k-lab1 { opacity: 1; transition: opacity 240ms ease 200ms; }
+#k-box .k-lab2 { opacity: 0; transition: opacity 200ms ease; }
+#k-box[data-state="wide"] .k-lab1 { opacity: 0; transition: opacity 200ms ease; }
+#k-box[data-state="wide"] .k-lab2 { opacity: 1; transition: opacity 240ms ease 200ms; }
+#k-blast .k-hot, #k-blast .k-cold, #k-blast .k-real { transition: opacity 420ms ease; }
+#k-blast .k-cold { opacity: 0; }
+#k-blast[data-state="safe"] .k-hot { opacity: 0; }
+#k-blast[data-state="safe"] .k-cold { opacity: 1; }
+#k-blast[data-state="safe"] .k-real { opacity: 0.28; }
+.deck-anim > svg { display:block; }
+
+/* "Make Good Checks Easy to Write": HTML and CSS rather than SVG, sized in ems of the
+   deck's 40px base font, so the panel's font scales with its width to keep the
+   slide's proportions. */
+.deck-anim.ux-panel { container-type: inline-size; }
+.deck-anim #ux { font-size: clamp(17px, 3.4cqw, 40px); padding: 0.4em 0 0.2em;
+  --warn:#ffb020; --line:#263038; --card:#14171b; --good:#27d67b; --mut:#9aa0a6; --cy:#11e1ee; --cy-dk:#0a8f98;
+  font-family: "Source Sans Pro", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+.deck-anim #ux .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+.deck-anim #ux .lede { font-size: 0.6em; color: var(--mut); margin: 0.1em 0 0.7em; line-height: 1.4; }
+#ux .ux-fold { overflow: hidden; height: 0; opacity: 0; transition: height 460ms ease, opacity 300ms ease; }
+#ux .ux-row { display: flex; align-items: stretch; gap: 0.3em; height: 2.5em; transition: opacity 460ms ease; }
+#ux .ux-item { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; line-height: 1.25; border: 1px solid #222a30; background: #101418; border-radius: 0.2em; padding: 0 0.4em; font-size: 0.42em; color: #6f767c; }
+#ux .ux-sep { flex: 0 0 1.1em; }
+#ux .ux-new { border: 2px solid var(--warn); background: #1c1710; color: #fff; font-weight: 700; font-size: 0.46em; }
+#ux .ux-pat { display: flex; align-items: center; gap: 0.5em; }
+#ux .ux-c { flex: 1; border: 2px solid var(--line); background: var(--card); border-radius: 0.26em; padding: 0.4em 0.55em; }
+#ux .ux-c.ux-good { border-color: var(--good); }
+#ux .ux-ct { display: block; font-size: 0.56em; font-weight: 700; color: #fff; }
+#ux .ux-cs { display: block; font-size: 0.42em; color: var(--mut); margin-top: 0.12em; }
+#ux .ux-arw { color: var(--cy); font-size: 0.66em; }
+#ux .ux-exams { display: flex; gap: 0.34em; align-items: flex-start; }
+#ux .ux-ex { border: 1.5px solid var(--cy-dk); background: #0e2b2f; border-radius: 0.22em; padding: 0.26em 0.5em; font-size: 0.48em; color: #dff8fa; }
+#ux .ux-q3 { font-size: 0.5em; color: #c7ced4; border-left: 3px solid var(--warn); padding-left: 0.5em; }
+#ux[data-state="pattern"] .ux-row, #ux[data-state="exams"] .ux-row { opacity: 0.35; }
+#ux[data-state="pattern"] .ux-pat, #ux[data-state="exams"] .ux-pat { height: 2.9em; opacity: 1; }
+#ux[data-state="exams"] .ux-p3 { height: 1.9em; opacity: 1; }
+#ux[data-state="exams"] .ux-q3 { height: 1.9em; opacity: 1; }
+#ux[data-state="exams"] .ux-exams { height: 1.8em; opacity: 1; }
+
+/* The slide reserves a fixed height for each part as it folds open, which clips the
+   text once it wraps at article width. Let each part grow to its content instead. */
+.deck-anim #ux .ux-fold { height: auto; max-height: 0; padding: 0 2px; transition: max-height 460ms ease, opacity 300ms ease; }
+.deck-anim #ux[data-state="pattern"] .ux-pat, .deck-anim #ux[data-state="exams"] .ux-pat,
+.deck-anim #ux[data-state="exams"] .ux-p3, .deck-anim #ux[data-state="exams"] .ux-exams { height: auto; max-height: 9em; padding: 2px; }
+.deck-anim #ux .ux-exams { flex-wrap: wrap; row-gap: 0.3em; }
+</style>
+<script>
+// A stand-in for the two reveal.js events the deck's step machine listens to,
+// so the deck's own d3 animations can play inside an article.
+window.Reveal = {
+  h: {}, on: function (e, f) { (this.h[e] = this.h[e] || []).push(f); },
+  isReady: function () { return false; }, getCurrentSlide: function () { return null; },
+  emit: function (e, x) { (this.h[e] || []).forEach(function (f) { f(x); }); }
+};
+</script>
+<script src="../talks/airflow-summit/2026/it-works-now-what/libs/d3.v7.min.js"></script>
+<script src="../talks/airflow-summit/2026/it-works-now-what/libs/talk-charts.js"></script>
+<script src="../talks/airflow-summit/2026/it-works-now-what/libs/who-knows-charts.js"></script>
+<script src="../talks/airflow-summit/2026/it-works-now-what/libs/reduced-charts.js"></script>
+<script>
+// Each panel starts in the slide's opening state. "Next" advances one step, the way
+// clicking through the slide would; after the last step it offers to start over.
+// Clicking the diagram does the same. Nothing moves until the reader asks.
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".deck-anim").forEach(function (panel) {
+    var steps = [].slice.call(panel.querySelectorAll(".step"));
+    // Steps sharing a data-i advance together, like fragments sharing an index.
+    var groups = [];
+    steps.forEach(function (s, k) {
+      var i = s.dataset.i !== undefined ? +s.dataset.i : k;
+      (groups[i] = groups[i] || []).push(s);
+    });
+    groups = groups.filter(Boolean);
+    var shown = 0, drawn = false;
+
+    var bar = document.createElement("div"); bar.className = "deck-anim-bar";
+    var btn = document.createElement("button"); bar.appendChild(btn); panel.appendChild(bar);
+    function label() {
+      if (shown >= groups.length) btn.textContent = "\u21BA Start over";
+      else if (groups.length > 1) btn.textContent = "Next \u25B8  " + (shown + 1) + "/" + groups.length;
+      else btn.textContent = "Next \u25B8";
+    }
+    function reset() {
+      steps.forEach(function (s) { s.classList.remove("visible"); });
+      Reveal.emit("slidechanged", { currentSlide: panel });
+      shown = 0; label();
+    }
+    function next() {
+      if (shown >= groups.length) { reset(); return; }
+      groups[shown].forEach(function (s) { s.classList.add("visible"); });
+      Reveal.emit("fragmentshown", { fragment: groups[shown][0], fragments: groups[shown] });
+      shown++; label();
+    }
+    btn.onclick = function (e) { e.stopPropagation(); next(); };
+    panel.addEventListener("click", next);
+    // Draw on first view, so the diagram's own entrance plays where it's seen.
+    new IntersectionObserver(function (es, obs) {
+      es.forEach(function (e) { if (e.isIntersecting && !drawn) { drawn = true; reset(); obs.disconnect(); } });
+    }, { threshold: 0.3 }).observe(panel);
+    label();
+  });
+});
+</script>
+<style>
+.vt { font-size: 0.85em; margin: -0.6em 0 1em; }
+.vt a { text-decoration: none; }
+.step-cap { font-size: 0.85em; opacity: 0.75; margin: 0.2em 0 1.2em; }
+</style>
+<section id="two-worlds" class="level2">
+<h2 class="anchored" data-anchor-id="two-worlds">Two worlds</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=15s">▶ 0:15 in the video</a></span></p>
+<p>You could sort me into two worlds. In the corporate world, I’m a software engineering lead at Amazon, for a team called Economic Decision Science, which optimizes the way the Amazon marketplace operates using economic models. My goal is to get economists to production without engineering or tech bottlenecks. In the other world, I’m an Airflow user. I run Linux, I run local models, and I run Airflow on my home server.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/two-worlds.png" class="img-fluid" alt="Two columns: the corporate world with an economics team, and the home world with Linux, Airflow and local models."></p>
+<p>These two worlds may seem to have nothing in common, but there’s one very important thing they share. I want to delegate heavily, and so do the economists on my team. We do it through coding agents, not because we’ve been mandated to, but because they’ve been very effective for us.</p>
+</section>
+<section id="a-real-problem" class="level2">
+<h2 class="anchored" data-anchor-id="a-real-problem">A real problem</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=74s">▶ 1:14 in the video</a></span></p>
+<p>Our corporate Dags can look quite convoluted. We use dbt and Astronomer Cosmos to author them, with models depending on models and all that jazz. But if you really think about it, they all share a common pattern: something triggers them, there’s a question we need to answer, we interpret that answer, and we decide an outcome.</p>
+<div class="deck-anim"><div id="c-zoom" class="chart" data-initial="wide"></div><span class="step" data-target="c-zoom" data-state="small"></span></div>
+<p>So I’m going to talk about a real problem that I have. I live in London, and in my neighborhood the bins get collected every week. It alternates between recycling and rubbish, and the food caddy thankfully gets collected every week. If I put out the wrong bin, or I forget, I end up holding a month of rubbish, because it’s the two weeks I already had plus two more. I don’t want that to happen, so I delegate.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/bins.png" class="img-fluid" alt="A calendar of alternating rubbish and recycling weeks; missing one means a whole month of rubbish in the garden."></p>
+</section>
+<section id="the-agent-figures-it-out" class="level2">
+<h2 class="anchored" data-anchor-id="the-agent-figures-it-out">The agent figures it out</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=138s">▶ 2:18 in the video</a></span></p>
+<p>If I delegated to a friend, I’d give them instructions: go to the council website, type my postcode, pick the right address from the dropdown, read the date and the bin, and take out the right one on the right date. But I don’t want to burden my friend, so I burden Claude Opus 5, or whatever agent you want to pick. I just tell it to write a skill for this problem, and it’s good enough to figure it out. If you’re curious, it finds no dropdown, reads the JavaScript, finds the endpoints behind the form, and calls those to get the answer.</p>
+<div class="deck-anim"><div id="c-h2s" class="chart" data-initial="hand"></div><span class="step" data-target="c-h2s" data-state="inside"></span></div>
+<p>I know it’s the right answer because I had already checked it, so I have my ground truth. But look at the numbers: 85 cents, two minutes and about a million tokens per question. That would run me $4 a month, and I still have to trigger the skill myself, which means I still have to remember. The whole point was not having to remember. Also, the price is kind of ridiculous.</p>
+</section>
+<section id="fast-iteration-needs-a-cheap-loop" class="level2">
+<h2 class="anchored" data-anchor-id="fast-iteration-needs-a-cheap-loop">Fast iteration needs a cheap loop</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=226s">▶ 3:46 in the video</a></span></p>
+<p>So how do I go about changing it? People might start guessing at what needs to change: the prompts, the tools, the models. But the most important part is having a loop that looks a lot like a refactoring loop, one that lets you change a system, or parts of it, without changing its externally observable behavior. It’s safe to change because we have tests.</p>
+<div class="deck-anim"><div id="c-design" class="chart"></div><span class="step" data-target="c-design" data-state="ask" data-i="0"></span></div>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/cheap-loop.png" class="img-fluid" alt="A loop of change, run and check, with the things you might want to change: the prompt, the model, the tools, the workflow, the runtime."></p>
+<p>So the rule is: before we delegate, we build a check that tells us whether something is right or wrong. We can call that executable intent.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/build-the-check.png" class="img-fluid" alt="Before you delegate, build the check that tells you it's right. You could also call it executable intent."></p>
+</section>
+<section id="the-smallest-check" class="level2">
+<h2 class="anchored" data-anchor-id="the-smallest-check">The smallest check</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=280s">▶ 4:40 in the video</a></span></p>
+<p>Here’s the check. A Pydantic model for the payload, a call to the agent against a specific recorded date I know about, and an assertion that the result matches what I expect. I use a set, so the order doesn’t matter.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/smallest-check.png" class="img-fluid" alt="A short Python test: a Pydantic model for the bin facts, a call to the agent against a recorded date, and an assertion on the expected bins."></p>
+<p>You may say this looks like a unit test, or more likely an integration test, because we’re calling outside things, and you’d be right. I’d say the correct term is an AI eval, because we’re asserting on the output of LLM inference. Whatever we call it, it’s what lets us change parts of our system safely.</p>
+</section>
+<section id="from-agent-skill-to-airflow-dag" class="level2">
+<h2 class="anchored" data-anchor-id="from-agent-skill-to-airflow-dag">From agent skill to Airflow Dag</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=324s">▶ 5:24 in the video</a></span></p>
+<p>So we take the agent skill, which only runs when a human runs it, and put it into Airflow, which is a great orchestrator. I made this change agentically too; I delegated it as well. Now it runs every day. The part that asks the agent keeps doing what it did before, and then Airflow decides whether to alert me. I only need to know the night before, so I use the Telegram provider that comes with Airflow.</p>
+<div class="deck-anim"><div id="c-h2s2" class="chart" data-initial="inside" style="max-width:86%"></div><span class="step" data-target="c-h2s2" data-state="dag" data-i="0"></span></div>
+<p>What I find interesting is that I didn’t have to give the agent Telegram permissions. Just by using Airflow, I bounded the responsibilities of the different parts. I didn’t actually refactor, though, because the behavior changed, so I wrote new checks for the new parts: send when it’s due, log why when it isn’t, and don’t send twice.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/airflow-ui.png" class="img-fluid figure-img" alt="The bin Dag in the Airflow UI, with task runs and logs."></p>
+<figcaption>The Dag in Airflow.</figcaption>
+</figure>
+</div>
+</section>
+<section id="change-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="change-the-model">Change the model</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=489s">▶ 8:09 in the video</a></span></p>
+<p>We solved the problem of me having to remember. Can we improve on the price? Yes, because we have the check. We can swap the frontier model for a cheaper one, a mid-tier model, an open-weight model, or even better, a local open-weight model, so that no one knows when I have to take out the trash.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/change-model.png" class="img-fluid" alt="A frontier model, a mid-tier model and two open-weight models all go through the same check: passes or doesn't pass. The check has to survive the model."></p>
+<p>The check is what lets us benchmark these things, and the check survives the models. The models will come and go, and the check stays until we decide it’s no longer valid. I tested many open-weight models, and it turns out gpt-oss with 20 billion parameters was good enough. If I wanted speed over price, I could use Mistral Large.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/model-ladder.png" class="img-fluid" alt="Chart of open-weight models by cost and pass rate; several pass every run at about a hundredth of the cost."></p>
+</section>
+<section id="making-the-loop-faster" class="level2">
+<h2 class="anchored" data-anchor-id="making-the-loop-faster">Making the loop faster</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=561s">▶ 9:21 in the video</a></span></p>
+<p>How long did this take? Not long at all, because I’m delegating all of it, and I make the loops fast. I don’t use an LLM as a judge by default, because it takes more time and adds stochasticity; here I had structured output, so I could assert on it directly. I made the runs independent, with no shared state, because if I had to lock state, it would become 40 sequential runs. And if you need isolation or containers, they have overhead, so tier them.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/faster-loop.png" class="img-fluid" alt="Run timelines: a naive run with a slow LLM judge, a cheaper check, independent runs side by side, and isolated runs with setup and teardown."></p>
+</section>
+<section id="move-more-out-of-inference" class="level2">
+<h2 class="anchored" data-anchor-id="move-more-out-of-inference">Move more out of inference</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=607s">▶ 10:07 in the video</a></span></p>
+<p>Look at the path so far. We had an agent skill, and the agent solved a lot at inference time. Then we moved to an Airflow Dag, and suddenly a lot of the behavior was encoded explicitly, with the agent left as a web scraper of sorts. Can we go further? The title spoils it, but yes: what I run at home doesn’t use AI at all. I use AI to change it, but it runs as a Python web scraper against the same checks.</p>
+<div class="deck-anim"><div id="c-morph2" class="chart" data-initial="skill"></div><div id="c-guess" class="chart" data-initial="all" data-compact="1"></div><span class="step" data-target="c-morph2" data-state="dag" data-i="0"></span><span class="step" data-target="c-guess" data-state="some" data-i="0"></span><span class="step" data-target="c-morph2" data-state="real" data-i="1"></span><span class="step" data-target="c-guess" data-state="none" data-i="1"></span></div>
+<p>What happens when the website changes? It’s going to break. But it hasn’t happened yet, and I’m not sure I want to pay for inference for a long time just in case. And if you’re getting the idea of feedback loops, the failure itself can start another loop, where an agent goes and changes the code until the checks pass again.</p>
+</section>
+<section id="find-the-loop-and-define-the-box" class="level2">
+<h2 class="anchored" data-anchor-id="find-the-loop-and-define-the-box">Find the loop, and define the box</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=701s">▶ 11:41 in the video</a></span></p>
+<p>So what do you need to find one of these loops? A goal worth pursuing, otherwise nobody spends the time or the tokens on it. Somewhere to experiment, where you can actually affect the outcome. A way to compare, like the checks or a baseline. And, very importantly, the levers you allow the agent to change: the prompt for prompt optimization, the model for benchmarking, or the tools and the workflow, like I did.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/find-the-loop.png" class="img-fluid" alt="Find the loop: a goal worth pursuing, somewhere to experiment, a way to compare, and the levers it can change."></p>
+<p>Some of you might say this is all great, but it’s a small demo, and your problems are large and distributed. Then make the box bigger. If you want to change Airflow itself, expand the box to cover Airflow: the scheduler, the triggerer, the workers. In my case I added AWS Glue too, because I was testing a real feature, durable executors.</p>
+<div class="deck-anim"><svg id="k-box" viewbox="0 0 1120 200" width="100%" style="overflow:visible;">
+  <rect class="k-b-grow" x="425" y="34" width="270" height="152" rx="14" fill="none" stroke="#4a5a63" stroke-width="2.4" stroke-dasharray="9 6"></rect>
+  <text class="k-lab1" x="425" y="20" fill="#7d868c" font-size="17" font-family="Source Sans Pro">every lever so far</text>
+  <text class="k-lab2" x="18" y="20" fill="#ffb020" font-size="18" font-weight="700" font-family="Source Sans Pro">make the box bigger</text>
+  <g class="k-dag" font-family="Source Sans Pro">
+    <rect x="460" y="66" width="200" height="88" rx="11" fill="#0e2b2f" stroke="#11e1ee" stroke-width="2.4"></rect>
+    <text x="560" y="116" text-anchor="middle" fill="#dff8fa" font-size="19" font-weight="700">the Dag</text>
+  </g>
+  <g class="k-far" font-family="Source Sans Pro">
+    <rect x="262" y="66" width="528" height="88" rx="11" fill="#14171b" stroke="#38474f" stroke-width="2"></rect>
+    <text x="526" y="100" text-anchor="middle" fill="#ececf0" font-size="19" font-weight="700">the whole of Airflow</text>
+    <text x="526" y="126" text-anchor="middle" fill="#9aa0a6" font-size="17">scheduler · triggerer · workers</text>
+    <rect x="814" y="66" width="268" height="88" rx="11" fill="#14171b" stroke="#38474f" stroke-width="2"></rect>
+    <text x="948" y="116" text-anchor="middle" fill="#ececf0" font-size="19" font-weight="700">real AWS Glue</text>
+  </g>
+</svg><span class="step" data-target="k-box" data-state="wide" data-i="0"></span></div>
+</section>
+<section id="hypothesize-and-prove" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesize-and-prove">Hypothesize and prove</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=859s">▶ 14:19 in the video</a></span></p>
+<p>Here the delegation isn’t about building something. It’s about hypothesizing behaviors I already know should happen, and finding out whether they’re true. What if a worker dies while the job is still running? The agent kills the worker, we observe and log everything, and I can see that it attached itself to the running job instead of starting a new one. What if the job already finished, or the ID we stored is gone? And the control case: the same kill with the feature off.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/hypothesize.png" class="img-fluid" alt="Hypotheses: what if the worker dies while the job is still running, what if the job already finished, what if the job id is gone, and the same kill with the feature off as a control."></p>
+</section>
+<section id="simulate-the-effect" class="level2">
+<h2 class="anchored" data-anchor-id="simulate-the-effect">Simulate the effect</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=960s">▶ 16:00 in the video</a></span></p>
+<p>With the agent touching this much of the system, some of you may ask whether this is dangerous, and you’re right to. You could lose money, send the wrong message to the wrong people, or delete the wrong things. There’s a line between the decision and the real world, and you can put something in between: a fake notifier, read-only credentials, dry runs for tool calls, mock MCP servers, a proxy. Then you can loop fast without fear. Just do it for real once, so you know what real looks like.</p>
+<div class="deck-anim"><svg id="k-blast" viewbox="0 0 1120 300" width="100%" style="overflow:visible;">
+  <g font-family="Source Sans Pro">
+    <rect x="20" y="104" width="250" height="94" rx="11" fill="#0e2b2f" stroke="#11e1ee" stroke-width="2.4"></rect>
+    <text x="145" y="146" text-anchor="middle" fill="#dff8fa" font-size="19" font-weight="600">the decision</text>
+    <text x="145" y="172" text-anchor="middle" fill="#11e1ee" font-size="16">made by the agent</text>
+    <g class="k-hot">
+      <path d="M270 151 H 852" stroke="#ff5c47" stroke-width="3"></path>
+      <path d="M858 151 l -14 -9 v18 z" fill="#ff5c47"></path>
+      <text x="561" y="132" text-anchor="middle" fill="#ff8b78" font-size="17">what I am afraid of</text>
+      <text x="561" y="186" text-anchor="middle" fill="#ff8b78" font-size="17">and how far it spreads</text>
+    </g>
+    <g class="k-cold">
+      <path d="M270 151 H 396" stroke="#4a5a63" stroke-width="2.6"></path>
+      <path d="M402 151 l -13 -8 v16 z" fill="#4a5a63"></path>
+      <rect x="412" y="74" width="296" height="154" rx="12" fill="#14171b" stroke="#ffb020" stroke-width="2.6" stroke-dasharray="8 5"></rect>
+      <text x="560" y="106" text-anchor="middle" fill="#ffb020" font-size="18" font-weight="700">something in between</text>
+      <text x="560" y="136" text-anchor="middle" fill="#9aa0a6" font-size="16">a fake notifier</text>
+      <text x="560" y="160" text-anchor="middle" fill="#9aa0a6" font-size="16">a read-only credential</text>
+      <text x="560" y="184" text-anchor="middle" fill="#9aa0a6" font-size="16">a dry run, a mock, a sandbox</text>
+      <path d="M708 151 H 852" stroke="#3c4c56" stroke-width="2" stroke-dasharray="6 6"></path>
+    </g>
+    <g class="k-real">
+      <rect x="862" y="104" width="238" height="94" rx="11" fill="#3a1714" stroke="#ff5c47" stroke-width="2.4"></rect>
+      <text x="981" y="146" text-anchor="middle" fill="#ffc9c1" font-size="19" font-weight="600">the real world</text>
+      <text x="981" y="172" text-anchor="middle" fill="#ff8b78" font-size="16">money, messages, deletes</text>
+    </g>
+  </g>
+</svg><span class="step" data-target="k-blast" data-state="safe" data-i="0"></span></div>
+<p>And very important, and very simple: evals are not security. If something must never happen, make it impossible, with permissions and role-based access control. Everywhere else you can use judgment, but not there.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/control.png" class="img-fluid" alt="Two kinds of control. Can it do this at all: permissions, tool exposure, credentials, sandboxes; if it must never happen, make it impossible. Did it do the right thing: checks, evals, assertions; if it's allowed but needs judgement, evaluate it."></p>
+</section>
+<section id="traces" class="level2">
+<h2 class="anchored" data-anchor-id="traces">Traces</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=1104s">▶ 18:24 in the video</a></span></p>
+<p>Going back to why the first version was so expensive: we had observability. In any AI work, persist your traces, because whatever result you get, the traces tell you how you got there. Here you can see the agent trying tools it had no access to, getting refused, and losing time on it.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/trace.png" class="img-fluid" alt="A trace of the first run: 22 turns, 20 tool calls, 6 refused, 124 seconds and 989,639 tokens."></p>
+<p>Traces also capture what your checks and tests missed. You can never predict everything reality will throw at you, and some of those traces become the next checks you add.</p>
+<p><img src="https://alexhans.github.io/talks/airflow-summit/2026/it-works-now-what/images/article/prod-traces.png" class="img-fluid" alt="A run does something new, you notice it in the trace, and it becomes a check: a new test added from a recorded date."></p>
+</section>
+<section id="make-good-checks-easy-to-write" class="level2">
+<h2 class="anchored" data-anchor-id="make-good-checks-easy-to-write">Make good checks easy to write</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=1201s">▶ 20:01 in the video</a></span></p>
+<p>The one hard thing, I think, is the UX of evals. Writing proper evals is hard, a bit like explaining test-driven development to people who have never built software. We could take a page from skill builders, which ship an agent skill you talk to and it creates skills the right way, and have eval builders. In particular, I’ve experimented a lot with a qualifying exam for a domain, before you let an agent work in it.</p>
+<div class="deck-anim ux-panel"><div id="ux">
+  <div class="ux-row">
+    <span class="ux-item">unit tests</span>
+    <span class="ux-item">test-driven, undogmatically</span>
+    <span class="ux-item">integration tests</span>
+    <span class="ux-item">system tests</span>
+    <span class="ux-sep"></span>
+    <span class="ux-item ux-new">evals</span>
+  </div>
+  <div class="ux-pat ux-fold">
+    <div class="ux-c">
+      <span class="ux-ct mono">/SkillBuilder</span>
+      <span class="ux-cs">shipped alongside Agent Skills. You just talk to it.</span>
+    </div>
+    <span class="ux-arw">→</span>
+    <div class="ux-c ux-good">
+      <span class="ux-ct mono">/EvalBuilder</span>
+      <span class="ux-cs">Encode good eval patterns once you know what "good" looks like</span>
+    </div>
+  </div>
+  <p class="lede ux-p3 ux-fold">A qualifying exam for a domain, before we let an agent work in it.</p>
+  <div class="ux-exams ux-fold">
+    <span class="ux-ex">Dag Operator</span>
+    <span class="ux-ex">Dag Code Generator</span>
+    <span class="ux-ex">Localizer</span>
+    <span class="ux-ex">… yours</span>
+  </div>
+</div><span class="step" data-target="ux" data-state="pattern" data-i="0"></span><span class="step" data-target="ux" data-state="exams" data-i="1"></span></div>
+</section>
+<section id="takeaways-1" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways-1">Takeaways</h2>
+<p><span class="vt"><a href="https://www.youtube.com/watch?v=L5SLtEN7lcA&amp;t=1262s">▶ 21:02 in the video</a></span></p>
+<ol type="1">
+<li><strong>Build executable checks for your loops</strong>, so you can delegate strongly.</li>
+<li><strong>Find the right box</strong>: a task, a Dag, the whole Airflow image, or bigger.</li>
+<li><strong>You may not need the inference at all</strong>: AI can be all around your system, with workflows that have none in them.</li>
+</ol>
+<p>Evals are not security. If something must never happen, prevent it rather than evaluating it.</p>
+</section>
+</section>
 <section id="related" class="level1">
 <h1>Related</h1>
 <ul>
@@ -746,6 +1064,287 @@ new: 53.17 tok/s</code></pre>
 <li><a href="../talks/nabe-tec-2026/alex-guglielmone-nemi-ai-coding-agents-nabe-tec-2026.pdf">Download PDF</a></li>
 <li><a href="../talks/nabe-tec-2026/ai-coding-agents-in-an-economics-team.vtt">Transcript (WebVTT)</a>, an edited transcript of the recording</li>
 </ul>
+</section>
+<section id="the-talk-in-article-form" class="level1">
+<h1>The Talk in Article Form</h1>
+<p>If you’d rather read than click through slides, here’s the talk as an article.</p>
+<section id="the-team" class="level2">
+<h2 class="anchored" data-anchor-id="the-team">The team</h2>
+<p>I’m the engineering lead of a cross-functional team called Economic Decision Science at Amazon, based in London. Our target is optimizing how the European stores operate, in any form or shape we can, including convincing others to act on our decisions and our economic models.</p>
+<p>The team is quite new. At first it was just economists, and we started seeing bottlenecks in data and scaling. When we engineers came in, one of the goals I set was that the scalable workforce here is not engineering. If we hire 40 more economists, we shouldn’t be blocked, and we shouldn’t have to scale engineers at the same ratio. So: can economists deliver without engineering bottlenecks of all shapes and forms?</p>
+<p>That led us to focus on minimal infrastructure and fast iteration. It also led to something that’s hard to convince people of: more often than not, there’s no trade-off between exploration and production. You can iterate as fast as you normally would, without a stage where you hand things off to people who scale it in six months. If things are set up in the right way, it goes straight to production.</p>
+<p>We call that setup the factory of economics: the capabilities you should have, built as blocks you can mix and match, with good UX, so you can tackle ambiguous problems across domains and move faster than the parts of the company that can afford multi-year efforts.</p>
+</section>
+<section id="coding-agents-arrived" class="level2">
+<h2 class="anchored" data-anchor-id="coding-agents-arrived">Coding agents arrived</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://alexhans.github.io/talks/nabe-tec-2026/images/metr-time-horizons.png" class="img-fluid figure-img" alt="METR chart of the length of software tasks different LLMs can complete 50% of the time, rising steeply in 2025 and 2026, with Claude Opus 4.6 near the top."></p>
+<figcaption>Source: <a href="https://metr.org/time-horizons">METR Time Horizons</a>.</figcaption>
+</figure>
+</div>
+<p>We had all of this before AI. The capabilities we’d built are what many of you will recognize as agent skills, so the ways of working we had converged really well with the ways of working AI has.</p>
+<p>We adopted coding agents as soon as they were available to us, around the middle of last year. I did the advocacy, never mandating, just getting people to see what they could do. When the Opus family of models came in, with Opus 4.6, there was a difference in quality: less babysitting, better tool calling, better at long tasks and combining things, and sometimes able to one-shot things.</p>
+<p>These agents also work where the economists work. We have remote computers, and the command line was already what we were training people on.</p>
+</section>
+<section id="what-economists-use-them-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-economists-use-them-for">What economists use them for</h2>
+<p><img src="https://alexhans.github.io/talks/nabe-tec-2026/images/article/what-we-delegate.png" class="img-fluid" alt="Treemap of what the team uses coding agents for: analysis and research design, data pipelines, operations, writing and comms, troubleshooting."></p>
+<p>Roughly, the work falls into these buckets, across the team as a whole:</p>
+<ul>
+<li><strong>Analysis and research design</strong>, the core economic work, where you’re rubber ducking a lot.</li>
+<li><strong>Data pipelines.</strong> Our economists are builders, so a lot of it is data manipulation.</li>
+<li><strong>Operations</strong>, which ideally shouldn’t be there, since we try to be zero ops. But we deliver for production, and sometimes things need to be done to keep live systems running.</li>
+<li><strong>Writing and comms</strong>, the one that might seem obvious.</li>
+<li><strong>Troubleshooting</strong>: libraries are broken, things aren’t working, and the agent helps you there.</li>
+</ul>
+</section>
+<section id="three-examples" class="level2">
+<h2 class="anchored" data-anchor-id="three-examples">Three examples</h2>
+<p>These are anonymized, so they might seem generic, but they’re real and very representative.</p>
+<p><strong>“Explain this model to me.”</strong> You have some applied science; let’s simplify and say it’s SQL. It doesn’t matter how long it is: the agent explains it to you step by step. You use your judgment and spot something wrong, like counting the wrong window, and you conversationally get it to correct it. If you’re set up in the right way, that can be in production immediately. It seems simple, but it’s very powerful, and you see a lot of it.</p>
+<p><strong>“Help me analyze this policy.”</strong> You’re starting to explore a problem and you have a lot of instincts, so you rubber duck with the agent to externalize your own thoughts. What about this methodology? These dimensions? Power analysis, clustering? What are my assumptions? You’re not just chatting and getting insights: as you go along, you’re proving and validating them. In this real case, it took fifteen different methodologies, or variations of one, to get to something we really trusted and could move forward with.</p>
+<p><strong>“Help me respond to this challenge.”</strong> It doesn’t really matter if your science is right if it doesn’t have an effect on the business. You may relate to being in meetings where your methodology gets challenged by non-economists. Challenging it is cheap, and in the past it might have been very hard to come back with the right data and win that battle. Now, two minutes after the meeting, you open your laptop, pull the data, produce a chart, and draft an appropriate response.</p>
+<p>We also use AI and ML in more traditional ways, where we model behavior. But coding agents live where you live and have the broadest space to work in, which lets you delegate everything you want to, if you feel safe enough.</p>
+</section>
+<section id="what-economists-never-delegate" class="level2">
+<h2 class="anchored" data-anchor-id="what-economists-never-delegate">What economists never delegate</h2>
+<p><img src="https://alexhans.github.io/talks/nabe-tec-2026/images/article/never-delegate.png" class="img-fluid" alt="What economists never delegate: methodology selection, causal identification, economic interpretation, stakeholder judgment, research taste."></p>
+<p>Experts don’t delegate which methodology to select. It’s very common for eager, helpful engineers from non-embedded teams to come in with an AI tool where you define a problem and it picks a methodology and does it all for you. Immediately the comments are: why this methodology? It’s wrong.</p>
+<p>They don’t delegate causal identification or economic interpretation either. You may use code to help you evaluate things, but at the end you apply your own judgment. The same goes for institutional knowledge and stakeholder management: you know how the company works. And, because I love a catch-all variable, taste: knowing what questions matter and what you want to learn.</p>
+</section>
+<section id="where-it-hurts" class="level2">
+<h2 class="anchored" data-anchor-id="where-it-hurts">Where it hurts</h2>
+<p>The pain points come down to a handful of questions:</p>
+<ul>
+<li><strong>Trust:</strong> how do we know it’s right? It’s 90% right, or 99% right. What happens if it’s wrong? Will I have to refund all my customers?</li>
+<li><strong>Reliability:</strong> it worked yesterday, not today.</li>
+<li><strong>Blast radius:</strong> what happens if it goes rogue?</li>
+<li><strong>Observability:</strong> can’t explain what happened.</li>
+<li><strong>Tool churn:</strong> so many things are coming in that it’s very hard, for you and for others, to decide what to adopt.</li>
+<li><strong>Cost:</strong> not every company cares about it the same way, but eventually you will care about your spend, and you need a way to tackle it.</li>
+<li><strong>Speed:</strong> too slow to explore effectively.</li>
+</ul>
+<p>They all come down to control. If someone asks you whether their thing is good enough and you say you don’t know, you haven’t controlled it. You want to manage risk by working out which dimensions of control are important to you.</p>
+</section>
+<section id="the-research-assistant-analogy" class="level2">
+<h2 class="anchored" data-anchor-id="the-research-assistant-analogy">The research assistant analogy</h2>
+<p><img src="https://alexhans.github.io/talks/nabe-tec-2026/images/article/ra-analogy.png" class="img-fluid" alt="Three research assistants replace each other over 30 days, while one qualification exam persists across all replacements."></p>
+<p>Analogies have limitations, so don’t stretch this one too much, but think of hiring a coding agent as if it were a human. We work on a problem together: an economic model with a financial number, like a 100k budget, an ask, and a scope, maybe Europe. We pair program and you hold its hand a bit. And since you already know a few good practices, you separate things: a deterministic layer, like a Python script, and a data gathering and transformation layer.</p>
+<p>Along the way you encode what the work should look like, and by the end you’ve encoded a qualification exam. That means you can replace the agent, or any part of it, and your user story persists. Same qualification, different agent.</p>
+</section>
+<section id="what-an-exam-looks-like" class="level2">
+<h2 class="anchored" data-anchor-id="what-an-exam-looks-like">What an exam looks like</h2>
+<p>It doesn’t have to look like this, but here’s one in YAML, which is human-readable, computer-readable and very easy to generate:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> econ-model-runner</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">questions</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> runs-scenario</span></span>
+<span id="cb1-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">input</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Run scenario for client ABC, target €100k. Scope: EU5</span></span>
+<span id="cb1-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">intention</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Agent picks the right skill and executes with correct params</span></span>
+<span id="cb1-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">assert</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">type</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> tool-called</span></span>
+<span id="cb1-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">value</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> run-model --client ABC --ask 100000 --scope EU5</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> plans-batch-safely</span></span>
+<span id="cb1-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">input</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Run all clients under €300k, all markets, 20% above last cycle</span></span>
+<span id="cb1-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">intention</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Agent should plan before executing a large ambiguous batch</span></span>
+<span id="cb1-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">assert</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">type</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> plan-contains</span></span>
+<span id="cb1-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">judge</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> clarifies 'last cycle' time range</span></span>
+<span id="cb1-17"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> identifies source table</span></span>
+<span id="cb1-18"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> smoke tests one case before full run</span></span>
+<span id="cb1-19"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">          </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> estimates total effort</span></span></code></pre></div></div>
+<p>With non-deterministic steps, errors compound and you lose control. If you bound the non-deterministic parts, you cut off that propagation. The first question does it at the library level: I make my things very easy for the LLM to call, and check that a natural-language request maps to the right code. Once you get there, you’re very safe in at least one aspect. It looks like an integration test, or an eval.</p>
+<p>The second question uses an LLM as a judge, where another model decides whether the answer is right. You should almost resist the urge to go there, because of cost and other considerations, but it can work for testing reasoning. Here it checks that, for a more complex ask, the agent plans and fails fast instead of going down tangents of work that have no value.</p>
+</section>
+<section id="the-feedback-loop" class="level2">
+<h2 class="anchored" data-anchor-id="the-feedback-loop">The feedback loop</h2>
+<p><img src="https://alexhans.github.io/talks/nabe-tec-2026/images/article/feedback-loop.png" class="img-fluid" alt="Your exam fails; the levers beneath it are the prompt, skill, tool or MCP, code and environment; changing them loops back until the exam passes. Human or agent iterates against the same exam."></p>
+<p>Once you’ve codified the examples, when things fail, you or the agent can change the prompt, the tools or other things until you get to the business use case you want. This is what lets things self-validate, even self-mutate, and you control to which degree. A lot of it is instinct and practice: knowing how much leverage you want to give it.</p>
+<p>Solving the right problem is usually about fast iteration. Look up Paul MacCready’s story: he did things way faster than others.</p>
+</section>
+<section id="operational-realities" class="level2">
+<h2 class="anchored" data-anchor-id="operational-realities">Operational realities</h2>
+<p>It’s not all beautiful.</p>
+<ul>
+<li><strong>Slow tools kill fast iteration.</strong> If your tools don’t allow fast iteration even without AI, you won’t see the benefits, and you’ll say it doesn’t work.</li>
+<li><strong>Context management</strong> is still a challenge.</li>
+<li><strong>None of this is security.</strong> Security means it must not happen, so you should have deterministic policies that prevent what shouldn’t happen.</li>
+<li><strong>Be a good boss.</strong> A good boss can delegate, but owns the outcomes. If you really automate, you don’t have an employee you can fire.</li>
+</ul>
+</section>
+<section id="takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
+<ol type="1">
+<li><strong>Sketch the workflow early.</strong> Think about the diagram, try the UX and see how it works. You can slowly fill the fake workflow with real things as you create the exam.</li>
+<li><strong>Break long tasks into testable blocks</strong>, and let the agents help you there, coding prototypes that become the real thing.</li>
+<li><strong>Use code for the stable steps</strong>, and let LLMs do reasoning and tool calling, but not more. Reduce the number of smart parts.</li>
+<li><strong>Use exam-first iteration to keep control.</strong> It works for what you build on your own computer, and it can easily be handed to engineers and other teams. My hope is that it becomes an easy communication bridge between business, software and economics.</li>
+</ol>
+</section>
 </section>
 <section id="related" class="level1">
 <h1>Related</h1>
